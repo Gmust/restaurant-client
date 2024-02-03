@@ -1,7 +1,17 @@
-import Image from 'next/image';
+import { EventsService } from '@/src/service/eventsService';
+import { RestaurantImage } from '@/src/components/homePage/RestaurantImage';
+import { EventsPanel } from '@/src/components/homePage/eventsPanel/EventsPanel';
 
-export default function Home() {
+const Home = async () => {
+  const closestEvents = await EventsService.fetchClosestEvents();
+  const nearestEvents = [] as IEvent[]
   return (
-    <div className='text-5xl text-black'>Test</div>
+    <section className='flex mt-7'>
+      <div className='flex w-full items-start justify-center space-x-6'>
+        <RestaurantImage />
+        <EventsPanel closestEvents={closestEvents} nearestEvents={nearestEvents} />
+      </div>
+    </section>
   );
-}
+};
+export default Home;

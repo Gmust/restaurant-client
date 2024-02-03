@@ -3,6 +3,7 @@ import { Rubik } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/src/components/header/Header';
 import { cn } from '@/src/lib/utils';
+import { Providers } from '@/src/components/shared/Providers';
 
 const rubik = Rubik({ subsets: ['latin'], display: 'swap', variable: '--font-rubik' });
 
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
     <body className={cn(rubik.className, 'bg-[#561C24] h-screen w-screen text-slate-200')}>
-    <Header/>
-    {children}
+    <Providers>
+      <Header />
+      {children}
+    </Providers>
     </body>
     </html>
   );
