@@ -17,8 +17,8 @@ export const EventsPanel = ({ nearestEvents, closestEvents }: IEventsProps) => {
   const [showEvents, setShowEvents] = useState<IEvent[]>(closestEvents);
 
   return (
-    <div>
-    <span className='flex  text-xl'>
+    <div className='animate-fadeInRight'>
+    <span className='flex text-xl'>
       <Button onClick={() => setShowEvents(closestEvents)}
               className={cn('w-full rounded-b-none rounded-r-none active:scale-100', {
                 'bg-amber-900': showEvents === closestEvents,
@@ -36,9 +36,9 @@ export const EventsPanel = ({ nearestEvents, closestEvents }: IEventsProps) => {
         <div>
           {
             showEvents.length <= 0 &&
-            <div className='text-2xl flex justify-center align-middle p-[144px] font-bold'>
-              <p className='flex '>
-                No events available at the moment <Frown />
+            <div className='text-2xl'>
+              <p className='flex  items-center p-24 break-all'>
+                No events available at the moment
               </p>
             </div>
           }

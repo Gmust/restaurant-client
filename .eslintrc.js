@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['next', 'prettier'],
   parserOptions: {
-    sourceType: 'module',
+    ecmaVersion: 2021, // Adjust to your project's ECMAScript version
   },
   env: {
     es6: true,

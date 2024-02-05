@@ -8,7 +8,7 @@ export const Header = () => {
   const isAuth = false;
 
   return (
-    <header className='w-screen bg-inherit flex justify-between items-center p-3 px-12 text-2xl sm:text-lg'>
+    <header className='animate-fadeInTop bg-inherit flex justify-between items-center p-3 px-12 text-2xl sm:text-lg'>
       <div className='relative w-16 h-16'>
         <Logo />
       </div>
