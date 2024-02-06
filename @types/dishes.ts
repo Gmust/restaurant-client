@@ -14,6 +14,22 @@ export interface IDish {
   image: string
 }
 
+export interface IFetchDishesResponse {
+  currentPage: number,
+  pageTotal: number,
+  data: IDish[]
+}
+
+export interface IFetchDishesQueryParams {
+  skip?: number,
+  limit?: number,
+  isVegan?: boolean,
+  category?: DishCategories
+}
+
+export interface IFetchDishesRequest {
+  queryParams: string;
+}
 
 export interface IFetchSpecialtiesResponse {
   _id: string,
