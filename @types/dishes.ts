@@ -17,7 +17,7 @@ export interface IDish {
 
 export interface IFetchSpecialtiesResponse {
   _id: string,
-  specialties: IDish[],
+  specialtyDishes: IDish[],
   created_at: string,
   updated_at: string
 }

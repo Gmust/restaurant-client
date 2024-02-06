@@ -18,7 +18,7 @@ export const DishCard = ({
     <Link
       href={`/dish/${_id}`}
       as={`/dish/${name.split(' ').join('-').toLowerCase()}`}
-      className='flex flex-row space-x-3 bg-inherit hover:scale-105 transition duration-200 shadow-md border-2 border-[#591d25]'
+      className='flex flex-row space-x-3 bg-inherit hover:scale-105 transition duration-200 shadow-md border-2 border-[#591d25] p-1'
     >
       <Image width={70} height={50} src={`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/${image}`} alt={name}
              draggable={false} />
@@ -30,7 +30,7 @@ export const DishCard = ({
           </div>
           <span className='border-2 border-amber-400 flex justify-center items-center h-10 p-1 '>{price}$</span>
         </div>
-        <p>
+        <p className='line-clamp-2 max-w-48'>
           {description}
         </p>
       </div>
