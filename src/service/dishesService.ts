@@ -14,9 +14,9 @@ export class DishesService {
 
   static async fetchDishes({ queryParams }: IFetchDishesRequest): Promise<IFetchDishesResponse> {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes${queryParams ? `?${queryParams}` : null}`,
+      `${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/dishes${queryParams ? `?${queryParams}` : ''}`,
     );
-    const dishes = await response.json();
+    const dishes = await response.json() as IFetchDishesResponse;
     return dishes;
   }
 
