@@ -1,6 +1,8 @@
 import { FilterBar } from '@/src/components/menu/FilterBar';
 import { DishesService } from '@/src/service/dishesService';
 import { MenuList } from '@/src/components/menu/menuList/MenuList';
+import { Suspense } from 'react';
+import { MenuSkeleton } from '@/src/components/loaders/MenuSkeleton';
 
 const MenuPage = async () => {
 
@@ -10,7 +12,9 @@ const MenuPage = async () => {
     <div className='flex flex-col items-center space-y-6 w-full'>
       <FilterBar />
       <span className='animate-fadeInBottom bg-gray-300 opacity-80 h-0.5 w-11/12'></span>
-      <MenuList initialMenu={initialMenu} />
+      <Suspense fallback={<MenuSkeleton itemsAmount={6} />}>
+        <MenuList initialMenu={initialMenu} />
+      </Suspense>
     </div>
   );
 };

@@ -4,10 +4,11 @@ import { IFetchDishesResponse } from '@/@types/dishes';
 import { Button } from '@/src/components/shared/Button';
 import { ArrowLeft, ArrowRight, Loader } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { DishesService } from '@/src/service/dishesService';
 import { DishCard } from '@/src/components/shared/DishCard';
 import { Paginator } from '@/src/components/menu/menuList/Paginator';
+import { MenuSkeleton } from '@/src/components/loaders/MenuSkeleton';
 
 interface IMenuListProps {
   initialMenu: IFetchDishesResponse;
@@ -18,10 +19,11 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const sectionHasBeenRendered = useRef(false);
 
   const [menu, setMenu] = useState<IFetchDishesResponse>(initialMenu);
   const [currentPage, setCurrentPage] = useState<number>(initialMenu.currentPage);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -35,16 +37,24 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
 
   useEffect(() => {
     const fetchAnotherPage = async () => {
-      const menuResponse = await DishesService.fetchDishes({ queryParams: `${searchParams.toString()}&limit=6` });
-      menuResponse.currentPage;
-      setCurrentPage(menuResponse.currentPage);
-      setMenu(menuResponse);
+      setIsLoading(true);
+      try {
+        const menuResponse = await DishesService.fetchDishes({ queryParams: `${searchParams.toString()}&limit=6` });
+        menuResponse.currentPage;
+        setCurrentPage(menuResponse.currentPage);
+        setMenu(menuResponse);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchAnotherPage();
+
+
   }, [searchParams]);
 
   const handleChangeToPrev = async () => {
-    console.log(createQueryString('skip', (currentPage - 1).toString()));
     if (currentPage <= 1) {
       return;
     }
@@ -52,8 +62,6 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
   };
 
   const handleChangeToNext = async () => {
-    console.log(currentPage);
-    console.log(initialMenu.pageTotal);
     if (currentPage >= initialMenu.pageTotal) {
       return;
     }
@@ -74,10 +82,10 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
           </div>
         }
         {
-          menu.data &&
-          <div className='grid grid-cols-2 align-middle justify-items-center gap-12 mx-8'>
-            {menu.data.map(dish => <DishCard {...dish} key={dish._id} />)}
-          </div>
+          isLoading ? <MenuSkeleton itemsAmount={6} /> : menu.data &&
+            <div className='grid grid-cols-2 align-middle justify-items-center gap-12 mx-8'>
+              {menu.data.map(dish => <DishCard {...dish} key={dish._id} />)}
+            </div>
         }
         <div>
           <Button onClick={handleChangeToNext}>
