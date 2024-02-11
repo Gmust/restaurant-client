@@ -2,9 +2,9 @@
 
 import { IFetchDishesResponse } from '@/@types/dishes';
 import { Button } from '@/src/components/shared/Button';
-import { ArrowLeft, ArrowRight, Loader } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DishesService } from '@/src/service/dishesService';
 import { DishCard } from '@/src/components/shared/DishCard';
 import { Paginator } from '@/src/components/menu/menuList/Paginator';
@@ -19,11 +19,12 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const sectionHasBeenRendered = useRef(false);
 
   const [menu, setMenu] = useState<IFetchDishesResponse>(initialMenu);
   const [currentPage, setCurrentPage] = useState<number>(initialMenu.currentPage);
+  const [totalPages, setTotalPages] = useState<number>(initialMenu.currentPage);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -35,12 +36,13 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
     [searchParams],
   );
 
+
   useEffect(() => {
     const fetchAnotherPage = async () => {
       setIsLoading(true);
       try {
         const menuResponse = await DishesService.fetchDishes({ queryParams: `${searchParams.toString()}&limit=6` });
-        menuResponse.currentPage;
+        setTotalPages(menuResponse.pageTotal);
         setCurrentPage(menuResponse.currentPage);
         setMenu(menuResponse);
       } catch (e) {
@@ -77,14 +79,13 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
           </Button>
         </div>
         {
-          !menu && <div className='flex flex-col justify-center items-center'>
-            <Loader className='animate-spin' />
-          </div>
-        }
-        {
-          isLoading ? <MenuSkeleton itemsAmount={6} /> : menu.data &&
+          isLoading ? <MenuSkeleton itemsAmount={6} /> : menu.data.length > 0 ?
             <div className='grid grid-cols-2 align-middle justify-items-center gap-12 mx-8'>
               {menu.data.map(dish => <DishCard {...dish} key={dish._id} />)}
+            </div>
+            :
+            <div className='flex justify-center items-center  mx-8'>
+              Unable to find dishes with the following filters
             </div>
         }
         <div>
@@ -93,7 +94,7 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
           </Button>
         </div>
       </div>
-      <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} pageTotal={menu.pageTotal}
+      <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} pageTotal={totalPages}
                  createQueryString={createQueryString} />
     </div>
   );

@@ -39,6 +39,7 @@ export interface IFetchSpecialtiesResponse {
 }
 
 export enum DishCategories {
+  All = 'All',
   Soup = 'Soup',
   Salad = 'Salad',
   MainCourse = 'Main Course',
