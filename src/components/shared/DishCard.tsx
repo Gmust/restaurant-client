@@ -13,11 +13,11 @@ export const DishCard = ({
                            price,
                            isAvailable,
                            category,
+                           dishWeight,
                          }: IDish) => {
   return (
     <Link
-      href={`/dish/${_id}`}
-      as={`/dish/${name.split(' ').join('-').toLowerCase()}`}
+      href={`menu/dish/${_id}`}
       className='w-[310px] h-[110px] flex flex-row space-x-3 bg-inherit hover:scale-105 transition duration-200 shadow-md border-2 border-[#591d25] p-1'
     >
       <Image width={70} height={50}
@@ -28,11 +28,13 @@ export const DishCard = ({
         <div className='flex flex-row  justify-between'>
           <div className='flex flex-col'>
             <h3 className='text-xl'>{name}</h3>
-            <p className='text-amber-500'>100 gr</p>
+            <p className='text-amber-500'>{dishWeight} gr</p>
           </div>
-          <span className='border-2 border-amber-400 flex justify-center items-center h-10 p-1 '>{price}$</span>
+          <div className='flex flex-col'>
+            <span  className='border-2 border-amber-400 flex justify-center items-center h-10 p-1 '>{price}$</span>
+          </div>
         </div>
-        <p className='line-clamp-2 '>
+        <p className='line-clamp-2'>
           {description}
         </p>
       </div>

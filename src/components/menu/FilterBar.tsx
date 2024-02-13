@@ -27,7 +27,7 @@ export const FilterBar = () => {
   useEffect(() => {
     searchParams.toString().includes('isVegan=true') && setIsVegan(true);
     const categoryParam = searchParams.get('category');
-    if (categoryParam && Object.values(DishCategories).includes(categoryParam as DishCategories)) {
+    if (categoryParam) {
       setCurrentCategory(categoryParam as DishCategories);
     }
   }, []);
@@ -64,7 +64,8 @@ export const FilterBar = () => {
 
       <div className='flex flex-row  justify-around items-center w-1/5'>
         <label htmlFor='dish-category' className='text-xl'>Select category:</label>
-        <select id='dish-category' title='Dish category' defaultValue={currentCategory} onChange={handleGetCategory}
+        <select id='dish-category' title='Dish category' value={currentCategory}
+                onChange={handleGetCategory}
                 className='block py-1 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
           {dishesOptions.map(dishOption =>
             <option value={dishOption} key={dishOption}
