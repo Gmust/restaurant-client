@@ -49,3 +49,8 @@ export function showDishCategoryIcon(dishCategory: DishCategories) {
   }
   return Utensils;
 }
+
+
+export function capitalizeFirstLetter(str: string) {
+  return str[0].toUpperCase() + str.slice(1);
+}

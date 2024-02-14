@@ -17,7 +17,7 @@ export const DishCard = ({
                          }: IDish) => {
   return (
     <Link
-      href={`menu/dish/${_id}`}
+      href={`/menu/dish/${_id}`}
       className='w-[310px] h-[110px] flex flex-row space-x-3 bg-inherit hover:scale-105 transition duration-200 shadow-md border-2 border-[#591d25] p-1'
     >
       <Image width={70} height={50}
