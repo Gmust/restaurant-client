@@ -3,6 +3,7 @@ import { RouteItem } from '@/src/components/header/RouteItem';
 import { Logo } from './Logo';
 import { Account } from '@/src/components/header/Account';
 import { Button } from '@/src/components/shared/Button';
+import { ShoppingCart } from '@/src/components/shoppingCart/ShoppingCart';
 
 export const Header = () => {
   const isAuth = false;
@@ -17,11 +18,12 @@ export const Header = () => {
           routes.map(route => <RouteItem path={route.path} name={route.name} key={route.path} />)
         }
       </nav>
-      <div>
+      <div className='flex items-center justify-between space-x-4'>
         {isAuth
           ? <Account />
           : <Button variant='outlined'>Log in</Button>
         }
+        <ShoppingCart />
       </div>
     </header>
   );

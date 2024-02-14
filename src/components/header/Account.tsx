@@ -17,7 +17,7 @@ export const Account = () => {
         className='absolute hidden items-center group-hover:flex-col group-hover:flex bg-white text-black right-6 w-36 rounded-b-lg rounded-l-lg'>
         <div>Welcome {user.firstName}!</div>
         <div className='divide-x-4'></div>
-        <Link href='account-info' className='w-full'>
+        <Link href='/user/account-info' className='w-full'>
           <Button variant='ghost' size='sm' className='w-full rounded-none'>Account info</Button>
         </Link>
         {
