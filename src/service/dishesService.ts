@@ -40,7 +40,7 @@ export class DishesService {
   static async fetchDish(id: string): Promise<IDish> {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/dishes/dish/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes/dish/${id}`,
       );
 
       if (!response.ok) {

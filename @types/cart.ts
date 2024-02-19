@@ -18,6 +18,7 @@ export interface ICartStore {
   actions: {
     setCart: (userCart: ICart) => void
     addToCart: (dish: IDish, quantity: number) => void,
+    updateCartItem: (dish: IDish, quantity: number) => void,
     removeFromCart: (dish: IDish) => void
     clearCart: () => void
   };
