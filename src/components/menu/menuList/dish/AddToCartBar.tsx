@@ -3,13 +3,13 @@
 import { IDish } from '@/@types/dishes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { userCartStore } from '@/src/store/cart-store';
+import { useCartStore } from '@/src/store/cart-store';
 import { Button } from '@/src/components/shared/Button';
 
 export const AddToCartBar = (dish: IDish) => {
 
   //const [quantity, setQuantity] = useState<number>(1);
-  const { cart, actions: { addToCart, updateCartItem } } = userCartStore();
+  const { cart, actions: { addToCart, updateCartItem } } = useCartStore();
   const [isDishInCart, setIsDishInCart] = useState<boolean>(cart.cartItems.some(cartDish => cartDish._id === dish._id));
 
   useEffect(() => {

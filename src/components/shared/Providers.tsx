@@ -3,6 +3,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ReactNode, useState } from 'react';
+import { HydrationZustand } from '@/src/components/shared/HydrationZustand';
+import { Elements } from '@stripe/react-stripe-js';
 
 export const Providers = ({ children }: { children: ReactNode }) => {
 
@@ -10,7 +12,9 @@ export const Providers = ({ children }: { children: ReactNode }) => {
 
   return (
     <QueryClientProvider client={client}>
-      {children}
+      <HydrationZustand>
+        {children}
+      </HydrationZustand>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

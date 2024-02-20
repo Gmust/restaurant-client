@@ -1,4 +1,5 @@
 import { IDish, IFetchDishesRequest, IFetchDishesResponse, IFetchSpecialtiesResponse } from '@/@types/dishes';
+import { IPayForOrderRes } from '@/@types/orders';
 
 
 export class DishesService {

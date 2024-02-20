@@ -1,8 +1,8 @@
-import { DishInfo } from '@/src/components/dish/DishInfo';
+import { DishInfo } from '@/src/components/menu/menuList/dish/DishInfo';
 import { DishesService } from '@/src/service/dishesService';
 import React from 'react';
-import { AddToCartBar } from '@/src/components/dish/AddToCartBar';
-import { SimilarDishes } from '@/src/components/dish/SimilarDishes';
+import { AddToCartBar } from '@/src/components/menu/menuList/dish/AddToCartBar';
+import { SimilarDishes } from '@/src/components/menu/menuList/dish/SimilarDishes';
 import { Button } from '@/src/components/shared/Button';
 import Link from 'next/link';
 import { ArrowBigLeft } from 'lucide-react';

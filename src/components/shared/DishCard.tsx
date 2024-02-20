@@ -21,7 +21,7 @@ export const DishCard = ({
       className='w-[310px] h-[110px] flex flex-row space-x-3 bg-inherit hover:scale-105 transition duration-200 shadow-md border-2 border-[#591d25] p-1'
     >
       <Image width={70} height={50}
-             src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${image}`}
+             src={`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/${image}`}
              alt={name}
              draggable={false} className='rounded-sm' />
       <div className='flex flex-col w-full'>

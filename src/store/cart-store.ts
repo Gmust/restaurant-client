@@ -3,8 +3,10 @@ import { ICartStore } from '@/@types/cart';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { CartService } from '@/src/service/cartService';
 import { useUserStore } from '@/src/store/user-store';
+import { persistNSync } from 'persist-and-sync';
 
-export const userCartStore = create<ICartStore>()(persist(
+export const useCartStore = create<ICartStore>()(
+  persistNSync(
   set => ({
     cart: {
       _id: '',
@@ -91,5 +93,5 @@ export const userCartStore = create<ICartStore>()(persist(
         })),
     },
   }),
-  { name: 'cart-store',storage: createJSONStorage(() => sessionStorage), skipHydration: true },
+  { name: 'cart-store' },
 ));
