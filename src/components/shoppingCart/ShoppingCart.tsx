@@ -67,7 +67,10 @@ export const ShoppingCart = () => {
               <Button size='md' variant='outlined'
                       disabled={cart.cartItems.length < 1}
                       className='border-emerald-600 hover:bg-emerald-600  hover:border-emerald-600'
-                      onClick={() => router.replace('/order')}
+                      onClick={() => {
+                        setIsShow(false)
+                        router.replace('/order');
+                      }}
               >
                 Order
               </Button>
