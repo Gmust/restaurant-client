@@ -8,6 +8,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Modal } from '@/src/components/shared/Modal';
 import { useState } from 'react';
 import { OrderModalContent } from '@/src/components/order/OrderModalContent';
+import { Elements } from '@stripe/react-stripe-js';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -40,8 +41,10 @@ const OrderPage = () => {
 
       </section>
       <Modal isActive={openModel} setIsActive={setOpenModal}>
-        <OrderModalContent />
-      </Modal>;
+        <Elements stripe={stripePromise}>
+          <OrderModalContent setOpenModal={setOpenModal} />
+        </Elements>
+      </Modal>
     </>
   );
 };
