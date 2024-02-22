@@ -69,7 +69,7 @@ export const ShoppingCart = () => {
                       className='border-emerald-600 hover:bg-emerald-600  hover:border-emerald-600'
                       onClick={() => {
                         setIsShow(false)
-                        router.replace('/order');
+                        router.replace('/order/order-proceed');
                       }}
               >
                 Order

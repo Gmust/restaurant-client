@@ -20,3 +20,23 @@ export interface IConfirmOrderReq {
   orderNumber: string;
   confirmationToken: string;
 }
+
+
+export interface IGetOrderInfoReq {
+  orderNumber: string,
+  email: string
+}
+
+export interface IOrder {
+  isConfirmed: boolean;
+  _id: string;
+  email: string;
+  status: string;
+  orderItems: ICartItem[];
+  totalPrice: number;
+  takeaway: boolean;
+  orderNumber: string;
+  created_at: string;
+  updated_at: string;
+}
+

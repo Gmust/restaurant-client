@@ -1,4 +1,4 @@
-import { IConfirmOrderReq, IPayForOrderReq, IPayForOrderRes } from '@/@types/orders';
+import { IConfirmOrderReq, IGetOrderInfoReq, IOrder, IPayForOrderReq, IPayForOrderRes } from '@/@types/orders';
 
 
 export class OrderService {
@@ -38,6 +38,26 @@ export class OrderService {
       return await response.json();
     } catch (e) {
       console.error('Failed to confirm order');
+    }
+  }
+
+  static async fetchOrderInfo({ orderNumber, email }: IGetOrderInfoReq): Promise<IOrder | undefined> {
+    try {
+      const data = JSON.stringify({ orderNumber, email });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/orders/get-order-info`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: data,
+        },
+      );
+
+      return await response.json() as IOrder;
+    } catch (e) {
+      console.error('Failed to fetch order info');
     }
   }
 

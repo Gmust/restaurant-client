@@ -12,7 +12,7 @@ import { Elements } from '@stripe/react-stripe-js';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const OrderPage = () => {
+const ProceedOrderPage = () => {
 
   const { cart } = useCartStore();
   const [openModel, setOpenModal] = useState<boolean>(false);
@@ -49,4 +49,4 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+export default ProceedOrderPage;
