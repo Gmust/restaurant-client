@@ -44,7 +44,7 @@ const OrderStatusPage = () => {
           orderNumber: orderNum,
           email,
         });
-        if (!orderResponse) {
+        if (!orderResponse || orderResponse.statusCode === 400) {
           setErrorMessage(
             'There was a problem with receiving information about this order with provided information.' +
             ' Check your email and order number',

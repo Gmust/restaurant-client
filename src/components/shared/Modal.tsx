@@ -25,7 +25,7 @@ export const Modal = ({ isActive, setIsActive, children }: IModalProps) => {
 
   return (
     <div
-      className={cn('h-full w-full  fixed top-0 left-0 flex bg-[#00000066] items-center justify-center opacity-0 transition duration-500 pointer-events-none', {
+      className={cn('h-full w-full z-10 fixed top-0 left-0 flex bg-[#00000066] items-center justify-center opacity-0 transition duration-500 pointer-events-none', {
         'opacity-100 pointer-events-auto': isActive,
       })}
       onClick={() => setIsActive(!isActive)}

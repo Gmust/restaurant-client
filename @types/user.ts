@@ -23,6 +23,7 @@ export interface IUser {
 
 export interface IUserStore {
   user: IUser | null,
+  isAuth: boolean,
   actions: {
     setUser: (user: IUser) => void,
     removeUser: () => void

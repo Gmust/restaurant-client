@@ -1,12 +1,16 @@
+'use client';
+
 import { routes } from '@/src/utils/routes';
 import { RouteItem } from '@/src/components/header/RouteItem';
 import { Logo } from './Logo';
 import { Account } from '@/src/components/header/Account';
 import { Button } from '@/src/components/shared/Button';
 import { ShoppingCart } from '@/src/components/shoppingCart/ShoppingCart';
+import { useUserStore } from '@/src/store/user-store';
+
 
 export const Header = () => {
-  const isAuth = false;
+  const { isAuth } = useUserStore();
 
   return (
     <header className='animate-fadeInTop bg-inherit flex justify-between items-center p-3 px-12 text-2xl sm:text-lg'>
@@ -19,7 +23,8 @@ export const Header = () => {
         }
       </nav>
       <div className='flex items-center justify-between space-x-4'>
-        {isAuth
+        {
+          isAuth
           ? <Account />
           : <Button variant='outlined'>Log in</Button>
         }

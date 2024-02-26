@@ -25,7 +25,7 @@ export const ShoppingCart = () => {
 
 
   return (
-    <div className='flex'>
+    <div className='flex' data-testid='shopping-cart'>
       <div className='relative'>
         <ShoppingCartIcon className='w-8 h-8 cursor-pointer ' onClick={() => {
           setIsShow(true);
