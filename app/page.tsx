@@ -18,7 +18,6 @@ const Home = async () => {
         <RestaurantImage />
         <EventsPanel closestEvents={closestEvents} nearestEvents={nearestEvents} />
       </div>
-      <div>test</div>
       {
         specialtiesMenu &&
         <SpecialtiesMenu specialtiesMenu={specialtiesMenu[0]} />

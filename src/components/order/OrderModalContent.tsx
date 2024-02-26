@@ -4,13 +4,14 @@ import { createOrderValidator } from '@/src/lib/validations/create-order';
 import { z } from 'zod';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { CreditCard, ShoppingBag } from 'lucide-react';
-import { MdTableBar } from 'react-icons/md';
+import { MdDiscount, MdEmail, MdTableBar } from 'react-icons/md';
 import { cn } from '@/src/lib/utils';
 import { Tooltip } from '@/src/components/shared/Tooltip';
 import { Button } from '@/src/components/shared/Button';
 import { useCartStore } from '@/src/store/cart-store';
 import { OrderService } from '@/src/service/orderService';
 import { useStripe } from '@stripe/react-stripe-js';
+import { CustomInput } from '@/src/components/shared/CustomInput';
 
 type formData = z.infer<typeof createOrderValidator>
 
@@ -109,10 +110,16 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-start mx-10 space-y-4'>
         <div className='flex flex-col labelStar '>
           <label htmlFor='email'>Email:</label>
-          <input id='email' required {...register('email', { required: true })} type='email' autoComplete='on'
-                 className='bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg  block w-full p-2 ' />
+          <CustomInput id='email'  required {...register('email', { required: true })}
+                       type='email' autoComplete='on'
+                       Icon={MdEmail} />
           <p className='text-red-700 font-semibold text-lg animate-fadeInBottom'>
-            {errors.email?.message}
+            {errors.email && errors.email.type === "required" && (
+              <span>This is required</span>
+            )}
+            {errors.email && errors.email.type === "maxLength" && (
+              <span>Max length exceeded</span>
+            )}
           </p>
         </div>
 
@@ -120,10 +127,7 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
           <label htmlFor='promoCode' className='text-gray-700'>
             Promo code:
           </label>
-          <input
-            id='promoCode' {...register('promoCode')}
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:border-amber-700 focus:ring-blue-500 block w-full p-2'
-          />
+          <CustomInput id='promoCode' {...register('promoCode')} Icon={MdDiscount} />
           <p className='text-gray-400 text-xs'>*Enter promo code to receive a discount </p>
           <p className='text-red-700 font-semibold text-lg animate-fadeInBottom'>
             {errors.promoCode?.message}

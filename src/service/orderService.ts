@@ -61,4 +61,17 @@ export class OrderService {
     }
   }
 
+  static async deleteOrder(orderId: string) {
+    try {
+      const data = JSON.stringify({ orderId });
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/orders/delete-order`, {
+        method: 'DELETE',
+        body: data,
+      });
+
+      return await response.json();
+    } catch (e) {
+      console.error('Failed to delete order');
+    }
+  }
 }

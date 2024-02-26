@@ -50,7 +50,7 @@ export const ShoppingCart = () => {
             </Button>
           </div>
             {cart.cartItems.length > 0 ?
-              <div className='overflow-auto flex flex-col space-y-2 items-star'>
+              <div className='overflow-auto flex flex-col space-y-2 items-star h-full'>
                 {cart.cartItems.map(cartItem => <ShoppingCartItem key={cartItem._id} {...cartItem} />)}
               </div>
               :
