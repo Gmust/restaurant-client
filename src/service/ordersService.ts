@@ -1,7 +1,7 @@
 import { IConfirmOrderReq, IGetOrderInfoReq, IOrder, IPayForOrderReq, IPayForOrderRes } from '@/@types/orders';
 
 
-export class OrderService {
+export class OrdersService {
 
   static async payForGuestOrder({ totalPrice, cartItems, orderDate, email, takeaway, promoCode }: IPayForOrderReq) {
     try {

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { OrderService } from '@/src/service/orderService';
+import { OrdersService } from '@/src/service/ordersService';
 
 type SuccessfulPaymentsSearchParams = {
   orderId: string,
@@ -13,8 +13,6 @@ type Props = {
 
 const AbandonedPaymentPage = async ({ searchParams, params }: Props) => {
 
-  const response = await OrderService.deleteOrder(searchParams.orderId);
-  console.error(response);
   return (
     <div className='text-2xl  flex items-center justify-center h-4/6'>
       <p>

@@ -9,7 +9,7 @@ import { cn } from '@/src/lib/utils';
 import { Tooltip } from '@/src/components/shared/Tooltip';
 import { Button } from '@/src/components/shared/Button';
 import { useCartStore } from '@/src/store/cart-store';
-import { OrderService } from '@/src/service/orderService';
+import { OrdersService } from '@/src/service/ordersService';
 import { useStripe } from '@stripe/react-stripe-js';
 import { CustomInput } from '@/src/components/shared/CustomInput';
 
@@ -47,7 +47,7 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
         setTakeawayError('Please select takeaway option');
         return;
       }
-      const response = await OrderService.payForGuestOrder({
+      const response = await OrdersService.payForGuestOrder({
         email,
         promoCode: promoCode ? promoCode : undefined,
         takeaway: isTakeaway,

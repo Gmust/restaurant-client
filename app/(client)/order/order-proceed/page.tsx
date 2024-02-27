@@ -9,6 +9,8 @@ import { Modal } from '@/src/components/shared/Modal';
 import { useState } from 'react';
 import { OrderModalContent } from '@/src/components/order/OrderModalContent';
 import { Elements } from '@stripe/react-stripe-js';
+import toast from 'react-hot-toast';
+import { Sunset } from 'lucide-react';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -19,7 +21,14 @@ const ProceedOrderPage = () => {
   const router = useRouter();
 
   const handleProceedOrder = async () => {
-    setOpenModal(true);
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
+    if (currentHour >= 9 && currentHour < 18) {
+      setOpenModal(true);
+    } else {
+      toast('We are now closed, orders from 9:00 a.m. to 5:30 p.m', { icon: <Sunset size={60} /> });
+      return;
+    }
   };
 
   const handleCloseModal = () => {

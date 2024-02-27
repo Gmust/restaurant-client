@@ -1,6 +1,6 @@
 'use client';
 
-import { OrderService } from '@/src/service/orderService';
+import { OrdersService } from '@/src/service/ordersService';
 import Link from 'next/link';
 import { useCartStore } from '@/src/store/cart-store';
 import { useEffect, useState } from 'react';
@@ -29,7 +29,7 @@ const SuccessfulPaymentPage = (props: Props) => {
     const confirmOrder = async () => {
       setIsLoading(true);
       try {
-        const confirmOrder = await OrderService.confirmOrder({
+        const confirmOrder = await OrdersService.confirmOrder({
           orderNumber: searchParams.orderNum,
           email: searchParams.email,
           confirmationToken: searchParams.confirmationToken,

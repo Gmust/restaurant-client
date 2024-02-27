@@ -1,6 +1,6 @@
 'use client';
 
-import { Frown, Loader, PanelRightClose, ShoppingCartIcon } from 'lucide-react';
+import { Frown, Loader, PanelRightClose, ShoppingCartIcon, Sunset } from 'lucide-react';
 import { useState } from 'react';
 import { useCartStore } from '@/src/store/cart-store';
 import { cn } from '@/src/lib/utils';
@@ -9,6 +9,7 @@ import { ShoppingCartItem } from '@/src/components/shoppingCart/ShoppingCartItem
 import { useStore } from '@/src/hooks/use-store';
 import { ICartStore } from '@/@types/cart';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export const ShoppingCart = () => {
 
@@ -20,9 +21,22 @@ export const ShoppingCart = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const router = useRouter();
 
+
   if (!cartStore) return <Loader className='animate-spin' />;
   const { cart, actions: { clearCart } } = cartStore;
 
+
+  const handleProceedOrder = () => {
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
+    if (currentHour >= 9 && currentHour < 18) {
+      setIsShow(false);
+      router.replace('/order/order-proceed');
+    } else {
+      toast('We are now closed, orders from 9:00 a.m. to 5:30 p.m', { icon: <Sunset size={60} /> });
+      return;
+    }
+  };
 
   return (
     <div className='flex' data-testid='shopping-cart'>
@@ -49,16 +63,16 @@ export const ShoppingCart = () => {
               <PanelRightClose color='red' />
             </Button>
           </div>
-            {cart.cartItems.length > 0 ?
-              <div className='overflow-auto flex flex-col space-y-2 items-star h-full'>
-                {cart.cartItems.map(cartItem => <ShoppingCartItem key={cartItem._id} {...cartItem} />)}
-              </div>
-              :
-              <span className='flex items-center justify-around'>
+          {cart.cartItems.length > 0 ?
+            <div className='overflow-auto flex flex-col space-y-2 items-star h-full'>
+              {cart.cartItems.map(cartItem => <ShoppingCartItem key={cartItem._id} {...cartItem} />)}
+            </div>
+            :
+            <span className='flex items-center justify-around'>
                  <p className='text-xl'>It is lonely here</p>
                  <Frown className='w-8 h-8' />
                </span>
-            }
+          }
           <div className='flex flex-col'>
             <div className='flex items-center justify-between w-full'>
               Total price: {cart.totalPrice} $
@@ -67,10 +81,7 @@ export const ShoppingCart = () => {
               <Button size='md' variant='outlined'
                       disabled={cart.cartItems.length < 1}
                       className='border-emerald-600 hover:bg-emerald-600  hover:border-emerald-600'
-                      onClick={() => {
-                        setIsShow(false)
-                        router.replace('/order/order-proceed');
-                      }}
+                      onClick={handleProceedOrder}
               >
                 Order
               </Button>

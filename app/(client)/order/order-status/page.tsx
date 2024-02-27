@@ -1,6 +1,6 @@
 'use client';
 
-import { OrderService } from '@/src/service/orderService';
+import { OrdersService } from '@/src/service/ordersService';
 import { Button } from '@/src/components/shared/Button';
 import { useEffect, useState } from 'react';
 import { IOrder } from '@/@types/orders';
@@ -40,7 +40,7 @@ const OrderStatusPage = () => {
     const fetchOrderInfo = async ({ orderNum, email }: CheckOrderSearchParams) => {
       setIsLoading(true);
       try {
-        const orderResponse = await OrderService.fetchOrderInfo({
+        const orderResponse = await OrdersService.fetchOrderInfo({
           orderNumber: orderNum,
           email,
         });

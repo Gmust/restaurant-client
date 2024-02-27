@@ -27,3 +27,46 @@
     content: " *";
     color: red;
 }
+
+.tablesContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    "entrance entrance . thirdTable thirdTable"
+    ". . . thirdTable thirdTable "
+    "firstTable firstTable . . . "
+    ". . . . fifthTable "
+    "secondTable secondTable . . . "
+    "secondTable secondTable . . fourthTable ";
+    width: 960px;
+    height: 540px;
+    background-color: white;
+    border: 6px solid gray;
+}
+
+.entrance {
+    grid-area: entrance;
+}
+
+.thirdTable {
+    grid-area: thirdTable;
+}
+
+.secondTable {
+    grid-area: secondTable;
+}
+
+.firstTable {
+    grid-area: firstTable;
+}
+
+.fifthTable {
+    grid-area: fifthTable;
+}
+
+.fourthTable {
+    grid-area: fourthTable;
+}
+
