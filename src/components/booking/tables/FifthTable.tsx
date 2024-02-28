@@ -11,6 +11,7 @@ export const FifthTable = ({ tableNum, numberOfSeats, isAvailable }: ITable) => 
         'group-hover:bg-red-300 transition duration-300 cursor-not-allowed': !isAvailable,
       })}>
         <div className='sr-only'>table</div>
+        <div className='z-10 text-xl text-black'>{tableNum}</div>
       </div>
       <Chair isAvailable={isAvailable} />
     </div>

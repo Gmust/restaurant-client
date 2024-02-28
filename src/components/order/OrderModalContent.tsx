@@ -117,9 +117,6 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
             {errors.email && errors.email.type === "required" && (
               <span>This is required</span>
             )}
-            {errors.email && errors.email.type === "maxLength" && (
-              <span>Max length exceeded</span>
-            )}
           </p>
         </div>
 

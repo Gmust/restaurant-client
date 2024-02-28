@@ -19,20 +19,20 @@ export const BuildingPlan = ({ tables }: BuildingPlanProps) => {
       <div className='entrance'>
         <Entrance />
       </div>
-      <div className='thirdTable '>
-        <ThirdTable {...tables[2]} />
-      </div>
       <div className='firstTable'>
         <FirstTable {...tables[0]} />
-      </div>
-      <div className='fifthTable'>
-        <FifthTable {...tables[4]} />
       </div>
       <div className='secondTable'>
         <SecondTable {...tables[1]} />
       </div>
+      <div className='thirdTable '>
+        <ThirdTable {...tables[2]} />
+      </div>
       <div className='fourthTable'>
         <FourthTable {...tables[3]} />
+      </div>
+      <div className='fifthTable'>
+        <FifthTable {...tables[4]} />
       </div>
     </div>
   );
