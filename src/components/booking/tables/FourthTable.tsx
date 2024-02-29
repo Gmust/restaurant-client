@@ -1,21 +1,19 @@
 import { ITable } from '@/@types/tables';
-import { cn } from '@/src/lib/utils';
 import { Chair } from '@/src/components/booking/tables/Chair';
 
-export const FourthTable = ({ tableNum, numberOfSeats, isAvailable }: ITable) => {
+export const FourthTable = ({ tableNum, numberOfSeats }: ITable) => {
   return (
     <div className='group space-y-0.5 flex flex-col py-2'>
-      <Chair isAvailable={isAvailable} className='ml-4' />
+      <Chair className='ml-4' />
       <div className='flex items-center space-x-0.5'>
-        <div className={cn('border-2 border-gray-400 bg-white w-20 h-12', {
-          'group-hover:bg-gray-300 transition duration-300 cursor-pointer': isAvailable,
-          'group-hover:bg-red-300 transition duration-300 cursor-not-allowed': !isAvailable,
-        })}>
+        <div
+          className={'border-2 border-gray-400 bg-white w-20 h-12 group-hover:bg-gray-300 transition duration-300 cursor-pointer'}>
           <div className='sr-only'>table</div>
+          <div className='z-10 text-xl text-black'>{tableNum}</div>
         </div>
-        <Chair isAvailable={isAvailable} />
+        <Chair />
       </div>
-      <Chair isAvailable={isAvailable} className='ml-4' />
+      <Chair className='ml-4' />
     </div>
   );
 };

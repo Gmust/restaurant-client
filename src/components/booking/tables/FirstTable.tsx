@@ -15,10 +15,7 @@ export const FirstTable = ({ tableNum, isAvailable, numberOfSeats }: ITable) => 
     <>
       <div className='flex flex-col items-center absolute ml-1 space-y-0.5 group' onClick={()=> setIsActive(true)}>
         <Chair isAvailable={isAvailable} />
-        <div className={cn('border-2 border-gray-400 bg-white size-12', {
-          'group-hover:bg-gray-300 transition duration-300 cursor-pointer': isAvailable,
-        // 'group-hover:bg-red-300 transition duration-300 cursor-not-allowed': !isAvailable,
-        })}>
+        <div className='border-2 border-gray-400 bg-white size-12 group-hover:bg-gray-300 transition duration-300 cursor-pointer'>
           <div className='sr-only'>table</div>
           <div className='z-10 text-xl text-black'>{tableNum}</div>
         </div>

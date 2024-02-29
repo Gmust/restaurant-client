@@ -48,5 +48,23 @@ export interface ICreateReservationReq {
 
 export interface ICreateReservationRes {
   message: string,
-  newBooking:IBooking,
+  newBooking: IBooking,
+}
+
+
+export interface ICreateReservationResError {
+  error: string,
+  message: string
+  statusCode: number
+}
+
+export interface IConfirmReservationReq {
+  tableNum: string,
+  email: string,
+  confirmed: boolean
+  reservationId: string
+}
+
+export interface IConfirmReservationRes {
+  message: string;
 }

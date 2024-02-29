@@ -25,9 +25,10 @@ type formData = z.infer<typeof createBookingValidator>
 
 export const BookingInfo = ({ tableNum, numberOfSeats, setIsActive }: IBookingInfoProps) => {
 
+  const [isLoading, setIsLoading] = useState<boolean>();
   const [reservations, setReservations] = useState<IAvailableTime[]>(availableReservations);
   const [selectedTime, setSelectedTime] = useState<ReservationTime | null>(null);
-  const { register, handleSubmit, setError, formState: { errors, isLoading } } = useForm<formData>({
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<formData>({
     resolver: zodResolver(createBookingValidator),
   });
 
@@ -39,8 +40,13 @@ export const BookingInfo = ({ tableNum, numberOfSeats, setIsActive }: IBookingIn
         timeOfReservation: selectedTime!,
         table: tableNum,
       });
-      setIsActive(false);
-      toast.success(newBooking!.message);
+      //@ts-ignore
+      if (newBooking?.statusCode == '400') {
+        toast.error(newBooking!.message);
+      } else {
+        setIsActive(false);
+        toast.success(newBooking!.message);
+      }
     } catch (e: any) {
       console.error(e);
     }
@@ -54,6 +60,7 @@ export const BookingInfo = ({ tableNum, numberOfSeats, setIsActive }: IBookingIn
 
   useEffect(() => {
     const fetchTableInfo = async () => {
+      setIsLoading(true);
       try {
         const table = await TablesService.fetchTableByNum(tableNum);
         if (!table) {
@@ -75,6 +82,8 @@ export const BookingInfo = ({ tableNum, numberOfSeats, setIsActive }: IBookingIn
         }
       } catch (e) {
         console.error(e);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -95,8 +104,11 @@ export const BookingInfo = ({ tableNum, numberOfSeats, setIsActive }: IBookingIn
         </div>
         <div>
           <label htmlFor='amount-of-visiors'>Amount of visitors</label>
-          <CustomInput id='amount-of-visiors' {...register('amountOfVisitors')} type='number' min={1}
-                       max={numberOfSeats} className='rounded-md' />
+          <CustomInput id='amount-of-visiors' {...register('amountOfVisitors', {
+            required: true,
+            min: 1,
+            max: numberOfSeats,
+          })} type='number' defaultValue={1} min={1} max={numberOfSeats} className='rounded-md' />
           <p className='text-red-700 font-semibold text-lg animate-fadeInBottom'>
             {errors.amountOfVisitors && 'Select amount of visitors'}
           </p>
