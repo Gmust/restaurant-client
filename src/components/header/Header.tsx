@@ -7,6 +7,7 @@ import { Account } from '@/src/components/header/Account';
 import { Button } from '@/src/components/shared/Button';
 import { ShoppingCart } from '@/src/components/shoppingCart/ShoppingCart';
 import { useUserStore } from '@/src/store/user-store';
+import Link from 'next/link';
 
 
 export const Header = () => {
@@ -25,8 +26,10 @@ export const Header = () => {
       <div className='flex items-center justify-between space-x-4'>
         {
           isAuth
-          ? <Account />
-          : <Button variant='outlined'>Log in</Button>
+            ? <Account />
+            : <Link href='/login'>
+              <Button variant='outlined'>Log in</Button>
+            </Link>
         }
         <ShoppingCart />
       </div>
