@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/src/lib/utils';
 import toast from 'react-hot-toast';
 import { AuthService } from '@/src/service/authService';
+import { useRouter } from 'next/navigation';
 
 
 type formData = z.infer<typeof createAccountValidator>
@@ -20,19 +21,13 @@ type formData = z.infer<typeof createAccountValidator>
 const RegistrationPage = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    setError,
     formState: { isValid, errors },
+    reset,
   } = useForm<formData>({ resolver: zodResolver(createAccountValidator), mode: 'all' });
-
-
-  useEffect(() => {
-    console.log(errors);
-    console.log(isValid);
-  }, [errors, isValid]);
-
 
   const onSubmit = async (formData: formData) => {
     setIsLoading(true);
@@ -40,8 +35,10 @@ const RegistrationPage = () => {
       const response = await AuthService.registerUser(formData);
       if (response!.statusCode && response!.statusCode === 400) {
         toast.error(response!.message);
+      } else {
+        toast.success(response!.message);
+        reset();
       }
-      toast.success(response!.message);
     } catch (e) {
       toast('Something went wrong, try again later');
       console.log(e);
@@ -91,7 +88,7 @@ const RegistrationPage = () => {
             <input id='receive-news' type='checkbox'{...register('receiveNews')}
                    className='w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 cursor-pointer' />
           </div>
-          <Button type='submit' variant='default' disabled={!isValid} isLoading={isLoading}>
+          <Button type='submit' variant='default' disabled={!isValid && isLoading} isLoading={isLoading}>
             Register
           </Button>
         </form>
