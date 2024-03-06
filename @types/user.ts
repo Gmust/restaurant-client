@@ -26,6 +26,7 @@ export interface IUserStore {
   isAuth: boolean,
   actions: {
     setUser: (user: IUser) => void,
-    removeUser: () => void
+    removeUser: () => void,
+    setIsAuth: (isAuth: boolean) => void
   }
 }

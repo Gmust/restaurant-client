@@ -14,5 +14,9 @@ export const useUserStore = create<IUserStore>()(set => ({
       set(state => ({
         user: null,
       })),
+    setIsAuth: (isAuth) =>
+      set(state => ({
+        isAuth,
+      })),
   },
 }));

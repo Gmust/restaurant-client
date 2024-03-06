@@ -1,12 +1,11 @@
 import { cookies } from 'next/headers';
-import { json } from 'node:stream/consumers';
 
 
 export async function GET(request: Request) {
   const authToken = cookies().get('accessToken')?.value;
   const headers = new Headers();
 
-  headers.append('Authorization', authToken!);
+  headers.append('Authorization', `Bearer ${authToken!}`);
   headers.append('Content-Type', 'application/json');
 
   const data = JSON.stringify({ access_token: authToken });
@@ -20,6 +19,7 @@ export async function GET(request: Request) {
   if (response.status === 401 || response.status === 403) {
     const refreshPayload = {
       'refresh_token': cookies().get('refreshToken')?.value,
+      'email': cookies().get('email')?.value,
     };
     const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/refresh`, {
       method: 'POST',

@@ -8,10 +8,27 @@ import { Button } from '@/src/components/shared/Button';
 import { ShoppingCart } from '@/src/components/shoppingCart/ShoppingCart';
 import { useUserStore } from '@/src/store/user-store';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { AuthService } from '@/src/service/authService';
+import { cookies } from 'next/headers';
 
 
 export const Header = () => {
-  const { isAuth } = useUserStore();
+  const { isAuth, user } = useUserStore();
+
+  useEffect(() => {
+
+    const fetchRefresh = async () => {
+      try {
+        const response = await AuthService.getUserByToken();
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchRefresh();
+
+  }, []);
 
   return (
     <header className='animate-fadeInTop bg-inherit flex justify-between items-center p-3 px-12 text-2xl sm:text-lg'>
@@ -25,8 +42,8 @@ export const Header = () => {
       </nav>
       <div className='flex items-center justify-between space-x-4'>
         {
-          isAuth
-            ? <Account />
+          isAuth && user
+            ? <Account user={user} />
             : <Link href='/login'>
               <Button variant='outlined'>Log in</Button>
             </Link>

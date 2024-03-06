@@ -11,6 +11,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { AuthService } from '@/src/service/authService';
 import { storeToken } from '@/src/lib/store-token';
+import { useUserStore } from '@/src/store/user-store';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 
 type formData = z.infer<typeof loginUserValidator>
@@ -18,7 +21,9 @@ type formData = z.infer<typeof loginUserValidator>
 const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm<formData>({
+  const router = useRouter();
+  const { actions: { setUser, setIsAuth } } = useUserStore();
+  const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm<formData>({
     mode: 'all',
     resolver: zodResolver(loginUserValidator),
   });
@@ -27,7 +32,20 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       const response = await AuthService.loginUser({ email, password });
-      await storeToken({ refresh_token: response!.refresh_token, access_token: response!.access_token });
+      if (response?.user) {
+        await storeToken({
+          refresh_token: response!.refresh_token,
+          access_token: response!.access_token,
+          email: response!.user.email,
+        });
+        setUser(response!.user);
+        setIsAuth(true);
+        reset();
+        toast.success('Successfully logged in!');
+        router.push('/user/account');
+      } else if (response?.statusCode && response.statusCode == 401) {
+        toast.error(response?.message!);
+      }
     } catch (e) {
       console.log(e);
     } finally {

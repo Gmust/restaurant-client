@@ -1,13 +1,18 @@
-'use client'
+'use client';
 
 import { SquareUserRound } from 'lucide-react';
 import { Button } from '@/src/components/shared/Button';
 import Link from 'next/link';
 import { useUserStore } from '@/src/store/user-store';
+import { IUser } from '@/@types/user';
 
-export const Account = () => {
 
-  const {user, actions} = useUserStore()
+interface IAccountProps {
+  user: IUser;
+}
+
+export const Account = ({ user }: IAccountProps) => {
+
 
   return (
     <div className='group relative w-full' data-testid='account'>

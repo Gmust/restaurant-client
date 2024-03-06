@@ -20,5 +20,13 @@ export interface IUserLoginReq {
 export interface IUserLoginRes {
   access_token: string,
   refresh_token: string,
-  user: IUser
+  user: IUser,
+  message?: string,
+  statusCode?: number
+}
+
+
+export interface IRefreshTokenReq {
+  email: string,
+  refresh_token: string
 }

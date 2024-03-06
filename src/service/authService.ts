@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import { createAccountValidator } from '@/src/lib/validations/create-account';
-import { IConfirmAccount, ILoginResponse, IUserLoginReq, IUserLoginRes } from '@/@types/auth';
+import { IConfirmAccount, ILoginResponse, IRefreshTokenReq, IUserLoginReq, IUserLoginRes } from '@/@types/auth';
+import { $authHost } from '@/src/service/index';
+import { IUser } from '@/@types/user';
+import { cookies } from 'next/headers';
 
 
 export class AuthService {
@@ -42,7 +45,6 @@ export class AuthService {
 
   static async loginUser({ email, password }: IUserLoginReq) {
     try {
-
       const data = JSON.stringify({ email, password });
       const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/login`, {
         method: 'POST',
@@ -56,6 +58,25 @@ export class AuthService {
       return await response.json() as IUserLoginRes;
     } catch (e) {
       console.error('Failed to login user');
+      console.error(e);
+    }
+  }
+
+  static async getUserByToken() {
+    try {
+      const nextRes = await fetch('/api/auth/token');
+      const { access_token } = await nextRes.json();
+      const response = await $authHost.post<IUser>('/auth/user-by-token', {
+        access_token,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+        },
+      });
+      console.log(response);
+      return response;
+    } catch (e) {
+      console.error('Failed to get user by token');
       console.error(e);
     }
   }
