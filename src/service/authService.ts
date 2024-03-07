@@ -4,6 +4,7 @@ import { IConfirmAccount, ILoginResponse, IRefreshTokenReq, IUserLoginReq, IUser
 import { $authHost } from '@/src/service/index';
 import { IUser } from '@/@types/user';
 import { cookies } from 'next/headers';
+import axios, { AxiosError } from 'axios';
 
 
 export class AuthService {
@@ -62,22 +63,29 @@ export class AuthService {
     }
   }
 
-  static async getUserByToken() {
+  static async checkIsAuth() {
     try {
-      const nextRes = await fetch('/api/auth/token');
-      const { access_token } = await nextRes.json();
-      const response = await $authHost.post<IUser>('/auth/user-by-token', {
+      const nextRes = await fetch('/api/auth-next/token');
+      return nextRes.json();
+    } catch (e) {
+      console.error('Failed to check user auth');
+      console.error(e);
+    }
+  }
+
+  static async getUserByToken(access_token: string) {
+    try {
+      const response = await $authHost.post<IUser>('auth/user-by-token', {
         access_token,
       }, {
         headers: {
-          'Authorization': `Bearer ${access_token}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(response);
       return response;
     } catch (e) {
-      console.error('Failed to get user by token');
-      console.error(e);
+      console.log(e);
+      console.error('Failed to fetch user');
     }
   }
 

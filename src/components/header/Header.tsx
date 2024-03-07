@@ -11,16 +11,22 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { AuthService } from '@/src/service/authService';
 import { cookies } from 'next/headers';
+import { useCartStore } from '@/src/store/cart-store';
 
 
 export const Header = () => {
-  const { isAuth, user } = useUserStore();
+  const { isAuth, user, actions: { setUser, setIsAuth } } = useUserStore();
+  const { actions: { clearCart } } = useCartStore();
 
   useEffect(() => {
-
     const fetchRefresh = async () => {
       try {
-        const response = await AuthService.getUserByToken();
+        const response = await AuthService.checkIsAuth();
+        if (response.user) {
+          clearCart();
+          setUser(response.user);
+          setIsAuth(true);
+        }
       } catch (e) {
         console.error(e);
       }
