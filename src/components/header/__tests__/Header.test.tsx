@@ -32,7 +32,7 @@ describe('Header component', () => {
     expect(screen.getByText('Reviews')).toBeInTheDocument();
     expect(screen.getByText('Events')).toBeInTheDocument();
     expect(screen.getByText('Booking')).toBeInTheDocument();
-    expect(screen.getByTestId('account')).toBeInTheDocument();
+    expect(screen.getByTestId('account-info')).toBeInTheDocument();
     expect(screen.getByTestId('shopping-cart')).toBeInTheDocument();
   });
 

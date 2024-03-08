@@ -1,4 +1,5 @@
 import { ICart } from '@/@types/cart';
+import { IOrder } from '@/@types/orders';
 
 
 export enum Roles {
@@ -15,11 +16,15 @@ export interface IUser {
   email: string
   role: Roles
   cart: ICart[]
-  orders: []
+  orders: IOrder[]
   review: any
   receiveNews: boolean
 }
 
+export interface IErrorResponse {
+  message: string;
+  statusCode: number;
+}
 
 export interface IUserStore {
   user: IUser | null,

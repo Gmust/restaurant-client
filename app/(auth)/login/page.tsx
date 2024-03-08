@@ -42,7 +42,7 @@ const LoginPage = () => {
         setIsAuth(true);
         reset();
         toast.success('Successfully logged in!');
-        router.push('/user/account');
+        router.push('/user/account-info');
       } else if (response?.statusCode && response.statusCode == 401) {
         toast.error(response?.message!);
       }

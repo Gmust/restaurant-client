@@ -13,6 +13,14 @@ interface IAccountProps {
 
 export const Account = ({ user }: IAccountProps) => {
 
+  const { actions: { removeUser, setIsAuth } } = useUserStore();
+
+  const handleLogoutButton = async () => {
+    setIsAuth(false);
+    removeUser();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/logout`, { method: 'DELETE' });
+    console.log(await res.json());
+  };
 
   return (
     <div className='group relative w-full' data-testid='account'>
@@ -21,7 +29,7 @@ export const Account = ({ user }: IAccountProps) => {
         className='absolute hidden items-center group-hover:flex-col group-hover:flex bg-white text-black right-6 w-36 rounded-b-lg rounded-l-lg'>
         <div>Welcome {user?.firstName}!</div>
         <div className='divide-x-4'></div>
-        <Link href='/user/account-info' className='w-full'>
+        <Link href='/user/account-info' prefetch={true} className='w-full'>
           <Button variant='ghost' size='sm' className='w-full rounded-none'>Account info</Button>
         </Link>
         {
@@ -30,6 +38,10 @@ export const Account = ({ user }: IAccountProps) => {
             <Button variant='ghost' size='sm' className='w-full rounded-t-none rounded-b-md'>Admin panel</Button>
           </Link>
         }
+        <Link href='/' className='w-full'>
+          <Button variant='ghost' size='sm' className='w-full rounded-t-none rounded-b-md'
+                  onClick={handleLogoutButton}>Logout</Button>
+        </Link>
       </div>
     </div>
   );

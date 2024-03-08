@@ -39,7 +39,7 @@ export class AuthService {
 
       return await response.json();
     } catch (e) {
-      console.error('FAiled to confirm account');
+      console.error('FAiled to confirm account-info');
       console.error(e);
     }
   }
@@ -66,7 +66,11 @@ export class AuthService {
   static async checkIsAuth() {
     try {
       const nextRes = await fetch('/api/auth-next/token');
-      return nextRes.json();
+      if (nextRes.status !== 200) {
+        return;
+      } else if (nextRes.status == 200) {
+        return await nextRes.json();
+      }
     } catch (e) {
       console.error('Failed to check user auth');
       console.error(e);
@@ -77,15 +81,10 @@ export class AuthService {
     try {
       const response = await $authHost.post<IUser>('auth/user-by-token', {
         access_token,
-      }, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
       });
-      return response;
+      return response.data;
     } catch (e) {
-      console.log(e);
-      console.error('Failed to fetch user');
+      console.error('Error fetching user:', e);
     }
   }
 

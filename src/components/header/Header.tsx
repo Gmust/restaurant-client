@@ -12,28 +12,33 @@ import { useEffect } from 'react';
 import { AuthService } from '@/src/service/authService';
 import { cookies } from 'next/headers';
 import { useCartStore } from '@/src/store/cart-store';
+import { IUser } from '@/@types/user';
 
 
 export const Header = () => {
-  const { isAuth, user, actions: { setUser, setIsAuth } } = useUserStore();
+  const { isAuth, user, actions: { setUser, setIsAuth, removeUser } } = useUserStore();
   const { actions: { clearCart } } = useCartStore();
 
   useEffect(() => {
     const fetchRefresh = async () => {
       try {
         const response = await AuthService.checkIsAuth();
-        if (response.user) {
+        if (response.user.statusCode === 403) {
+          setIsAuth(false);
+          removeUser();
+        } else {
           clearCart();
           setUser(response.user);
           setIsAuth(true);
         }
       } catch (e) {
+        setIsAuth(false);
         console.error(e);
       }
     };
 
     fetchRefresh();
-
+    console.log(user);
   }, []);
 
   return (
