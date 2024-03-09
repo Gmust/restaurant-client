@@ -15,7 +15,7 @@ export interface IUser {
   secondName: string
   email: string
   role: Roles
-  cart: ICart[]
+  cart: ICart
   orders: IOrder[]
   review: any
   receiveNews: boolean

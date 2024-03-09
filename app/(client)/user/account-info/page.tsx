@@ -6,6 +6,7 @@ import { Button } from '@/src/components/shared/Button';
 import { UserInfo } from '@/src/components/userPage/UserInfo';
 import { UserOrders } from '@/src/components/userPage/UserOrders';
 import { Frown } from 'lucide-react';
+import { ReceiveNews } from '@/src/components/userPage/ReceiveNews';
 
 const UserPage = async () => {
   const token = cookies().get('accessToken')?.value;
@@ -22,6 +23,7 @@ const UserPage = async () => {
         <div className='flex justify-around mx-16 text-2xl'>
           <div>
             <UserInfo {...user} />
+            <ReceiveNews receiveNews={user.receiveNews} />
           </div>
           <div className='space-y-6'>
             <div>
@@ -39,8 +41,11 @@ const UserPage = async () => {
             <div>
               {
                 user.review ?
-                  <div>
-
+                  <div className='flex flex-col'>
+                    <p>Your review:</p>
+                    <div>
+                      {user.review}
+                    </div>
                   </div>
                   :
                   <div className='flex flex-col space-y-2 '>

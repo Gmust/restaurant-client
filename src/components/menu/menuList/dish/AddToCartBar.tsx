@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useCartStore } from '@/src/store/cart-store';
 import { Button } from '@/src/components/shared/Button';
+import { useUserStore } from '@/src/store/user-store';
+import { CartService } from '@/src/service/cartService';
 
 export const AddToCartBar = (dish: IDish) => {
 
@@ -35,7 +37,7 @@ export const AddToCartBar = (dish: IDish) => {
   //   });
   // };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (isDishInCart) {
       return;
     }

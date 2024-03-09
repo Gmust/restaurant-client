@@ -6,10 +6,13 @@ import { useEffect, useState } from 'react';
 import { ArrowBigLeft, ArrowBigRight, Trash } from 'lucide-react';
 import { Button } from '@/src/components/shared/Button';
 import { useCartStore } from '@/src/store/cart-store';
+import { useUserStore } from '@/src/store/user-store';
+import { CartService } from '@/src/service/cartService';
 
 export const ShoppingCartItem = ({ _id, dish, quantity: initialQuantity }: ICartItem) => {
 
   const { actions: { updateCartItem, removeFromCart } } = useCartStore();
+  const { isAuth, actions, user } = useUserStore();
   const [quantity, setQuantity] = useState<number>(initialQuantity);
 
 
@@ -17,14 +20,20 @@ export const ShoppingCartItem = ({ _id, dish, quantity: initialQuantity }: ICart
     setQuantity(initialQuantity);
   }, [initialQuantity]);
 
-  const handleAddQuantity = () => {
+  const handleAddQuantity = async () => {
+    if (user && isAuth) {
+      await CartService.changeCartItemQuantity({ cartId: user.cart._id, cartItemId: _id!, newQuantity: quantity + 1 });
+    }
     updateCartItem(dish, quantity + 1);
     setQuantity((prevState) => {
       return prevState + 1;
     });
   };
 
-  const handleReduceQuantity = () => {
+  const handleReduceQuantity = async () => {
+    if (user && isAuth) {
+      await CartService.changeCartItemQuantity({ cartId: user.cart._id, cartItemId: _id!, newQuantity: quantity - 1 });
+    }
     updateCartItem(dish, quantity - 1);
     setQuantity((prevState) => {
       if (prevState <= 1) {
@@ -50,7 +59,7 @@ export const ShoppingCartItem = ({ _id, dish, quantity: initialQuantity }: ICart
       <div className='text-lg font-semibold flex flex-col'>
         {dish.price * quantity}$
         <Button variant='outlined' className='border-red-500 hover:border-red-500 py-0 px-1'
-                onClick={() => removeFromCart(dish)}>
+                onClick={() => removeFromCart(dish, _id!)}>
           <Trash color='red' />
         </Button>
       </div>

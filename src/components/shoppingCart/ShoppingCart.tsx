@@ -25,7 +25,6 @@ export const ShoppingCart = () => {
   if (!cartStore) return <Loader className='animate-spin' />;
   const { cart, actions: { clearCart } } = cartStore;
 
-
   const handleProceedOrder = () => {
     const currentTime = new Date();
     const currentHour = currentTime.getHours();

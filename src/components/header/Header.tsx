@@ -17,7 +17,7 @@ import { IUser } from '@/@types/user';
 
 export const Header = () => {
   const { isAuth, user, actions: { setUser, setIsAuth, removeUser } } = useUserStore();
-  const { actions: { clearCart } } = useCartStore();
+  const { actions: { clearCart, setCart } } = useCartStore();
 
   useEffect(() => {
     const fetchRefresh = async () => {
@@ -27,9 +27,9 @@ export const Header = () => {
           setIsAuth(false);
           removeUser();
         } else {
-          clearCart();
           setUser(response.user);
           setIsAuth(true);
+          setCart(response.user.cart);
         }
       } catch (e) {
         setIsAuth(false);
@@ -38,7 +38,6 @@ export const Header = () => {
     };
 
     fetchRefresh();
-    console.log(user);
   }, []);
 
   return (

@@ -7,26 +7,22 @@ import { persistNSync } from 'persist-and-sync';
 
 export const useCartStore = create<ICartStore>()(
   persistNSync(
-  set => ({
-    cart: {
-      _id: '',
-      cartItems: [],
-      totalPrice: 0,
-    },
-    actions: {
-      setCart: async (userCart) => {
-        if (useUserStore.getState().user) {
-
-          const cart = await CartService.fetchCart();
-          set({
-            cart,
-          });
-        }
+    set => ({
+      cart: {
+        _id: '',
+        cartItems: [],
+        totalPrice: 0,
       },
-      updateCartItem: async (dish, quantity) => {
-        if (useUserStore.getState().user) {
-          console.log('here');
-        } else {
+      actions: {
+        setCart: async (userCart) => {
+          if (useUserStore.getState().user) {
+            const cart = await CartService.fetchCart(userCart._id!);
+            set({
+              cart: cart,
+            });
+          }
+        },
+        updateCartItem: async (dish, quantity) => {
           set(state => {
             const itemIndex = state.cart.cartItems.findIndex(item => item.dish._id === dish._id);
 
@@ -47,31 +43,39 @@ export const useCartStore = create<ICartStore>()(
             }
             return state;
           });
-        }
-      },
-      addToCart: async (dish, quantity) => {
-        if (useUserStore.getState().user) {
-          const updatedCart = await CartService.addToCart();
-          set({
-            cart: {
-              _id: updatedCart.cart._id,
-              totalPrice: updatedCart.cart.totalPrice,
-              cartItems: updatedCart.cart.cartItems,
-            },
-          });
-        } else {
-          set(state => ({
-            cart: {
-              ...state.cart,
-              totalPrice: state.cart.totalPrice + (dish.price * quantity),
-              cartItems: [...state.cart.cartItems, { dish, quantity, _id: `${dish._id}${quantity}` }],
-            },
-          }));
-        }
-      },
-      removeFromCart: (dish) => {
-        if (useUserStore.getState().user) {
-        } else {
+        },
+        addToCart: async (dish, quantity) => {
+          if (useUserStore.getState().user) {
+            const updatedCart = await CartService.addToCart({
+              _id: useUserStore.getState().user?.cart._id!,
+              quantity: quantity,
+              dish: dish,
+            });
+            set({
+              cart: {
+                _id: updatedCart!.cart._id,
+                totalPrice: updatedCart!.cart.totalPrice,
+                cartItems: updatedCart!.cart.cartItems,
+              },
+            });
+          } else {
+            set(state => ({
+              cart: {
+                ...state.cart,
+                totalPrice: state.cart.totalPrice + (dish.price * quantity),
+                cartItems: [...state.cart.cartItems, { dish, quantity, _id: `${dish._id}${quantity}` }],
+              },
+            }));
+          }
+        },
+        removeFromCart: async (dish, cartItemId) => {
+          if (useUserStore.getState().user) {
+            await CartService.removeFromCart({
+              cartId: useUserStore.getState().user?.cart._id!,
+              cartItemId: cartItemId!,
+            });
+          }
+
           set(state => {
             return {
               cart: {
@@ -81,17 +85,21 @@ export const useCartStore = create<ICartStore>()(
               },
             };
           });
-        }
-      },
-      clearCart: () =>
-        set(state => ({
-          cart: {
-            ...state.cart,
-            cartItems: [],
-            totalPrice:0
+        },
+        clearCart: async () => {
+          if (useUserStore.getState().user) {
+            await CartService.emptyCart(useUserStore.getState().user?.cart._id!);
           }
-        })),
-    },
-  }),
-  { name: 'cart-store' },
-));
+
+          set(state => ({
+            cart: {
+              ...state.cart,
+              cartItems: [],
+              totalPrice: 0,
+            },
+          }));
+        },
+      },
+    }),
+    { name: 'cart-store' },
+  ));
