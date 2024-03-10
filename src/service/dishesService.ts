@@ -25,7 +25,7 @@ export class DishesService {
   static async fetchDishes({ queryParams }: IFetchDishesRequest): Promise<IFetchDishesResponse> {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes${queryParams ? `?${queryParams}` : ''}`,
+        `${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/dishes${queryParams ? `?${queryParams}` : ''}`,
       );
       if (!response.ok) {
         throw new Error('Failed to fetch dishes menu');

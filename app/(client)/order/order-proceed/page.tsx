@@ -23,12 +23,12 @@ const ProceedOrderPage = () => {
   const handleProceedOrder = async () => {
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
-    if (currentHour >= 9 && currentHour < 18) {
+    //if (currentHour >= 9 && currentHour < 18) {
       setOpenModal(true);
-    } else {
-      toast('We are now closed, orders from 9:00 a.m. to 5:30 p.m', { icon: <Sunset size={60} /> });
-      return;
-    }
+    //} else {
+    //  toast('We are now closed, orders from 9:00 a.m. to 5:30 p.m', { icon: <Sunset size={60} /> });
+    //  return;
+    //}
   };
 
   const handleCloseModal = () => {

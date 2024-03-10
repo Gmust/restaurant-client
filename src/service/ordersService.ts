@@ -1,9 +1,24 @@
-import { IConfirmOrderReq, IGetOrderInfoReq, IOrder, IPayForOrderReq, IPayForOrderRes } from '@/@types/orders';
+import {
+  IConfirmOrderReq,
+  IGetOrderInfoReq,
+  IOrder,
+  IGuestPayForOrderReq,
+  IPayForOrderRes,
+  IUserPayForOrderReq, IUserOrder,
+} from '@/@types/orders';
+import { $authHost } from '@/src/service/index';
 
 
 export class OrdersService {
 
-  static async payForGuestOrder({ totalPrice, cartItems, orderDate, email, takeaway, promoCode }: IPayForOrderReq) {
+  static async payForGuestOrder({
+                                  totalPrice,
+                                  cartItems,
+                                  orderDate,
+                                  email,
+                                  takeaway,
+                                  promoCode,
+                                }: IGuestPayForOrderReq) {
     try {
       const data = JSON.stringify({ totalPrice, cartItems, orderDate, email, takeaway, promoCode });
       const response = await fetch(
@@ -17,6 +32,21 @@ export class OrdersService {
       );
 
       return await response.json() as IPayForOrderRes;
+    } catch (e) {
+      console.error('Failed to pay for order', e);
+    }
+  }
+
+  static async payForUserOrder({ orderDate, email, takeaway, promoCode }: IUserPayForOrderReq) {
+    try {
+      const response = await $authHost.post<IPayForOrderRes>(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/payments/user-pay-for-order`, {
+        orderDate,
+        email,
+        takeaway,
+        promoCode,
+      });
+
+      return response.data;
     } catch (e) {
       console.error('Failed to pay for order', e);
     }
@@ -72,6 +102,19 @@ export class OrdersService {
       return await response.json();
     } catch (e) {
       console.error('Failed to delete order');
+    }
+  }
+
+  static async getUserOrders(userId: string) {
+    try {
+      const response = await $authHost.get<IUserOrder[]>('orders', {
+        params: {
+          userId,
+        },
+      });
+      return response.data;
+    } catch (e) {
+      console.error('Failed to get all user orders');
     }
   }
 }

@@ -12,6 +12,8 @@ import { useCartStore } from '@/src/store/cart-store';
 import { OrdersService } from '@/src/service/ordersService';
 import { useStripe } from '@stripe/react-stripe-js';
 import { CustomInput } from '@/src/components/shared/CustomInput';
+import { useUserStore } from '@/src/store/user-store';
+import toast from 'react-hot-toast';
 
 type formData = z.infer<typeof createOrderValidator>
 
@@ -26,9 +28,10 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { cart, actions: { clearCart } } = useCartStore();
+  const { user } = useUserStore();
   const stripe = useStripe();
 
-  const { register, handleSubmit, setError, formState: { errors } } = useForm<formData>({
+  const { register, handleSubmit, setError, formState: { errors }, setValue } = useForm<formData>({
     mode: 'onSubmit',
     resolver: zodResolver(createOrderValidator),
   });
@@ -36,6 +39,9 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
   useEffect(() => {
     if (isTakeaway !== null) {
       setTakeawayError('');
+    }
+    if (user) {
+      setValue('email', user.email);
     }
   }, [isTakeaway]);
 
@@ -47,16 +53,26 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
         setTakeawayError('Please select takeaway option');
         return;
       }
-      const response = await OrdersService.payForGuestOrder({
-        email,
-        promoCode: promoCode ? promoCode : undefined,
-        takeaway: isTakeaway,
-        orderDate: new Date().toISOString(),
-        cartItems: cart.cartItems,
-        totalPrice: cart.totalPrice,
-      });
+      let response;
+      if (user) {
+        response = await OrdersService.payForUserOrder({
+          email: user.email,
+          promoCode: promoCode ? promoCode : undefined,
+          takeaway: isTakeaway,
+          orderDate: new Date().toISOString(),
+        });
+      } else {
+        response = await OrdersService.payForGuestOrder({
+          email,
+          promoCode: promoCode ? promoCode : undefined,
+          takeaway: isTakeaway,
+          orderDate: new Date().toISOString(),
+          cartItems: cart.cartItems,
+          totalPrice: cart.totalPrice,
+        });
+      }
       if (!response) {
-        console.error('Something went wrong');
+        toast.error('Something went wrong');
       } else {
         await stripe?.redirectToCheckout({
           sessionId: response.sessionId,
@@ -110,11 +126,11 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-start mx-10 space-y-4'>
         <div className='flex flex-col labelStar '>
           <label htmlFor='email'>Email:</label>
-          <CustomInput id='email'  required {...register('email', { required: true })}
+          <CustomInput id='email' required {...register('email', { required: true, value: user?.email })}
                        type='email' autoComplete='on'
                        Icon={MdEmail} />
           <p className='text-red-700 font-semibold text-lg animate-fadeInBottom'>
-            {errors.email && errors.email.type === "required" && (
+            {errors.email && errors.email.type === 'required' && (
               <span>This is required</span>
             )}
           </p>

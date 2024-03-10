@@ -1,7 +1,9 @@
 import { ICartItem } from '@/@types/cart';
+import { IUser } from '@/@types/user';
+import { IDish } from '@/@types/dishes';
 
 
-export interface IPayForOrderReq {
+export interface IGuestPayForOrderReq {
   email: string;
   totalPrice: number;
   cartItems: ICartItem[];
@@ -12,6 +14,14 @@ export interface IPayForOrderReq {
 
 export interface IPayForOrderRes {
   sessionId: string;
+}
+
+
+export interface IUserPayForOrderReq {
+  email: string;
+  takeaway: boolean;
+  promoCode?: string;
+  orderDate: string;
 }
 
 
@@ -27,6 +37,26 @@ export interface IGetOrderInfoReq {
   email: string
 }
 
+export interface IOrderItem {
+  _id: string,
+  quantity: number,
+  dish: IDish
+}
+
+export interface IUserOrder {
+  _id: string;
+  isConfirmed: boolean;
+  user: IUser;
+  status: string;
+  orderItems: IOrderItem[];
+  totalPrice: number;
+  takeaway: boolean;
+  orderNumber: string;
+  created_at: string;
+  updated_at: string;
+  statusCode: number;
+}
+
 export interface IOrder {
   isConfirmed: boolean;
   _id: string;
@@ -38,6 +68,6 @@ export interface IOrder {
   orderNumber: string;
   created_at: string;
   updated_at: string;
-  statusCode: number
+  statusCode: number;
 }
 

@@ -23,7 +23,7 @@ export const Header = () => {
     const fetchRefresh = async () => {
       try {
         const response = await AuthService.checkIsAuth();
-        if (response.user.statusCode === 403) {
+        if (response.user.statusCode === 403 || response.user.statusCode === 500) {
           setIsAuth(false);
           removeUser();
         } else {

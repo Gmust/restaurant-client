@@ -18,7 +18,7 @@ export const Account = ({ user }: IAccountProps) => {
   const handleLogoutButton = async () => {
     setIsAuth(false);
     removeUser();
-    const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/logout`, { method: 'DELETE' });
+    const res = await fetch(`/api/auth-next/logout`, { method: 'DELETE' });
     console.log(await res.json());
   };
 
