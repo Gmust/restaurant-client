@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import { createAccountValidator } from '@/src/lib/validations/create-account';
 import { IConfirmAccount, ILoginResponse, IRefreshTokenReq, IUserLoginReq, IUserLoginRes } from '@/@types/auth';
-import { $authHost } from '@/src/service/index';
 import { IUser } from '@/@types/user';
-import { cookies } from 'next/headers';
-import axios, { AxiosError } from 'axios';
 
 
 export class AuthService {
@@ -21,8 +18,17 @@ export class AuthService {
       });
       return await response.json() as ILoginResponse;
     } catch (e) {
-      console.error('Failed to create user');
-      console.error(e);
+      console.error('Failed to create user', e);
+    }
+  }
+
+  static async getUserWithToken() {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/token`, { method: 'GET' });
+      const resData = await res.json();
+      return resData as { access_token: string, user: IUser };
+    } catch (e) {
+      console.error('Failed to receive user with token');
     }
   }
 
@@ -79,10 +85,19 @@ export class AuthService {
 
   static async getUserByToken(access_token: string) {
     try {
-      const response = await $authHost.post<IUser>('auth/user-by-token', {
-        access_token,
+
+      const data = JSON.stringify({ access_token });
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/user-by-token`, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`,
+        },
       });
-      return response.data;
+
+      return await response.json() as IUser;
     } catch (e) {
       console.error('Error fetching user:', e);
     }

@@ -6,81 +6,101 @@ import {
   IRemoveFromCartReq,
   IRemoveFromCartRes,
 } from '@/@types/cart';
-import { $authHost } from '@/src/service/index';
 
 export class CartService {
 
-  static async fetchCart(cartId: string): Promise<ICart | undefined> {
+  static async fetchCart(cartId: string, token: string): Promise<ICart | undefined> {
     try {
-      const response = await $authHost.get<ICart>('/cart', {
-        params: {
-          cartId,
-        },
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/cart?cartId=${cartId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
       });
 
-      return response.data;
+      return await response.json() as ICart;
     } catch (e) {
       console.error('Failed to fetch cart', e);
     }
   }
 
-  static async addToCart({ _id, quantity, dish }: IAddToCartReq): Promise<IAddToCartRes | undefined> {
+  static async addToCart({ _id, quantity, dish, token }: IAddToCartReq): Promise<IAddToCartRes | undefined> {
     try {
-      const response = await $authHost.post<IAddToCartRes>(`/cart/add-to-cart`, {
-        _id,
-        quantity,
-        dish,
+      const data = JSON.stringify({ _id, quantity, token });
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/cart/add-to-cart`, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
       });
 
-      return response.data;
+      return await response.json() as IAddToCartRes;
     } catch (e) {
       console.error('Failed to add to cart:', e);
     }
   }
 
-  static async removeFromCart({ cartId, cartItemId }: IRemoveFromCartReq) {
+  static async removeFromCart({ cartId, cartItemId, token }: IRemoveFromCartReq) {
     try {
-      const response = await $authHost.delete<IRemoveFromCartRes>('/cart/remove-from-cart', {
-        data: {
-          cartId,
-          cartItemId,
+
+      const data = JSON.stringify({
+        cartId,
+        cartItemId,
+      });
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/cart/remove-from-cart`, {
+        method: 'DELETE',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
       });
 
-      return response.data;
+      return await response.json() as IRemoveFromCartRes;
     } catch (e) {
       console.error('Failed to remove from cart', e);
     }
   }
 
-  static async emptyCart(cartId: string) {
+  static async emptyCart(cartId: string, token: string) {
     try {
-      const response = await $authHost.delete<{ message: string }>('/cart/empty-cart', {
-        data: {
-          cartId,
+
+      const data = JSON.stringify({ cartId });
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/cart/empty-cart`, {
+        body: data,
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
       });
 
-      return response.data;
+      return await response.json() as { message: string };
     } catch (e) {
       console.error('Failed to empty cart', e);
     }
   }
 
-  static async changeCartItemQuantity({ cartItemId, cartId, newQuantity }: IChangeCartItemQuantityReq) {
+  static async changeCartItemQuantity({ cartItemId, cartId, newQuantity, token }: IChangeCartItemQuantityReq) {
     try {
-      const response = await $authHost.post<ICart>('/cart/change-quantity', {
-          cartItemId,
-          cartId,
-          newQuantity,
-        },
-      );
 
-      return response.data;
+      const data = JSON.stringify({ cartItemId, cartId, newQuantity });
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/cart/change-quantity`, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      return await response.json() as ICart;
     } catch (e) {
       console.error('Failed to change quantity', e);
     }

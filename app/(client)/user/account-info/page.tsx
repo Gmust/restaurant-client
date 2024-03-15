@@ -11,14 +11,13 @@ import { OrdersService } from '@/src/service/ordersService';
 
 const UserPage = async () => {
   const token = cookies().get('accessToken')?.value;
-
   if (!token) {
     permanentRedirect('/');
   }
-
+  console.log(token);
   const user = await AuthService.getUserByToken(token);
-  if(!user){
-    notFound()
+  if (!user) {
+    permanentRedirect('/');
   }
   const userOrders = await OrdersService.getUserOrders(user._id);
 
@@ -28,7 +27,7 @@ const UserPage = async () => {
         <div className='flex space-x-10 items-center justify-between mx-16 text-2xl'>
           <div>
             <UserInfo {...user} />
-            <ReceiveNews receiveNews={user.receiveNews} />
+            <ReceiveNews userId={user._id} receiveNews={user.receiveNews} />
             <div className='mt-10'>
               {
                 user.review ?

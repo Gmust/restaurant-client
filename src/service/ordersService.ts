@@ -6,7 +6,6 @@ import {
   IPayForOrderRes,
   IUserPayForOrderReq, IUserOrder,
 } from '@/@types/orders';
-import { $authHost } from '@/src/service/index';
 
 
 export class OrdersService {
@@ -37,16 +36,25 @@ export class OrdersService {
     }
   }
 
-  static async payForUserOrder({ orderDate, email, takeaway, promoCode }: IUserPayForOrderReq) {
+  static async payForUserOrder({ orderDate, email, takeaway, promoCode, token }: IUserPayForOrderReq) {
     try {
-      const response = await $authHost.post<IPayForOrderRes>(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/payments/user-pay-for-order`, {
+      const data = JSON.stringify({
         orderDate,
         email,
         takeaway,
         promoCode,
       });
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/payments/user-pay-for-order`, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-      return response.data;
+      return await response.json() as IPayForOrderRes;
+
     } catch (e) {
       console.error('Failed to pay for order', e);
     }
@@ -105,14 +113,16 @@ export class OrdersService {
     }
   }
 
-  static async getUserOrders(userId: string) {
+  static async getUserOrders(userId: string, token: string) {
     try {
-      const response = await $authHost.get<IUserOrder[]>('orders', {
-        params: {
-          userId,
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/order?userId=${userId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
         },
       });
-      return response.data;
+
+      return await response.json() as IUserOrder[];
     } catch (e) {
       console.error('Failed to get all user orders');
     }

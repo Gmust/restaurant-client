@@ -22,6 +22,7 @@ export interface IUserPayForOrderReq {
   takeaway: boolean;
   promoCode?: string;
   orderDate: string;
+  token: string
 }
 
 

@@ -24,19 +24,17 @@ export const ShoppingCart = () => {
 
   if (!cartStore) return <Loader className='animate-spin' />;
   const { cart, actions: { clearCart } } = cartStore;
-
   const handleProceedOrder = () => {
     const currentTime = new Date();
-    //const currentHour = currentTime.getHours();
-    //if (currentHour >= 9 && currentHour < 18) {
+    const currentHour = currentTime.getHours();
+    if (currentHour >= 9 && currentHour < 18) {
       setIsShow(false);
       router.replace('/order/order-proceed');
-   // } else {
-   //   toast('We are now closed, orders from 9:00 a.m. to 5:30 p.m', { icon: <Sunset size={60} /> });
-   //   return;
-   // }
+    } else {
+      toast('We are now closed, orders from 9:00 a.m. to 5:30 p.m', { icon: <Sunset size={60} /> });
+      return;
+    }
   };
-
   return (
     <div className='flex' data-testid='shopping-cart'>
       <div className='relative'>
@@ -44,7 +42,7 @@ export const ShoppingCart = () => {
           setIsShow(true);
         }} />
         <div
-          className='absolute text-xs bg-amber-500 px-1 rounded-lg top-0.5 -right-1 select-none pointer-events-none'>{cart.cartItems.length}</div>
+          className='absolute text-xs bg-amber-500 px-1 rounded-lg top-0.5 -right-1 select-none pointer-events-none'>{cart ? cart.cartItems.length : 0}</div>
       </div>
       {isShow && (
         <div className='fixed top-0 left-0 z-10 w-full h-full bg-black opacity-50'
@@ -62,7 +60,7 @@ export const ShoppingCart = () => {
               <PanelRightClose color='red' />
             </Button>
           </div>
-          {cart.cartItems.length > 0 ?
+          {cart && cart.cartItems.length > 0 ?
             <div className='overflow-auto flex flex-col space-y-2 items-star h-full'>
               {cart.cartItems.map(cartItem => <ShoppingCartItem key={cartItem._id} {...cartItem} />)}
             </div>
@@ -74,18 +72,18 @@ export const ShoppingCart = () => {
           }
           <div className='flex flex-col'>
             <div className='flex items-center justify-between w-full'>
-              Total price: {cart.totalPrice} $
+              Total price: {cart ? cart.totalPrice : 0} $
             </div>
             <div className='flex flex-col space-y-1'>
               <Button size='md' variant='outlined'
-                      disabled={cart.cartItems.length < 1}
+                      disabled={cart == undefined || cart.cartItems.length < 1}
                       className='border-emerald-600 hover:bg-emerald-600  hover:border-emerald-600'
                       onClick={handleProceedOrder}
               >
                 Order
               </Button>
               <Button size='md' variant='outlined' className='border-red-600 hover:bg-red-600  hover:border-red-600'
-                      disabled={cart.cartItems.length < 1} onClick={clearCart}>Empty cart
+                      disabled={cart == undefined || cart.cartItems.length < 1} onClick={clearCart}>Empty cart
               </Button>
             </div>
           </div>

@@ -28,7 +28,8 @@ export interface ICartStore {
 export interface IAddToCartReq {
   _id: string,
   dish: IDish,
-  quantity: number
+  quantity: number,
+  token: string
 }
 
 export interface IAddToCartRes {
@@ -40,6 +41,7 @@ export interface IAddToCartRes {
 export interface IRemoveFromCartReq {
   cartItemId: string,
   cartId: string
+  token: string
 }
 
 
@@ -51,6 +53,7 @@ export interface IRemoveFromCartRes {
 export interface IChangeCartItemQuantityReq {
   newQuantity: number,
   cartItemId: string,
-  cartId: string
+  cartId: string,
+  token: string
 }
 

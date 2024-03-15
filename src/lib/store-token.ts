@@ -13,16 +13,20 @@ export async function storeToken(request: StoreTokenRequest) {
     name: 'accessToken',
     value: request.access_token,
     httpOnly: true,
-    sameSite: 'strict',
+    path: '/',
+    sameSite: 'lax',
     secure: true,
+    priority: 'high',
   });
 
   cookies().set({
     name: 'refreshToken',
     value: request.refresh_token,
     httpOnly: true,
-    sameSite: 'strict',
     secure: true,
+    path: '/',
+    sameSite: 'lax',
+    priority: 'high',
   });
 
   cookies().set({

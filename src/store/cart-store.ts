@@ -15,6 +15,8 @@ export const useCartStore = create<ICartStore>()(
       },
       actions: {
         setCart: async (userCart) => {
+          console.log('USER CART', userCart);
+          console.log('USER', useUserStore.getState().user);
           if (useUserStore.getState().user) {
             const cart = await CartService.fetchCart(userCart._id!);
             set({
