@@ -115,7 +115,7 @@ export class OrdersService {
 
   static async getUserOrders(userId: string, token: string) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/order?userId=${userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/orders?userId=${userId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -124,7 +124,7 @@ export class OrdersService {
 
       return await response.json() as IUserOrder[];
     } catch (e) {
-      console.error('Failed to get all user orders');
+      console.error('Failed to get all user orders', e);
     }
   }
 }

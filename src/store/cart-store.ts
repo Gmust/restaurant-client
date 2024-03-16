@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { ICartStore } from '@/@types/cart';
-import { createJSONStorage, persist } from 'zustand/middleware';
 import { CartService } from '@/src/service/cartService';
 import { useUserStore } from '@/src/store/user-store';
 import { persistNSync } from 'persist-and-sync';
@@ -15,8 +14,6 @@ export const useCartStore = create<ICartStore>()(
       },
       actions: {
         setCart: async (userCart) => {
-          console.log('USER CART', userCart);
-          console.log('USER', useUserStore.getState().user);
           if (useUserStore.getState().user) {
             const cart = await CartService.fetchCart(userCart._id!);
             set({
@@ -71,6 +68,7 @@ export const useCartStore = create<ICartStore>()(
           }
         },
         removeFromCart: async (dish, cartItemId) => {
+          console.log(useUserStore.getState().user);
           if (useUserStore.getState().user) {
             await CartService.removeFromCart({
               cartId: useUserStore.getState().user?.cart._id!,

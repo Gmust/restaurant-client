@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { createAccountValidator } from '@/src/lib/validations/create-account';
 import { IConfirmAccount, ILoginResponse, IRefreshTokenReq, IUserLoginReq, IUserLoginRes } from '@/@types/auth';
 import { IUser } from '@/@types/user';
+import { $authHost } from '@/src/service/index';
 
 
 export class AuthService {
@@ -85,7 +86,6 @@ export class AuthService {
 
   static async getUserByToken(access_token: string) {
     try {
-
       const data = JSON.stringify({ access_token });
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/user-by-token`, {
@@ -102,5 +102,14 @@ export class AuthService {
       console.error('Error fetching user:', e);
     }
   }
-
+  // static async getUserByToken(access_token: string) {
+  //   try {
+  //     const response = await $authHost.post<IUser>('auth/user-by-token', {
+  //       access_token,
+  //     });
+  //     return response.data;
+  //   } catch (e) {
+  //     //console.error('Error fetching user:', e);
+  //   }
+  // }
 }

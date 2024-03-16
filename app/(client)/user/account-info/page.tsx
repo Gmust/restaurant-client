@@ -14,13 +14,12 @@ const UserPage = async () => {
   if (!token) {
     permanentRedirect('/');
   }
-  console.log(token);
   const user = await AuthService.getUserByToken(token);
   if (!user) {
     permanentRedirect('/');
   }
-  const userOrders = await OrdersService.getUserOrders(user._id);
 
+  const userOrders = await OrdersService.getUserOrders(user._id, token);
   return (
     <>
       {user ?
@@ -51,8 +50,8 @@ const UserPage = async () => {
             <div>
               <p className='font-semibold'>Current orders:</p>
               {
-                user.orders.length > 0 ?
-                  <UserOrders orders={userOrders!} />
+                userOrders && userOrders.length > 0 ?
+                  <UserOrders orders={userOrders} />
                   :
                   <span className='flex space-x-2 items-start'>
                     <p>It is empty here...</p>
