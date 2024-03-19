@@ -7,7 +7,7 @@ const NotFound = () => {
       <h2 className='font-bold'>Not Found</h2>
       <p>Could not find requested resource</p>
       <Button>
-        <Link href='/'>
+        <Link href='/menu'>
           Return to the main page
         </Link>
       </Button>

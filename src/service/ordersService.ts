@@ -6,6 +6,7 @@ import {
   IPayForOrderRes,
   IUserPayForOrderReq, IUserOrder,
 } from '@/@types/orders';
+import { $unAuthHost } from '@/src/service/index';
 
 
 export class OrdersService {
@@ -125,6 +126,15 @@ export class OrdersService {
       return await response.json() as IUserOrder[];
     } catch (e) {
       console.error('Failed to get all user orders', e);
+    }
+  }
+
+  static async getOrderById(orderId: string) {
+    try {
+      const order = await $unAuthHost.get<IOrder>(`orders/get-order/${orderId}`);
+      return order.data;
+    } catch (e) {
+      console.error('Failed to get order by id', e);
     }
   }
 }

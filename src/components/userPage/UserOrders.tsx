@@ -15,7 +15,7 @@ export const UserOrders = ({ orders }: IUserOrdersProps) => {
           <div className='flex flex-col items-start justify-center'>
             <p>Order No̱: {order.orderNumber}</p>
             <p>Total price: {order.totalPrice}</p>
-            <p>Order status: {order.status}</p>
+        {/*<p>Order status: {order.status}</p>*/}
           </div>
           <div className='overflow-auto max-h-[140px] w-[290px] scroll-smooth'>
             {order.orderItems.map(orderItem =>
