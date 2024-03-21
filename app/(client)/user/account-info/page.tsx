@@ -10,6 +10,7 @@ import { ReceiveNews } from '@/src/components/userPage/ReceiveNews';
 import { OrdersService } from '@/src/service/ordersService';
 import { ReviewsService } from '@/src/service/reviewsService';
 import { ReviewCard } from '@/src/components/reviews/ReviewCard';
+import { LeaveFeedback } from '@/src/components/shared/LeaveFeedback';
 
 const UserPage = async () => {
   const token = cookies().get('accessToken')?.value;
@@ -22,7 +23,10 @@ const UserPage = async () => {
   }
 
   const userOrders = await OrdersService.getUserOrders(user._id, token);
-  const userReview = await ReviewsService.getUserReview(user.review);
+  let userReview;
+  if (user.review) {
+    userReview = await ReviewsService.getUserReview(user.review);
+  }
   return (
     <>
       {user ?
@@ -40,9 +44,7 @@ const UserPage = async () => {
                   :
                   <div className='flex flex-col space-y-2 '>
                     <p>Please leave your feedback about our place to make it better!</p>
-                    <Link href='/review' className='w-full'>
-                      <Button>Leave feedback</Button>
-                    </Link>
+                    <LeaveFeedback />
                   </div>
               }
             </div>

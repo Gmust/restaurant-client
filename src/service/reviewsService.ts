@@ -1,6 +1,6 @@
 import { $authHost, $unAuthHost } from '@/src/service/index';
 import { IUser } from '@/@types/user';
-import { IGetReviewsReq, IGetReviewsRes, IReview } from '@/@types/reviews';
+import { ICreateReviewReq, ICreateReviewRes, IGetReviewsReq, IGetReviewsRes, IReview } from '@/@types/reviews';
 import { generateQuery } from '@/src/utils/generateQuery';
 
 export class ReviewsService {
@@ -22,6 +22,20 @@ export class ReviewsService {
       return response.data;
     } catch (e) {
       console.error('Failed to fetch all reviews');
+    }
+  }
+
+  static async createReview({ userId, rating, comment }: ICreateReviewReq) {
+    try {
+      const response = await $authHost.post<ICreateReviewRes>('/reviews', {
+        userId,
+        rating,
+        comment,
+      });
+
+      return response.data;
+    } catch (e) {
+      console.error('Failed to create review', e);
     }
   }
 

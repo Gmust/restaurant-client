@@ -20,3 +20,14 @@ export interface IGetReviewsRes {
   pageTotal: number,
   currentPage: number
 }
+
+export interface ICreateReviewReq {
+  comment: string,
+  rating: number,
+  userId: string
+}
+
+export interface ICreateReviewRes {
+  newReview: IReview;
+  message: string;
+}
