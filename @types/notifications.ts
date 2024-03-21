@@ -1,7 +1,6 @@
 export interface IChangeReceiveNewsReq {
   userId: string,
   receiveNews: boolean,
-  token: string
 }
 
 export interface IChangeReceiveNewsErrorRes {

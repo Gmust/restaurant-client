@@ -8,6 +8,8 @@ import { UserOrders } from '@/src/components/userPage/UserOrders';
 import { Frown } from 'lucide-react';
 import { ReceiveNews } from '@/src/components/userPage/ReceiveNews';
 import { OrdersService } from '@/src/service/ordersService';
+import { ReviewsService } from '@/src/service/reviewsService';
+import { ReviewCard } from '@/src/components/reviews/ReviewCard';
 
 const UserPage = async () => {
   const token = cookies().get('accessToken')?.value;
@@ -20,6 +22,7 @@ const UserPage = async () => {
   }
 
   const userOrders = await OrdersService.getUserOrders(user._id, token);
+  const userReview = await ReviewsService.getUserReview(user.review);
   return (
     <>
       {user ?
@@ -32,9 +35,7 @@ const UserPage = async () => {
                 user.review ?
                   <div className='flex flex-col'>
                     <p>Your review:</p>
-                    <div>
-                      {user.review}
-                    </div>
+                    <ReviewCard {...userReview!} />
                   </div>
                   :
                   <div className='flex flex-col space-y-2 '>

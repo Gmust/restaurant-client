@@ -83,11 +83,11 @@ const FullInfoOrderPage = () => {
     <div className='flex flex-col space-y-6 justify-center items-center h-3/5'>
       {
         currentOrder ?
-          <OrderInfo  {...currentOrder} />
+          <OrderInfo  {...currentOrder} email={user?.email!} />
           : <Loader2 className='animate-spin' />
       }
       <div>
-        <Button size='lg' className='text-2xl space-x-2'>
+        <Button size='lg' className='text-2xl space-x-2' onClick={()=> router.push('/user/account-info')}>
           <ArrowLeft />
           <p>Return</p>
         </Button>
