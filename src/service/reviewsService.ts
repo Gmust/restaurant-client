@@ -1,6 +1,13 @@
 import { $authHost, $unAuthHost } from '@/src/service/index';
 import { IUser } from '@/@types/user';
-import { ICreateReviewReq, ICreateReviewRes, IGetReviewsReq, IGetReviewsRes, IReview } from '@/@types/reviews';
+import {
+  IChangeReviewReq,
+  ICreateReviewReq,
+  ICreateReviewRes,
+  IGetReviewsReq,
+  IGetReviewsRes,
+  IReview,
+} from '@/@types/reviews';
 import { generateQuery } from '@/src/utils/generateQuery';
 
 export class ReviewsService {
@@ -36,6 +43,20 @@ export class ReviewsService {
       return response.data;
     } catch (e) {
       console.error('Failed to create review', e);
+    }
+  }
+
+  static async changeReview({ reviewId, newRating, newComment }: IChangeReviewReq) {
+    try {
+      const response = await $authHost.patch<ICreateReviewRes>('/reviews/update-review', {
+        reviewId,
+        newRating,
+        newComment,
+      });
+
+      return response.data;
+    } catch (e) {
+      console.error('Failed to patch review', e)
     }
   }
 

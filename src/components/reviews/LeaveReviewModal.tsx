@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { ReviewsService } from '@/src/service/reviewsService';
 import { useUserStore } from '@/src/store/user-store';
 import { useRouter } from 'next/navigation';
+import { ReviewStars } from '@/src/components/reviews/ReviewStars';
 
 
 interface ILeaveReviewModal {
@@ -40,7 +41,7 @@ export const LeaveReviewModal = ({ setIsActive, isActive }: ILeaveReviewModal) =
         userId: user?._id!,
       });
       if (response) {
-        toast(response.message);
+        toast.success(response.message);
         setIsActive(false);
         router.refresh();
       }
@@ -57,28 +58,7 @@ export const LeaveReviewModal = ({ setIsActive, isActive }: ILeaveReviewModal) =
                     placeholder='Write your review here...' onChange={e => setReview(e.target.value)}>
           </textarea>
         <div className='flex space-x-3'>
-          {
-            [...Array(5)].map((star, index) => {
-              const rating = index + 1;
-              return <label key={index}>
-                <input type='radio' name='rating' value={rating} onChange={() => setRating(rating)}
-                       className='hidden' />
-                <Star
-                  onMouseEnter={() => {
-                    setHover(rating);
-                    setCurrentRating(rating);
-                  }}
-                  className={cn('cursor-pointer text-gray-500 shadow-2xls', {
-                    // @ts-ignore
-                    'text-yellow-200': rating <= (hover || rating),
-                  })}
-                  // @ts-ignore
-                  fill={rating <= (hover || rating) ? 'yellow' : 'gray'}
-                  size={35}
-                />
-              </label>;
-            })
-          }
+          <ReviewStars hover={hover} setRating={setRating} setHover={setHover} setCurrentRating={setCurrentRating} />
         </div>
         {
           currentRating && <RatingMessages currentRating={currentRating} />

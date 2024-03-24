@@ -9,7 +9,7 @@ export const ReviewCard = ({ reviewComment, user, rating }: IReview) => {
         <p>{user.firstName} {user.secondName}</p>
         <div className='flex space-x-2 text-2xl'>
           {[...Array(5)].map((value, index, array) => {
-            if (index + 1 < rating) {
+            if (index < rating) {
               return <Star fill='yellow' key={index} className='text-yellow-200' size={30} />;
             } else {
               return <Star key={index} size={30} />;

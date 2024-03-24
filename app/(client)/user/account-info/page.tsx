@@ -11,22 +11,22 @@ import { OrdersService } from '@/src/service/ordersService';
 import { ReviewsService } from '@/src/service/reviewsService';
 import { ReviewCard } from '@/src/components/reviews/ReviewCard';
 import { LeaveFeedback } from '@/src/components/shared/LeaveFeedback';
+import { IReview } from '@/@types/reviews';
+import { ChangeReviewModal } from '@/src/components/reviews/ChangeReviewModal';
+import { ChangeFeedback } from '@/src/components/shared/ChangeFeedback';
 
 const UserPage = async () => {
   const token = cookies().get('accessToken')?.value;
   if (!token) {
-    permanentRedirect('/');
+    redirect('/');
   }
   const user = await AuthService.getUserByToken(token);
   if (!user) {
-    permanentRedirect('/');
+    redirect('/');
   }
 
   const userOrders = await OrdersService.getUserOrders(user._id, token);
-  let userReview;
-  if (user.review) {
-    userReview = await ReviewsService.getUserReview(user.review);
-  }
+  const userReview = await ReviewsService.getUserReview(user.review);
   return (
     <>
       {user ?
@@ -36,10 +36,11 @@ const UserPage = async () => {
             <ReceiveNews userId={user._id} receiveNews={user.receiveNews} />
             <div className='mt-10'>
               {
-                user.review ?
-                  <div className='flex flex-col'>
+                userReview ?
+                  <div className='flex flex-col space-y-3'>
                     <p>Your review:</p>
                     <ReviewCard {...userReview!} />
+                    <ChangeFeedback review={userReview} />
                   </div>
                   :
                   <div className='flex flex-col space-y-2 '>

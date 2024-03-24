@@ -31,3 +31,14 @@ export interface ICreateReviewRes {
   newReview: IReview;
   message: string;
 }
+
+export interface IChangeReviewReq {
+  reviewId: string;
+  newRating: number;
+  newComment: string;
+}
+
+export interface IChangeReviewRes {
+  review: IReview;
+  message: string;
+}
