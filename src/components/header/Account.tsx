@@ -34,7 +34,7 @@ export const Account = ({ user }: IAccountProps) => {
         </Link>
         {
           user?.role === 'Administrator' &&
-          <Link href='admin-panel' className='w-full'>
+          <Link href='/admin-panel' className='w-full'>
             <Button variant='ghost' size='sm' className='w-full rounded-t-none rounded-b-md'>Admin panel</Button>
           </Link>
         }

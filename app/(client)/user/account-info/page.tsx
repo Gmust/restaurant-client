@@ -30,7 +30,7 @@ const UserPage = async () => {
   return (
     <>
       {user ?
-        <div className='flex space-x-10 items-center justify-between mx-16 text-2xl'>
+        <div className='flex space-x-10  justify-between mx-16 text-2xl'>
           <div>
             <UserInfo {...user} />
             <ReceiveNews userId={user._id} receiveNews={user.receiveNews} />

@@ -1,5 +1,6 @@
 import { IDish, IFetchDishesRequest, IFetchDishesResponse, IFetchSpecialtiesResponse } from '@/@types/dishes';
 import { IPayForOrderRes } from '@/@types/orders';
+import { $authHost } from '@/src/service/index';
 
 
 export class DishesService {
@@ -54,4 +55,22 @@ export class DishesService {
       throw new Error('Failed to fetch dishes menu. Please try again later.');
     }
   }
+
+
+  static async getAllDishes(token: string) {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/dishes/all`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      return await response.json() as IDish[];
+    } catch (e) {
+      console.error('Error fetching dishes menu:', e);
+    }
+  }
+
 }

@@ -1,6 +1,13 @@
+import { IconType } from 'react-icons';
 
 
-interface IRoute {
+export interface IRoute {
   path: string,
-  name: string
+  name: string,
+}
+
+export interface IRouteAdmin {
+  path: string,
+  name: string,
+  Icon: IconType
 }
