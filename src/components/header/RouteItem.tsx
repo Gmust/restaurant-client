@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { cn } from '@/src/lib/utils';
 import { IRoute } from '@/@types/routes';
 
 export const RouteItem = ({ name, path }: IRoute) => {

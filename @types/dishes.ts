@@ -51,3 +51,6 @@ export enum DishCategories {
   Snack = 'Snack',
 }
 
+export interface IChangeDishInfoReq {
+
+}

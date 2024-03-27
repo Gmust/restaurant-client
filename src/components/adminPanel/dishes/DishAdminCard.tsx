@@ -6,12 +6,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { ChangeDishModal } from '@/src/components/adminPanel/dishes/ChangeDishModal';
+import { IIngredient } from '@/@types/ingredients';
 
 interface IDishAdminCardProps {
   dish: IDish;
+  allIngredients: IIngredient[]
 }
 
-export const DishAdminCard = ({ dish }: IDishAdminCardProps) => {
+export const DishAdminCard = ({ dish, allIngredients }: IDishAdminCardProps) => {
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isDelete, setIsDelete] = useState<boolean>(false);
@@ -51,7 +53,7 @@ export const DishAdminCard = ({ dish }: IDishAdminCardProps) => {
           </Button>
         </div>
       </div>
-      <ChangeDishModal dish={dish} setIsActive={setIsEdit} isActive={isEdit}/>
+      <ChangeDishModal dish={dish} setIsActive={setIsEdit} isActive={isEdit} allIngredients={allIngredients}/>
     </>
   );
 };

@@ -73,4 +73,8 @@ export class DishesService {
     }
   }
 
+  static async changeDishInfo({}) {
+
+  }
+
 }
