@@ -10,7 +10,7 @@ import { CustomInput } from '@/src/components/shared/CustomInput';
 import { Button } from '@/src/components/shared/Button';
 import { IIngredient } from '@/@types/ingredients';
 import { useState } from 'react';
-import { IngredientsList } from '@/src/components/adminPanel/dishes/IngredientsList';
+import { IngredientsList } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientsList';
 
 interface IChangeDishModalProps extends IModalProps {
   dish: IDish;

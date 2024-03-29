@@ -66,8 +66,7 @@ export class DishesService {
           'Authorization': `Bearer ${token}`,
         },
       });
-
-      return await response.json() as IDish[];
+      return await response.clone().json() as IDish[];
     } catch (e) {
       console.error('Error fetching dishes menu:', e);
     }
