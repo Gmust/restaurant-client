@@ -29,7 +29,7 @@ export const IngredientItemsContainer = ({
   };
 
   return (
-    <div className='flex flex-col'
+    <div className='flex flex-col max-w-[150px]'
          onDragOver={handleDragOver}
          onDrop={handleDrop}>
       {ingredients.length > 0 ?

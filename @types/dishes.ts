@@ -52,5 +52,14 @@ export enum DishCategories {
 }
 
 export interface IChangeDishInfoReq {
-
+  _id: string
+  name?: string,
+  description?: string,
+  isVegan?: boolean,
+  price?: number,
+  ingredients?: IIngredient[],
+  preparationTime?: string,
+  category?: DishCategories,
+  isAvailable?: boolean,
+  dishWeight?: number,
 }

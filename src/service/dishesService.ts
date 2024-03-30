@@ -1,4 +1,10 @@
-import { IDish, IFetchDishesRequest, IFetchDishesResponse, IFetchSpecialtiesResponse } from '@/@types/dishes';
+import {
+  IChangeDishInfoReq,
+  IDish,
+  IFetchDishesRequest,
+  IFetchDishesResponse,
+  IFetchSpecialtiesResponse,
+} from '@/@types/dishes';
 import { IPayForOrderRes } from '@/@types/orders';
 import { $authHost } from '@/src/service/index';
 
@@ -66,14 +72,21 @@ export class DishesService {
           'Authorization': `Bearer ${token}`,
         },
       });
-      return await response.clone().json() as IDish[];
+      return await response.json() as IDish[];
     } catch (e) {
       console.error('Error fetching dishes menu:', e);
     }
   }
 
-  static async changeDishInfo({}) {
+  static async changeDishInfo(updatedDish: IChangeDishInfoReq) {
+    try {
+      const response = await $authHost.patch<IDish>('/dishes', updatedDish);
 
+      return response.data;
+    } catch (e) {
+      console.error('Error changing dish info', e);
+      throw new Error('Error changing dish info', { cause: e });
+    }
   }
 
 }

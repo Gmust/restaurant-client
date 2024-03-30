@@ -1,6 +1,9 @@
 import { $authHost } from '@/src/service/index';
 import { IIngredient } from '@/@types/ingredients';
 import { IDish } from '@/@types/dishes';
+import { AuthService } from '@/src/service/authService';
+import { cookies } from 'next/headers';
+import { storeToken } from '@/src/lib/store-token';
 
 
 export class IngredientsService {
@@ -18,7 +21,6 @@ export class IngredientsService {
       return await response.json() as IIngredient[];
     } catch (e) {
       console.error('Error fetching all ingredients:', e);
-      throw Error('Error fetching all ingredients:')
     }
   }
 

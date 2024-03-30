@@ -18,7 +18,7 @@ const DishesPage = async () => {
       {
         allDishes && allDishes.length > 0 ?
           <div className='flex justify-between w-full'>
-            <DishesList allIngredients={allIngredients} initialDishes={allDishes} />
+            <DishesList allIngredients={allIngredients!} initialDishes={allDishes} />
             {/*<div>*/}
             {/*  <div>*/}
             {/*    <p>Total amount of dishes: {allDishes.length}</p>*/}

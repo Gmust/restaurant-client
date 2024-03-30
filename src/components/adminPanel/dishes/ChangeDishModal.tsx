@@ -9,8 +9,11 @@ import { z } from 'zod';
 import { CustomInput } from '@/src/components/shared/CustomInput';
 import { Button } from '@/src/components/shared/Button';
 import { IIngredient } from '@/@types/ingredients';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IngredientsList } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientsList';
+import { DishesService } from '@/src/service/dishesService';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 interface IChangeDishModalProps extends IModalProps {
   dish: IDish;
@@ -21,8 +24,8 @@ type formData = z.infer<typeof changeDishValidator>
 
 export const ChangeDishModal = ({ dish, isActive, setIsActive, allIngredients }: IChangeDishModalProps) => {
 
-  const [pickedIngredients, setPickedIngredients] = useState<IIngredient[]>([]);
-
+  const [pickedIngredients, setPickedIngredients] = useState<IIngredient[]>(dish.ingredients);
+  const router = useRouter();
   const { register, reset, handleSubmit, formState: { errors } } = useForm<formData>({
     resolver: zodResolver(changeDishValidator),
     mode: 'all',
@@ -32,17 +35,34 @@ export const ChangeDishModal = ({ dish, isActive, setIsActive, allIngredients }:
     },
   });
 
-  const onSubmit = (formData: formData) => {
+
+  const onSubmit = async (formData: formData) => {
     try {
-
+      const response = await DishesService.changeDishInfo({
+        name: formData.name,
+        _id: dish._id,
+        category: formData.category as DishCategories,
+        dishWeight: formData.dishWeight,
+        description: formData.description,
+        ingredients: pickedIngredients,
+        isAvailable: formData.isAvailable,
+        isVegan: formData.isVegan,
+        price: formData.price,
+        preparationTime: formData.preparationTime?.toString(),
+      });
+      if(response._id){
+        toast.success('Dish successfully updated');
+        router.refresh()
+      }
     } catch (e) {
-
+      console.error(e);
+      toast('Something went wrong')
     }
   };
 
   return (
     <Modal setIsActive={setIsActive} isActive={isActive}>
-      <div className='flex space-x-8 divide-x-2'>
+      <div className='flex space-x-2 divide-x-2'>
         <form className='flex justify-between flex-col' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex space-x-4'>
             <div className='flex flex-col space-y-6 '>
@@ -122,7 +142,8 @@ export const ChangeDishModal = ({ dish, isActive, setIsActive, allIngredients }:
           </div>
           <Button className='mt-2' type='submit'>Update</Button>
         </form>
-        <IngredientsList allIngredients={allIngredients} setPickedIngredients={setPickedIngredients} pickedIngredients={pickedIngredients}/>
+        <IngredientsList allIngredients={allIngredients} setPickedIngredients={setPickedIngredients}
+                         pickedIngredients={pickedIngredients} />
       </div>
     </Modal>
   );

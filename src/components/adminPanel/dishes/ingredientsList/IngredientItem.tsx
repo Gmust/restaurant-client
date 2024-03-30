@@ -1,6 +1,7 @@
 import { PiDotsNine } from 'react-icons/pi';
 import React from 'react';
 import { IIngredient } from '@/@types/ingredients';
+import { cn } from '@/src/lib/utils';
 
 interface IIngredientItemProps {
   ingredient: IIngredient,
@@ -18,7 +19,9 @@ export const IngredientItem = ({ ingredient, isDragging, handleDragging }: IIngr
   };
 
   return (
-    <div className='flex space-x-1 items-center cursor-pointer' draggable={true} onDragEnd={handleDragEnd}
+    <div className={cn('flex space-x-1 items-center cursor-pointer', {
+      'opacity-60':isDragging
+    })} draggable={true} onDragEnd={handleDragEnd}
          onDragStart={handleDragStart}>
       <p>
         {ingredient.name.charAt(0).toUpperCase() + ingredient.name.slice(1)}

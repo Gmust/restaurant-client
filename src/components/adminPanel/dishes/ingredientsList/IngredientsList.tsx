@@ -19,20 +19,28 @@ interface IIngredientsList {
 export const IngredientsList = ({ setPickedIngredients, allIngredients, pickedIngredients }: IIngredientsList) => {
 
   const [isListOpened, setIsListOpened] = useState<boolean>(false);
-  const [ingredients, setIngredients] = useState<IIngredient[] | []>(allIngredients);
+  const [ingredients, setIngredients] = useState<IIngredient[] | []>(allIngredients.filter(item=> !pickedIngredients.find(rm=> rm._id === item._id)));
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const handleDragging = (dragging: boolean) => setIsDragging(dragging);
 
-  const handleUpdateList = (id: string) => {
+  const handleUpdatePickedList = (id: string) => {
     let ingredientFromList = ingredients.find(item => item._id = id);
     if (ingredientFromList && !pickedIngredients.find(item => item._id = id)) {
       const newIngredientsList = ingredients.filter(item => item._id != id);
       setIngredients(newIngredientsList);
       setPickedIngredients([...pickedIngredients, ingredientFromList]);
     }
-
   };
+
+  const handleUpdateIngredientsList =(id:string)=> {
+    const ingredientFromList = pickedIngredients.find(item => item._id = id);
+    if (ingredientFromList && !ingredients.find(item => item._id = id)) {
+      const newIngredientsList = pickedIngredients.filter(item => item._id != id);
+      setPickedIngredients(newIngredientsList);
+      setIngredients([...ingredients, ingredientFromList]);
+    }
+  }
 
   return (
     <div className='flex flex-col pl-4 relative'>
@@ -43,7 +51,7 @@ export const IngredientsList = ({ setPickedIngredients, allIngredients, pickedIn
                               onClick={() => setIsListOpened(prevState => !prevState)} />
         </Tooltip>
       </span>
-      <IngredientItemsContainer handleUpdateList={handleUpdateList} ingredients={pickedIngredients}
+      <IngredientItemsContainer handleUpdateList={handleUpdatePickedList} ingredients={pickedIngredients}
                                 isDragging={isDragging} handleDragging={handleDragging} />
       <div className={cn('absolute ml-60 bg-white p-2 rounded-md w-full', {
         'flex flex-col animate-fadeInTop': isListOpened,
@@ -51,7 +59,7 @@ export const IngredientsList = ({ setPickedIngredients, allIngredients, pickedIn
       })}>
         <h3>Ingredients list:</h3>
         <div className='flex flex-col divide-y-2 mt-2 shadow-2xl shadow-black'>
-          <IngredientItemsContainer handleUpdateList={handleUpdateList} ingredients={ingredients}
+          <IngredientItemsContainer handleUpdateList={handleUpdateIngredientsList} ingredients={ingredients}
                                     isDragging={isDragging} handleDragging={handleDragging} />
         </div>
       </div>
