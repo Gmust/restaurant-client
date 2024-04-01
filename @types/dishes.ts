@@ -63,3 +63,19 @@ export interface IChangeDishInfoReq {
   isAvailable?: boolean,
   dishWeight?: number,
 }
+
+export interface ICreateDishResponse {
+  message: string,
+  dish: IDish
+}
+
+
+export interface IAdminDishesStore {
+  dishes: IDish[],
+  actions: {
+    deleteDish: (dishId: string) => void;
+    updateDish: (updatedDish: IDish) => void;
+    createDish: (newDish: IDish) => void;
+    setDishes: (dishes: IDish[]) => void
+  }
+}

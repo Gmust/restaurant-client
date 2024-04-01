@@ -9,24 +9,36 @@ import { z } from 'zod';
 import { CustomInput } from '@/src/components/shared/CustomInput';
 import { Button } from '@/src/components/shared/Button';
 import { IIngredient } from '@/@types/ingredients';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { IngredientsList } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientsList';
 import { DishesService } from '@/src/service/dishesService';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useAdminDishesStore } from '@/src/store/admin-dishes-store';
 
 interface IChangeDishModalProps extends IModalProps {
   dish: IDish;
   allIngredients: IIngredient[];
+  dishes: IDish[];
+  setDishes: Dispatch<SetStateAction<IDish[]>>;
 }
 
 type formData = z.infer<typeof changeDishValidator>
 
-export const ChangeDishModal = ({ dish, isActive, setIsActive, allIngredients }: IChangeDishModalProps) => {
+export const ChangeDishModal = ({
+                                  dishes,
+                                  dish,
+                                  isActive,
+                                  setIsActive,
+                                  allIngredients,
+                                  setDishes,
+                                }: IChangeDishModalProps) => {
 
   const [pickedIngredients, setPickedIngredients] = useState<IIngredient[]>(dish.ingredients);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const updateDish = useAdminDishesStore(state => state.actions.updateDish);
   const router = useRouter();
-  const { register, reset, handleSubmit, formState: { errors } } = useForm<formData>({
+  const { register, reset, handleSubmit, setError, formState: { errors } } = useForm<formData>({
     resolver: zodResolver(changeDishValidator),
     mode: 'all',
     defaultValues: {
@@ -35,8 +47,20 @@ export const ChangeDishModal = ({ dish, isActive, setIsActive, allIngredients }:
     },
   });
 
+  const handleUpdateDish = (updatedDish: IDish) => {
+    const index = dishes.findIndex((d) => d._id === updatedDish._id);
+    if (index !== -1) {
+      const updatedDishes = [...dishes];
+      updatedDishes[index] = updatedDish;
+      setDishes(updatedDishes);
+    }
+  };
 
   const onSubmit = async (formData: formData) => {
+    if (!pickedIngredients) {
+      return setError('name', { message: 'Provide ingredients' });
+    }
+    setIsLoading(true);
     try {
       const response = await DishesService.changeDishInfo({
         name: formData.name,
@@ -50,13 +74,18 @@ export const ChangeDishModal = ({ dish, isActive, setIsActive, allIngredients }:
         price: formData.price,
         preparationTime: formData.preparationTime?.toString(),
       });
-      if(response._id){
+      if (response._id) {
+        updateDish(response)
+        //handleUpdateDish(response);
         toast.success('Dish successfully updated');
-        router.refresh()
+        setIsActive(false)
+        router.refresh();
       }
     } catch (e) {
       console.error(e);
-      toast('Something went wrong')
+      toast('Something went wrong');
+    }finally {
+      setIsLoading(false)
     }
   };
 
@@ -79,7 +108,7 @@ export const ChangeDishModal = ({ dish, isActive, setIsActive, allIngredients }:
                   <select id='dish-category' title='Dish category'
                           defaultValue={dish.category} {...register('category')}
                           className='text-xl block py-1 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-                    {Object.values(DishCategories).map(dishOption =>
+                    {Object.values(DishCategories).filter(category => category != DishCategories.All).map(dishOption =>
                       <option value={dishOption} key={dishOption}
                       >
                         {dishOption}
@@ -140,7 +169,7 @@ export const ChangeDishModal = ({ dish, isActive, setIsActive, allIngredients }:
               <p className='text-red-700 font-semibold'>{errors.isVegan && errors.isVegan.message}</p>
             </div>
           </div>
-          <Button className='mt-2' type='submit'>Update</Button>
+          <Button className='mt-2' type='submit' isLoading={isLoading}>Update</Button>
         </form>
         <IngredientsList allIngredients={allIngredients} setPickedIngredients={setPickedIngredients}
                          pickedIngredients={pickedIngredients} />

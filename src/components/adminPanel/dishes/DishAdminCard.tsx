@@ -4,16 +4,21 @@ import { Edit2, Trash } from 'lucide-react';
 import { IDish } from '@/@types/dishes';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { ChangeDishModal } from '@/src/components/adminPanel/dishes/ChangeDishModal';
 import { IIngredient } from '@/@types/ingredients';
+import toast from 'react-hot-toast';
+import { DishesService } from '@/src/service/dishesService';
+import { DeleteDishModal } from '@/src/components/adminPanel/dishes/DeleteDishModal';
 
 interface IDishAdminCardProps {
   dish: IDish;
-  allIngredients: IIngredient[]
+  allIngredients: IIngredient[];
+  setDishes: Dispatch<SetStateAction<IDish[]>>;
+  dishes: IDish[]
 }
 
-export const DishAdminCard = ({ dish, allIngredients }: IDishAdminCardProps) => {
+export const DishAdminCard = ({dishes, dish, allIngredients, setDishes }: IDishAdminCardProps) => {
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isDelete, setIsDelete] = useState<boolean>(false);
@@ -53,7 +58,8 @@ export const DishAdminCard = ({ dish, allIngredients }: IDishAdminCardProps) => 
           </Button>
         </div>
       </div>
-      <ChangeDishModal dish={dish} setIsActive={setIsEdit} isActive={isEdit} allIngredients={allIngredients}/>
+      <ChangeDishModal dishes={dishes} dish={dish} setIsActive={setIsEdit} isActive={isEdit} allIngredients={allIngredients} setDishes={setDishes} />
+      <DeleteDishModal isActive={isDelete} setIsActive={setIsDelete} dishId={dish._id} setDishes={setDishes} />
     </>
   );
 };

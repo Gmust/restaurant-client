@@ -1,24 +1,27 @@
 'use client';
 
 import { IDish } from '@/@types/dishes';
-import { useState } from 'react';
-import { Input } from 'postcss';
+import { useEffect, useState } from 'react';
 import { CustomInput } from '@/src/components/shared/CustomInput';
-import { Edit2, SearchIcon, Trash } from 'lucide-react';
 import { FiSearch } from 'react-icons/fi';
-import { DishCard } from '@/src/components/shared/DishCard';
-import { Button } from '@/src/components/shared/Button';
 import { DishAdminCard } from '@/src/components/adminPanel/dishes/DishAdminCard';
 import { IIngredient } from '@/@types/ingredients';
+import { useAdminDishesStore } from '@/src/store/admin-dishes-store';
 
 interface IDishesListProps {
   initialDishes: IDish[];
-  allIngredients: IIngredient[]
+  allIngredients: IIngredient[];
 }
 
 export const DishesList = ({ initialDishes, allIngredients }: IDishesListProps) => {
 
-  const [dishes, setDishes] = useState<IDish[]>(initialDishes);
+
+  const [ddishes, setDishes] = useState<IDish[]>(initialDishes);
+  const { dishes, actions } = useAdminDishesStore();
+
+  useEffect(() => {
+    actions.setDishes(initialDishes);
+  }, []);
 
 
   return (
@@ -28,7 +31,8 @@ export const DishesList = ({ initialDishes, allIngredients }: IDishesListProps) 
       </div>
       <div className='grid grid-cols-2 overflow-y-auto  gap-2 p-2 max-h-[550px]'>
         {dishes.map(dish =>
-          <DishAdminCard dish={dish} key={dish._id} allIngredients={allIngredients}/>
+          <DishAdminCard dishes={dishes} dish={dish} key={dish._id} allIngredients={allIngredients}
+                         setDishes={setDishes} />,
         )}
       </div>
     </div>

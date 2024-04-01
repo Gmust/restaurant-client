@@ -1,5 +1,5 @@
 import {
-  IChangeDishInfoReq,
+  IChangeDishInfoReq, ICreateDishResponse,
   IDish,
   IFetchDishesRequest,
   IFetchDishesResponse,
@@ -89,4 +89,25 @@ export class DishesService {
     }
   }
 
+  static async createDish(formData: any) {
+    try {
+      const response = await $authHost.post<ICreateDishResponse>('/dishes', formData);
+
+      return response.data;
+    } catch (e) {
+      console.error('Error creating dish:', e);
+      throw e;
+    }
+  }
+
+  static async deleteDish(dishId: string) {
+    try {
+      const response = await $authHost.delete<{ message: string }>(`/dishes/${dishId}`);
+
+      return response.data;
+    } catch (e) {
+      console.error('Error deleting dish:', e);
+      throw e;
+    }
+  }
 }

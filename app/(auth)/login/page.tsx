@@ -21,7 +21,13 @@ type formData = z.infer<typeof loginUserValidator>
 const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const user = useUserStore(state => state.user)
   const router = useRouter();
+
+  if(user){
+    router.push('/user/account-info');
+  }
+
   const { actions: { setUser, setIsAuth } } = useUserStore();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm<formData>({
     mode: 'all',

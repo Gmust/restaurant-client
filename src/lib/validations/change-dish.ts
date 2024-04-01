@@ -14,4 +14,4 @@ export const changeDishValidator = z.object({
   isAvailable: z.boolean().optional(),
   dishWeight: z.number().optional(),
 });
-3
+

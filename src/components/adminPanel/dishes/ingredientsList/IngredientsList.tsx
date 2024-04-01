@@ -19,7 +19,7 @@ interface IIngredientsList {
 export const IngredientsList = ({ setPickedIngredients, allIngredients, pickedIngredients }: IIngredientsList) => {
 
   const [isListOpened, setIsListOpened] = useState<boolean>(false);
-  const [ingredients, setIngredients] = useState<IIngredient[] | []>(allIngredients.filter(item=> !pickedIngredients.find(rm=> rm._id === item._id)));
+  const [ingredients, setIngredients] = useState<IIngredient[] | []>(allIngredients.filter(item => !pickedIngredients.find(rm => rm._id === item._id)));
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const handleDragging = (dragging: boolean) => setIsDragging(dragging);
@@ -33,14 +33,14 @@ export const IngredientsList = ({ setPickedIngredients, allIngredients, pickedIn
     }
   };
 
-  const handleUpdateIngredientsList =(id:string)=> {
+  const handleUpdateIngredientsList = (id: string) => {
     const ingredientFromList = pickedIngredients.find(item => item._id = id);
     if (ingredientFromList && !ingredients.find(item => item._id = id)) {
       const newIngredientsList = pickedIngredients.filter(item => item._id != id);
       setPickedIngredients(newIngredientsList);
       setIngredients([...ingredients, ingredientFromList]);
     }
-  }
+  };
 
   return (
     <div className='flex flex-col pl-4 relative'>
