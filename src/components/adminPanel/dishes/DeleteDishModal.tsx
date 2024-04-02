@@ -12,10 +12,9 @@ interface IDeleteDishModalProps {
   isActive: boolean,
   setIsActive: Dispatch<SetStateAction<boolean>>,
   dishId: string,
-  setDishes: Dispatch<SetStateAction<IDish[]>>
 }
 
-export const DeleteDishModal = ({ dishId, isActive, setIsActive, setDishes }: IDeleteDishModalProps) => {
+export const DeleteDishModal = ({ dishId, isActive, setIsActive }: IDeleteDishModalProps) => {
 
   const router = useRouter();
   const deleteDish = useAdminDishesStore(state => state.actions.deleteDish);

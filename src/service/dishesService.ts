@@ -110,4 +110,15 @@ export class DishesService {
       throw e;
     }
   }
+
+  static async getDishesByTerm(term: string) {
+    try {
+      const response = await $authHost.get(`/dishes/find?term=${term}`);
+      return response.data;
+    } catch (e) {
+      console.error('Error finding dish by term', e);
+      throw e;
+    }
+  }
+
 }

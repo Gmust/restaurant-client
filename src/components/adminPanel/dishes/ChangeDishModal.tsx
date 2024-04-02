@@ -20,7 +20,6 @@ interface IChangeDishModalProps extends IModalProps {
   dish: IDish;
   allIngredients: IIngredient[];
   dishes: IDish[];
-  setDishes: Dispatch<SetStateAction<IDish[]>>;
 }
 
 type formData = z.infer<typeof changeDishValidator>
@@ -31,7 +30,6 @@ export const ChangeDishModal = ({
                                   isActive,
                                   setIsActive,
                                   allIngredients,
-                                  setDishes,
                                 }: IChangeDishModalProps) => {
 
   const [pickedIngredients, setPickedIngredients] = useState<IIngredient[]>(dish.ingredients);
@@ -46,15 +44,6 @@ export const ChangeDishModal = ({
       isAvailable: dish.isAvailable,
     },
   });
-
-  const handleUpdateDish = (updatedDish: IDish) => {
-    const index = dishes.findIndex((d) => d._id === updatedDish._id);
-    if (index !== -1) {
-      const updatedDishes = [...dishes];
-      updatedDishes[index] = updatedDish;
-      setDishes(updatedDishes);
-    }
-  };
 
   const onSubmit = async (formData: formData) => {
     if (!pickedIngredients) {

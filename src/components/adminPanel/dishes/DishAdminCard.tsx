@@ -14,11 +14,10 @@ import { DeleteDishModal } from '@/src/components/adminPanel/dishes/DeleteDishMo
 interface IDishAdminCardProps {
   dish: IDish;
   allIngredients: IIngredient[];
-  setDishes: Dispatch<SetStateAction<IDish[]>>;
   dishes: IDish[]
 }
 
-export const DishAdminCard = ({dishes, dish, allIngredients, setDishes }: IDishAdminCardProps) => {
+export const DishAdminCard = ({dishes, dish, allIngredients }: IDishAdminCardProps) => {
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isDelete, setIsDelete] = useState<boolean>(false);
@@ -58,8 +57,8 @@ export const DishAdminCard = ({dishes, dish, allIngredients, setDishes }: IDishA
           </Button>
         </div>
       </div>
-      <ChangeDishModal dishes={dishes} dish={dish} setIsActive={setIsEdit} isActive={isEdit} allIngredients={allIngredients} setDishes={setDishes} />
-      <DeleteDishModal isActive={isDelete} setIsActive={setIsDelete} dishId={dish._id} setDishes={setDishes} />
+      <ChangeDishModal dishes={dishes} dish={dish} setIsActive={setIsEdit} isActive={isEdit} allIngredients={allIngredients} />
+      <DeleteDishModal isActive={isDelete} setIsActive={setIsDelete} dishId={dish._id} />
     </>
   );
 };
