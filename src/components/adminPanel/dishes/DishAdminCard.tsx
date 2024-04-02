@@ -10,6 +10,7 @@ import { IIngredient } from '@/@types/ingredients';
 import toast from 'react-hot-toast';
 import { DishesService } from '@/src/service/dishesService';
 import { DeleteDishModal } from '@/src/components/adminPanel/dishes/DeleteDishModal';
+import { UpdateDeleteButtons } from '@/src/components/shared/UpdateDeleteButtons';
 
 interface IDishAdminCardProps {
   dish: IDish;
@@ -49,12 +50,7 @@ export const DishAdminCard = ({dishes, dish, allIngredients }: IDishAdminCardPro
           </div>
         </div>
         <div className='flex flex-col space-y-6'>
-          <Button className='bg-emerald-700 hover:bg-emerald-800' onClick={() => setIsEdit(true)}>
-            <Edit2 />
-          </Button>
-          <Button className='bg-red-600 hover:bg-red-800' onClick={() => setIsDelete(true)}>
-            <Trash />
-          </Button>
+          <UpdateDeleteButtons setIsEdit={setIsEdit} setIsDelete={setIsDelete} buttonsSize={'md'}/>
         </div>
       </div>
       <ChangeDishModal dishes={dishes} dish={dish} setIsActive={setIsEdit} isActive={isEdit} allIngredients={allIngredients} />

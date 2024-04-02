@@ -5,6 +5,7 @@ import { Button } from '@/src/components/shared/Button';
 import { Edit2, Trash } from 'lucide-react';
 import { DeleteIngredientModal } from '@/src/components/adminPanel/ingredients/DeleteIngredientModal';
 import { UpdateIngredientsModal } from '@/src/components/adminPanel/ingredients/UpdateIngredientsModal';
+import { UpdateDeleteButtons } from '@/src/components/shared/UpdateDeleteButtons';
 
 
 interface IIngredientTableItem {
@@ -30,12 +31,7 @@ export const IngredientTableItem = ({
         <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap '>{quantity}</td>
         <td className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap '>{unit}</td>
         <td className='px-6 py-4 font-medium text-gray-900 flex flex-col space-y-2'>
-          <Button className='bg-emerald-700 hover:bg-emerald-800' size='sm' onClick={() => setIsEdit(true)}>
-            <Edit2 />
-          </Button>
-          <Button className='bg-red-600 hover:bg-red-800' size='sm' onClick={() => setIsDelete(true)}>
-            <Trash />
-          </Button>
+          <UpdateDeleteButtons setIsEdit={setIsEdit} setIsDelete={setIsDelete} buttonsSize={'sm'}/>
         </td>
       </tr>
       <DeleteIngredientModal setIsActive={setIsDelete} isActive={isDelete} ingredientId={_id}

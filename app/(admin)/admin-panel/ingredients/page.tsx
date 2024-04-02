@@ -15,7 +15,7 @@ const IngredientsPage = async () => {
   return (
     <div>
       {
-        allIngredients && allIngredients.length > 0 ?
+        allIngredients  ?
             <IngredientsList ingredients={allIngredients} />
           :
           <div>Error....s</div>
