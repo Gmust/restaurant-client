@@ -52,5 +52,5 @@ export function showDishCategoryIcon(dishCategory: DishCategories) {
 
 
 export function capitalizeFirstLetter(str: string) {
-  return str[0].toUpperCase() + str.slice(1);
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

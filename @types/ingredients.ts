@@ -8,6 +8,11 @@ export enum Units {
 export interface IIngredient {
   _id: string,
   name: string,
-  quantity: string,
-  unit: string
+  quantity: number,
+  unit: Units
+}
+
+export interface ICreateIngredientRes {
+  message: string,
+  ingredient: IIngredient
 }
