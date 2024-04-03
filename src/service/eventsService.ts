@@ -24,9 +24,9 @@ export class EventsService {
     }
   }
 
-  static async createEvent({ name, endDate, startDate, description }: Omit<IEvent, '_id'>) {
+  static async createEvent({ name, endDate, startDate, description }: ICreateEventReq) {
     try {
-      const response = await $authHost.post('/events', {
+      const response = await $authHost.post<ICreateEventRes>('/events', {
         name,
         description,
         startDate,

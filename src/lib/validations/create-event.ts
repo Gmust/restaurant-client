@@ -12,7 +12,7 @@ export const createEventValidator = z.object({
       z
         .string()
         .datetime({ message: 'incorrect format' }),
-    ),
+    ).optional(),
   endDate: z.string()
     .min(1, { message: 'mandatory' })
     .transform((v) => v.split('-').reverse().join('-'))
@@ -21,5 +21,5 @@ export const createEventValidator = z.object({
       z
         .string()
         .datetime({ message: 'incorrect format' }),
-    ),
+    ).optional()
 });
