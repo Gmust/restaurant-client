@@ -17,3 +17,17 @@ interface ICreateEventRes {
   message: string,
   newEvent: IEvent
 }
+
+
+interface IChangeEventReq {
+  name: string,
+  description: string,
+  eventId: string,
+  startDate: Date,
+  endDate: Date
+}
+
+interface IChangeEventRes {
+  message: string,
+  event: IEvent
+}

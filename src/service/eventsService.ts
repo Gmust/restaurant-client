@@ -40,4 +40,25 @@ export class EventsService {
     }
   }
 
+  static async updateEvent(updatedEvent: IChangeEventReq) {
+    try {
+      const response = await $authHost.patch<IChangeEventRes>('/events/change-info', updatedEvent);
+
+      return response.data;
+    } catch (e) {
+      console.error('Failed to update event');
+      throw e;
+    }
+  }
+
+  static async deleteEvent(eventId: string) {
+    try {
+      const response = await $authHost.delete<{ message: string }>(`/events/${eventId}`);
+
+      return response.data;
+    } catch (e) {
+      console.error('Failed to delete event');
+      throw e;
+    }
+  }
 };

@@ -10,6 +10,7 @@ import { IngredientsService } from '@/src/service/ingredientsService';
 import { Modal } from '@/src/components/shared/Modal';
 import { CustomInput } from '@/src/components/shared/CustomInput';
 import { Button } from '@/src/components/shared/Button';
+import { handleUpdateData } from '@/src/lib/handleUpdateData';
 
 
 interface IUpdateIngredientsModal {
@@ -40,14 +41,14 @@ export const UpdateIngredientsModal = ({
     },
   });
 
-  const handleUpdateIngredients = (updatedIngredient: IIngredient) => {
-    const index = ingredients.findIndex((d) => d._id === updatedIngredient._id);
-    if (index !== -1) {
-      const updatedDishes = [...ingredients];
-      updatedDishes[index] = updatedIngredient;
-      setIngredients(updatedDishes);
-    }
-  };
+  // const handleUpdateIngredients = (updatedIngredient: IIngredient) => {
+  //   const index = ingredients.findIndex((d) => d._id === updatedIngredient._id);
+  //   if (index !== -1) {
+  //     const updatedDishes = [...ingredients];
+  //     updatedDishes[index] = updatedIngredient;
+  //     setIngredients(updatedDishes);
+  //   }
+  // };
 
   const onSubmit = async (formData: formData) => {
     setIsLoading(true);
@@ -58,7 +59,11 @@ export const UpdateIngredientsModal = ({
         name: formData.name!,
         quantity: formData.quantity!,
       });
-      handleUpdateIngredients(response);
+      handleUpdateData({
+        setData: setIngredients,
+        updatedData: response,
+        data: ingredients,
+      });
       toast.success('Ingredient successfully updated');
       reset();
       setIsActive(false);

@@ -1,81 +1,59 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Modal } from '@/src/components/shared/Modal';
-import { z } from 'zod';
-import { createEventValidator } from '@/src/lib/validations/create-event';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomInput } from '@/src/components/shared/CustomInput';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Button } from '@/src/components/shared/Button';
-import { EventsService } from '@/src/service/eventsService';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { updateEventValidator } from '@/src/lib/validations/update-event';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
+import { EventsService } from '@/src/service/eventsService';
+import { handleUpdateData } from '@/src/lib/handleUpdateData';
 
-interface ICreateEventModalProps {
-  setIsActive: Dispatch<SetStateAction<boolean>>,
-  isActive: boolean,
-  setEvents: Dispatch<SetStateAction<IEvent[]>>
+interface IUpdateEventModal {
+  isEdit: boolean,
+  setIsEdit: Dispatch<SetStateAction<boolean>>,
+  events: IEvent[],
+  setEvents: Dispatch<SetStateAction<IEvent[]>>,
+  event: IEvent
 }
 
+type formData = z.infer<typeof updateEventValidator>
 
-type formData = z.infer<typeof createEventValidator>;
+export const UpdateEventModal = ({ isEdit, setIsEdit, events, setEvents, event }: IUpdateEventModal) => {
 
-export const CreateEventModal = ({ setEvents, setIsActive, isActive }: ICreateEventModalProps) => {
-
+  const [newStartDate, setNewStartDate] = useState<Date>(new Date(event.startDate));
+  const [newEndDate, setNewEndDate] = useState<Date>(new Date(event.endDate));
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const { register, formState: { errors, isValid }, setError, handleSubmit, reset } = useForm<formData>({
-    resolver: zodResolver(createEventValidator),
+  const { handleSubmit, register, reset, formState: { errors, isValid }, setError } = useForm<formData>({
+    resolver: zodResolver(updateEventValidator),
     mode: 'all',
+    defaultValues: {
+      description: event.description,
+      name: event.name,
+    },
   });
 
   const onSubmit = async (formData: formData) => {
-    if (!startDate) {
-      setError('startDate', {
-        type: 'required',
-        message: 'Start date is required',
-      });
-    }
-    if (!endDate) {
-      setError('endDate', {
-        type: 'required',
-        message: 'End date is required',
-      });
-    }
-    if (startDate! < new Date()) {
-      setError('startDate', {
-        type: 'value',
-        message: 'You can`t create event in the past!',
-      });
-    }
-    if (endDate! < startDate!) {
-      setError('endDate', {
-        type: 'valueAsDate',
-        message: 'The end date cannot precede the start date',
-      });
-    }
-    if (startDate! === startDate!) {
-      setError('endDate', {
-        type: 'valueAsDate',
-        message: 'You cannot create events that start and end at the same time!',
-      });
-    }
     setIsLoading(true);
     try {
-      const response = await EventsService.createEvent({
-        name: formData.name,
-        description: formData.description,
-        startDate: startDate!.toISOString()!,
-        endDate: endDate!.toISOString(),
+      const response = await EventsService.updateEvent({
+        eventId: event._id,
+        name: formData.name!,
+        description: formData.description!,
+        startDate: newStartDate,
+        endDate: newEndDate,
+      });
+      handleUpdateData({
+        setData: setEvents,
+        updatedData: response.event,
+        data: events,
       });
       toast.success(response.message);
-      setEvents(prevState => [...prevState, response.newEvent]);
       reset();
-      setStartDate(null);
-      setEndDate(null);
-      setIsActive(false);
+      setIsEdit(false);
     } catch (e) {
       if (e instanceof AxiosError) {
         toast.error(e.response!.data.message);
@@ -87,9 +65,8 @@ export const CreateEventModal = ({ setEvents, setIsActive, isActive }: ICreateEv
     }
   };
 
-
   return (
-    <Modal isActive={isActive} setIsActive={setIsActive}>
+    <Modal setIsActive={setIsEdit} isActive={isEdit}>
       <div>
         <h1 className='text-2xl font-semibold'>Create new event:</h1>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col space-y-4'>
@@ -107,18 +84,18 @@ export const CreateEventModal = ({ setEvents, setIsActive, isActive }: ICreateEv
           <div className='flex space-x-8'>
             <div className='flex flex-col'>
               <label htmlFor='name' className='text-xl font-medium'>Set start
-                date: {startDate?.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</label>
+                date: {newStartDate?.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</label>
               <div>
-                <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} showTimeSelect inline />
+                <DatePicker selected={newStartDate} onChange={(date) => setNewStartDate(date!)} showTimeSelect inline />
               </div>
               <p
                 className='text-red-700 font-semibold'>{errors.startDate && errors.startDate?.type !== 'valueAsDate' && errors.startDate.message}</p>
             </div>
             <div className='flex flex-col'>
-              <label htmlFor='name' className='text-xl font-medium'>Set end
-                date: {endDate?.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</label>
+              <label htmlFor='name' className='text-xl font-medium'>
+                Set end date: {newEndDate?.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</label>
               <div>
-                <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} showTimeSelect inline />
+                <DatePicker selected={newEndDate} onChange={(date) => setNewEndDate(date!)} showTimeSelect inline />
               </div>
               <p
                 className='text-red-700 font-semibold'>{errors.endDate && errors.endDate?.type !== 'valueAsDate' && errors.endDate.message}</p>
@@ -127,7 +104,7 @@ export const CreateEventModal = ({ setEvents, setIsActive, isActive }: ICreateEv
           </div>
           <p
             className='text-red-700 font-semibold'>{errors.endDate?.type == 'valueAsDate' && errors.endDate.message}</p>
-          <Button type='submit' isLoading={isLoading} disabled={!startDate || !endDate || !isValid}>
+          <Button type='submit' isLoading={isLoading} disabled={!newStartDate || !newEndDate || !isValid}>
             Create Event
           </Button>
         </form>
