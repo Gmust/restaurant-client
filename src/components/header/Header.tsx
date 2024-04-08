@@ -13,11 +13,13 @@ import { AuthService } from '@/src/service/authService';
 import { cookies } from 'next/headers';
 import { useCartStore } from '@/src/store/cart-store';
 import { IUser } from '@/@types/user';
+import { useRouter } from 'next/navigation';
 
 
 export const Header = () => {
   const { isAuth, user, actions: { setUser, setIsAuth, removeUser } } = useUserStore();
   const { actions: { clearCart, setCart } } = useCartStore();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRefresh = async () => {
@@ -26,6 +28,7 @@ export const Header = () => {
         if (response.user.statusCode === 403 || response.user.statusCode === 500) {
           setIsAuth(false);
           removeUser();
+          window.history.replaceState(null, '','/')
         } else {
           setUser(response.user);
           setIsAuth(true);

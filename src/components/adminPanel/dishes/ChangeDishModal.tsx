@@ -112,7 +112,7 @@ export const ChangeDishModal = ({
               <div>
                 <label htmlFor='description'>Description:</label>
                 <textarea id='description' {...register('description')} defaultValue={dish.description} rows={4}
-                          className='block min-w-96 p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                          className='block min-w-96 p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500' />
                 <p className='text-red-700 font-semibold'>{errors.description && errors.description.message}</p>
               </div>
               <div>

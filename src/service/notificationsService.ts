@@ -1,4 +1,9 @@
-import { IChangeReceiveNewsErrorRes, IChangeReceiveNewsReq } from '@/@types/notifications';
+import {
+  IChangeReceiveNewsErrorRes,
+  IChangeReceiveNewsReq,
+  ISendNotificationReq,
+  ISendNotificationRes,
+} from '@/@types/notifications';
 import { IUser } from '@/@types/user';
 import { $authHost } from '@/src/service/index';
 
@@ -7,18 +12,6 @@ export class NotificationsService {
 
   static async changeUserReceiveNews({ userId, receiveNews }: IChangeReceiveNewsReq) {
     try {
-      // const data = JSON.stringify({ userId, receiveNews });
-      //
-      // const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/users/change-receive-news`, {
-      //   method: 'PATCH',
-      //   body: data,
-      //   headers: {
-      //     'Authorization': `Bearer ${token}`,
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-      //
-      // return await response.json();
 
       const response = await $authHost.patch(`/users/change-receive-news`, {
         userId,
@@ -31,5 +24,19 @@ export class NotificationsService {
     }
   }
 
+  static async sendNotification({ role, subject, message }: ISendNotificationReq) {
+    try {
+      const response = await $authHost.post<ISendNotificationRes>('/users/send-notification', {
+        role,
+        message,
+        subject,
+      });
+
+      return response.data;
+    } catch (e) {
+      console.log('Failed to notify users', e);
+      throw e;
+    }
+  }
 
 }
