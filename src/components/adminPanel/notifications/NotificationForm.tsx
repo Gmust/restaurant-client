@@ -47,7 +47,7 @@ export const NotificationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col w-5/6 mt-2 space-y-4'>
+    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col w-5/6 mt-2 space-y-4 p-2'>
       <div>
         <label htmlFor='role'>Select receivers:</label>
         <select id='role'   {...register('role')}

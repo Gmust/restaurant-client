@@ -4,9 +4,9 @@ import {
   IOrder,
   IGuestPayForOrderReq,
   IPayForOrderRes,
-  IUserPayForOrderReq, IUserOrder,
+  IUserPayForOrderReq, IUserOrder, IUpdateOrderStatusReq, IUpdateOrderStatusRes, ICompleteOrderRes,
 } from '@/@types/orders';
-import { $unAuthHost } from '@/src/service/index';
+import { $authHost, $unAuthHost } from '@/src/service/index';
 
 
 export class OrdersService {
@@ -137,4 +137,58 @@ export class OrdersService {
       console.error('Failed to get order by id', e);
     }
   }
+
+  static async getAllOrders(access_token: string) {
+    const response = await $unAuthHost.get('orders/orders-list', {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    if (response.status == 403) {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/token`, { method: 'GET' });
+      const resData = await res.json();
+      const token = resData?.access_token;
+      console.log('token', token);
+      const response = await $unAuthHost.get('orders/orders-list', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response.data;
+    } else {
+      return response.data;
+    }
+  }
+
+  static async updateOrderStatus({ orderId, newStatus, userId }: IUpdateOrderStatusReq) {
+    try {
+      const response = await $authHost.patch<IUpdateOrderStatusRes>('orders/update-order-status', {
+        orderId,
+        newStatus,
+        userId,
+      });
+
+      return response.data;
+    } catch (e) {
+      console.error('Failed to update order status');
+      throw e;
+    }
+  }
+
+  static async completeOrder(orderId: string) {
+    try {
+      const response = await $authHost.delete<ICompleteOrderRes>('orders/complete-order', {
+        data: {
+          orderId,
+        },
+      });
+
+      return response.data;
+    } catch (e) {
+      console.error('Failed to complete order', e);
+      throw e;
+    }
+  }
+
 }

@@ -22,7 +22,7 @@ export interface IUserPayForOrderReq {
   takeaway: boolean;
   promoCode?: string;
   orderDate: string;
-  token: string
+  token: string;
 }
 
 
@@ -62,7 +62,7 @@ export interface IOrder {
   isConfirmed: boolean;
   _id: string;
   email: string;
-  status: string;
+  status: Statuses;
   orderItems: ICartItem[];
   totalPrice: number;
   takeaway: boolean;
@@ -72,3 +72,41 @@ export interface IOrder {
   statusCode: number;
 }
 
+export enum Statuses {
+  completed = 'Completed',
+  preparation = 'Preparation',
+  pending = 'Pending',
+  accepted = 'Accepted',
+  declined = 'Declined',
+}
+
+export interface IUpdateOrderStatusReq {
+  orderId: string,
+  newStatus: Statuses,
+  userId: string
+}
+
+export interface IUpdateOrderStatusRes {
+  orderId: string,
+  newStatus: Statuses,
+  userId: string
+}
+
+export interface ICompleteOrderRes {
+  message: string;
+}
+
+
+export interface UpdatedStatus {
+  newStatus: Statuses,
+  orderId: string
+}
+
+export interface IAdminOrdersStore {
+  orders: IOrder[],
+  actions: {
+    completeOrder: (orderId: string) => void;
+    updateOrderStatus: (updatedStatus: UpdatedStatus) => void;
+    setOrders: (orders: IOrder[]) => void
+  }
+}

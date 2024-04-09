@@ -22,17 +22,28 @@ export const Header = () => {
   const router = useRouter();
 
   useEffect(() => {
+
+    const handleSuccess =(response: any )=> {
+      setUser(response.user);
+      setIsAuth(true);
+      setCart(response.user.cart);
+    }
+
     const fetchRefresh = async () => {
       try {
         const response = await AuthService.checkIsAuth();
         if (response.user.statusCode === 403 || response.user.statusCode === 500) {
-          setIsAuth(false);
-          removeUser();
-          window.history.replaceState(null, '','/')
+          await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/token`, { method: 'GET' });
+          const response = await AuthService.checkIsAuth();
+          if (response.user.statusCode === 403 || response.user.statusCode === 500) {
+            setIsAuth(false);
+            removeUser();
+            window.history.replaceState(null, '', '/');
+          } else {
+            handleSuccess(response)
+          }
         } else {
-          setUser(response.user);
-          setIsAuth(true);
-          setCart(response.user.cart);
+          handleSuccess(response)
         }
       } catch (e) {
         setIsAuth(false);

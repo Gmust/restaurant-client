@@ -73,7 +73,6 @@ export class AuthService {
   static async checkIsAuth() {
     try {
       const nextRes = await fetch('/api/auth-next/token');
-      console.log(nextRes.status);
       if (nextRes.status !== 200) {
         return;
       } else if (nextRes.status == 200) {
