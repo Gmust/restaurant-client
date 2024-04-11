@@ -104,9 +104,11 @@ export interface UpdatedStatus {
 
 export interface IAdminOrdersStore {
   orders: IOrder[],
+  selectedOrder: IOrder | null,
   actions: {
     completeOrder: (orderId: string) => void;
+    selectOrder: (order: IOrder)=> void;
     updateOrderStatus: (updatedStatus: UpdatedStatus) => void;
-    setOrders: (orders: IOrder[]) => void
+    setOrders: (orders: IOrder[]) => void,
   }
 }

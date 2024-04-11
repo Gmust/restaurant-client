@@ -4,10 +4,16 @@ import { IAdminOrdersStore } from '@/@types/orders';
 
 export const useAdminOrdersStore = create<IAdminOrdersStore>()(set => ({
   orders: [],
+  selectedOrder: null,
   actions: {
     setOrders: (orders) => {
       set({
         orders,
+      });
+    },
+    selectOrder: (order) => {
+      set({
+        selectedOrder: order,
       });
     },
     completeOrder: (orderId) => {

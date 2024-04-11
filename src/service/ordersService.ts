@@ -139,25 +139,29 @@ export class OrdersService {
   }
 
   static async getAllOrders(access_token: string) {
-    const response = await $unAuthHost.get('orders/orders-list', {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    if (response.status == 403) {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/token`, { method: 'GET' });
-      const resData = await res.json();
-      const token = resData?.access_token;
-      console.log('token', token);
+    try {
       const response = await $unAuthHost.get('orders/orders-list', {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
+      if (response.status == 403) {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/token`, { method: 'GET' });
+        const resData = await res.json();
+        const token = resData?.access_token;
+        console.log('token', token);
+        const response = await $unAuthHost.get('orders/orders-list', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      return response.data;
-    } else {
-      return response.data;
+        return response.data;
+      } else {
+        return response.data;
+      }
+    }catch (e){
+      console.log(e);
     }
   }
 
