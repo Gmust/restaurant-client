@@ -35,6 +35,7 @@ export const useAdminDishesStore = create<IAdminDishesStore>()(set => ({
         }
         return state;
       });
+
     },
   },
 }));

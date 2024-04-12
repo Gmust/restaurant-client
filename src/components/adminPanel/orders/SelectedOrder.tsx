@@ -7,11 +7,45 @@ import { OrderItem } from '@/src/components/order/OrderItem';
 import { AdminOrderItem } from '@/src/components/adminPanel/orders/AdminOrderItem';
 import { Statuses } from '@/@types/orders';
 import { Button } from '@/src/components/shared/Button';
+import { ChangeEvent, useState } from 'react';
+import { OrdersService } from '@/src/service/ordersService';
+import toast from 'react-hot-toast';
+import { useUserStore } from '@/src/store/user-store';
 
 export const SelectedOrder = () => {
 
-  const { selectedOrder } = useAdminOrdersStore();
-  console.log(selectedOrder);
+  const { selectedOrder, actions: { updateOrderStatus, updateCurrentOrder } } = useAdminOrdersStore();
+  const { user } = useUserStore();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [status, setStatus] = useState<Statuses>();
+
+  const handleChangeStatus = async () => {
+    setIsLoading(true);
+    try {
+      if (selectedOrder?.email) {
+        const response = await OrdersService.updateGuestOrderStatus({ orderId: selectedOrder._id, newStatus: status! });
+        updateOrderStatus({ newStatus: response.newStatus, orderId: response.orderId });
+        updateCurrentOrder(status!);
+        toast.success(response.message);
+      } else if (selectedOrder?.user) {
+        console.log(user);
+        console.log(status);
+        const response = await OrdersService.updateOrderStatus({
+          orderId: selectedOrder._id,
+          newStatus: status!,
+          userId: user?._id!,
+        });
+        updateOrderStatus({ newStatus: response.newStatus, orderId: response.orderId });
+        updateCurrentOrder(status!);
+        toast.success(response.message);
+      }
+    } catch (e) {
+
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className='flex flex-col text-2xl text-black border-[3px] border-black rounded-md p-2'>
       <p>Order number: <strong>{selectedOrder?.orderNumber}</strong></p>
@@ -32,12 +66,17 @@ export const SelectedOrder = () => {
       </div>
       <div className='flex flex-col space-y-2'>
         <p>Current status: <strong>{selectedOrder?.status}</strong></p>
-        <select defaultValue={selectedOrder?.status} className='text-2xl block py-1 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'>
+        <select defaultValue={status}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => setStatus(e.currentTarget.value as Statuses)}
+                className='text-2xl block py-1 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'>
           {Object.values(Statuses).map(option =>
-            <option>{option}</option>,
+            <option selected={selectedOrder?.status == option ? true : false}>{option}</option>,
           )}
         </select>
-        <Button>Change status</Button>
+        <Button disabled={selectedOrder?.status === status} isLoading={isLoading}
+                onClick={handleChangeStatus}>
+          Change status
+        </Button>
       </div>
     </div>
   );

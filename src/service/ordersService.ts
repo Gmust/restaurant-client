@@ -4,7 +4,12 @@ import {
   IOrder,
   IGuestPayForOrderReq,
   IPayForOrderRes,
-  IUserPayForOrderReq, IUserOrder, IUpdateOrderStatusReq, IUpdateOrderStatusRes, ICompleteOrderRes,
+  IUserPayForOrderReq,
+  IUserOrder,
+  IUpdateOrderStatusReq,
+  IUpdateOrderStatusRes,
+  ICompleteOrderRes,
+  IUpdateGuestOrderStatusReq, IUpdateGuestOrderStatusRes,
 } from '@/@types/orders';
 import { $authHost, $unAuthHost } from '@/src/service/index';
 
@@ -171,6 +176,19 @@ export class OrdersService {
         orderId,
         newStatus,
         userId,
+      });
+
+      return response.data;
+    } catch (e) {
+      console.error('Failed to update order status');
+      throw e;
+    }
+  }
+  static async updateGuestOrderStatus({ orderId, newStatus}: IUpdateGuestOrderStatusReq) {
+    try {
+      const response = await $authHost.patch<IUpdateGuestOrderStatusRes>('orders/update-guest-order-status', {
+        orderId,
+        newStatus,
       });
 
       return response.data;

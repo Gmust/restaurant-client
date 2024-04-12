@@ -22,7 +22,6 @@ export const useAdminOrdersStore = create<IAdminOrdersStore>()(set => ({
       }));
     },
     updateOrderStatus: (updatedStatus) => {
-      // @ts-ignore
       set(state => {
         const orderInList = state.orders.find((order) => order._id === updatedStatus.orderId);
         const index = state.orders.findIndex((order) => order._id === updatedStatus.orderId);
@@ -30,10 +29,18 @@ export const useAdminOrdersStore = create<IAdminOrdersStore>()(set => ({
           const updatedOrders = [...state.orders];
           updatedOrders[index] = { ...orderInList, status: updatedStatus.newStatus };
           return {
-            dishes: updatedOrders,
+            orders: updatedOrders,
           };
         }
         return state;
+      });
+    },
+    updateCurrentOrder: (newStatus) => {
+      // @ts-ignore
+      set(state => {
+        return {
+          selectedOrder: { ...state.selectedOrder, status: newStatus },
+        };
       });
     },
   },

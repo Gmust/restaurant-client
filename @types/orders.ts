@@ -61,7 +61,8 @@ export interface IUserOrder {
 export interface IOrder {
   isConfirmed: boolean;
   _id: string;
-  email: string;
+  user?: string;
+  email?: string;
   status: Statuses;
   orderItems: ICartItem[];
   totalPrice: number;
@@ -86,10 +87,22 @@ export interface IUpdateOrderStatusReq {
   userId: string
 }
 
+export interface IUpdateGuestOrderStatusReq {
+  orderId: string,
+  newStatus: Statuses,
+}
+
 export interface IUpdateOrderStatusRes {
   orderId: string,
   newStatus: Statuses,
   userId: string
+  message: string
+}
+
+export interface IUpdateGuestOrderStatusRes {
+  newStatus: Statuses,
+  orderId: string,
+  message: string
 }
 
 export interface ICompleteOrderRes {
@@ -102,13 +115,20 @@ export interface UpdatedStatus {
   orderId: string
 }
 
+export interface UpdatedStatus {
+  newStatus: Statuses,
+  orderId: string
+}
+
+
 export interface IAdminOrdersStore {
   orders: IOrder[],
   selectedOrder: IOrder | null,
   actions: {
     completeOrder: (orderId: string) => void;
-    selectOrder: (order: IOrder)=> void;
+    selectOrder: (order: IOrder) => void;
     updateOrderStatus: (updatedStatus: UpdatedStatus) => void;
     setOrders: (orders: IOrder[]) => void,
+    updateCurrentOrder: (newStatus: Statuses) => void
   }
 }

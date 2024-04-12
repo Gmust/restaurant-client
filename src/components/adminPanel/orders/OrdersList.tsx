@@ -20,7 +20,7 @@ export const OrdersList = ({ orders: initialOrders }: IOrdersList) => {
   }, []);
 
   return (
-    <div className='grid grid-cols-1 gap-y-4 max-h-96 overflow-y-auto'>
+    <div className='flex flex-col space-y-4 overflow-y-auto'>
       {orders.length > 0 ? orders.map(order => <AdminOrderCard key={order._id} {...order} />) :
         <p>Orders queue is empty...</p>}
     </div>
