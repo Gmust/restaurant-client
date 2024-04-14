@@ -15,14 +15,16 @@ export const OrdersList = ({ orders: initialOrders }: IOrdersList) => {
   const { orders, actions: { setOrders, selectOrder } } = useAdminOrdersStore();
 
   useEffect(() => {
-    setOrders(initialOrders);
-    selectOrder(initialOrders[0]);
+    if(initialOrders){
+      setOrders(initialOrders);
+      selectOrder(initialOrders[0]);
+    }
   }, []);
 
   return (
     <div className='flex flex-col space-y-4 overflow-y-auto'>
       {orders.length > 0 ? orders.map(order => <AdminOrderCard key={order._id} {...order} />) :
-        <p>Orders queue is empty...</p>}
+        <p className='text-gray-600 opacity-80'>Orders queue is empty...</p>}
     </div>
   );
 };

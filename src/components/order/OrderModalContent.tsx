@@ -60,6 +60,7 @@ export const OrderModalContent = ({ setOpenModal }: IOrderModalContentProps) => 
           promoCode: promoCode ? promoCode : undefined,
           takeaway: isTakeaway,
           orderDate: new Date().toISOString(),
+          
         });
       } else {
         response = await OrdersService.payForGuestOrder({

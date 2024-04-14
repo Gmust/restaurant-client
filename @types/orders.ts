@@ -22,7 +22,6 @@ export interface IUserPayForOrderReq {
   takeaway: boolean;
   promoCode?: string;
   orderDate: string;
-  token: string;
 }
 
 
@@ -126,7 +125,7 @@ export interface IAdminOrdersStore {
   selectedOrder: IOrder | null,
   actions: {
     completeOrder: (orderId: string) => void;
-    selectOrder: (order: IOrder) => void;
+    selectOrder: (order: IOrder | null) => void;
     updateOrderStatus: (updatedStatus: UpdatedStatus) => void;
     setOrders: (orders: IOrder[]) => void,
     updateCurrentOrder: (newStatus: Statuses) => void

@@ -42,25 +42,17 @@ export class OrdersService {
     }
   }
 
-  static async payForUserOrder({ orderDate, email, takeaway, promoCode, token }: IUserPayForOrderReq) {
+  static async payForUserOrder({ orderDate, email, takeaway, promoCode }: IUserPayForOrderReq) {
     try {
-      const data = JSON.stringify({
+
+      const response = await $authHost.post<IPayForOrderRes>('/payments/user-pay-for-order', {
         orderDate,
         email,
         takeaway,
         promoCode,
       });
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/payments/user-pay-for-order`, {
-        method: 'POST',
-        body: data,
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
 
-      return await response.json() as IPayForOrderRes;
-
+      return response.data;
     } catch (e) {
       console.error('Failed to pay for order', e);
     }
@@ -165,7 +157,7 @@ export class OrdersService {
       } else {
         return response.data;
       }
-    }catch (e){
+    } catch (e) {
       console.log(e);
     }
   }
@@ -184,7 +176,8 @@ export class OrdersService {
       throw e;
     }
   }
-  static async updateGuestOrderStatus({ orderId, newStatus}: IUpdateGuestOrderStatusReq) {
+
+  static async updateGuestOrderStatus({ orderId, newStatus }: IUpdateGuestOrderStatusReq) {
     try {
       const response = await $authHost.patch<IUpdateGuestOrderStatusRes>('orders/update-guest-order-status', {
         orderId,

@@ -25,15 +25,15 @@ export const ShoppingCart = () => {
   if (!cartStore) return <Loader className='animate-spin' />;
   const { cart, actions: { clearCart } } = cartStore;
   const handleProceedOrder = () => {
-    const currentTime = new Date();
-    const currentHour = currentTime.getHours();
-    if (currentHour >= 9 && currentHour < 18) {
+    // const currentTime = new Date();
+    // const currentHour = currentTime.getHours();
+    // if (currentHour >= 9 && currentHour < 18) {
       setIsShow(false);
       router.replace('/order/order-proceed');
-    } else {
-      toast('We are now closed, orders from 9:00 a.m. to 5:30 p.m', { icon: <Sunset size={60} /> });
-      return;
-    }
+    // } else {
+    //   toast('We are now closed, orders from 9:00 a.m. to 5:30 p.m', { icon: <Sunset size={60} /> });
+    //   return;
+    // }
   };
   return (
     <div className='flex' data-testid='shopping-cart'>
