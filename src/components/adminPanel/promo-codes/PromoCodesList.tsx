@@ -5,6 +5,7 @@ import { PromoCodeCard } from '@/src/components/adminPanel/promo-codes/PromoCode
 import { Button } from '@/src/components/shared/Button';
 import { useAdminPromoCodesStore } from '@/src/store/admin-promo-codes-store';
 import { CreatePromoCodeModal } from '@/src/components/adminPanel/promo-codes/CreatePromoCodeModal';
+import { DeletePromoCode } from '@/src/components/adminPanel/promo-codes/DeletePromoCode';
 
 interface IPromoCodesListProps {
   promoCodes: IPromoCode[];
@@ -23,15 +24,15 @@ export const PromoCodesList = ({ promoCodes: initialPromoCodes }: IPromoCodesLis
 
   return (
     <>
-      <div className='flex flex-col items-center justify-between h-full max-h-[500px]'>
+      <div className='flex items-start justify-between h-full'>
         {promoCodes.length > 0 ?
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-2'>
+          <div className='grid grid-cols-1 gap-y-1 mt-2 max-h-[500px] overflow-y-auto'>
             {promoCodes.map(promoCode => <PromoCodeCard {...promoCode} key={promoCode._id} />)}
           </div>
           :
           <p className='mt-2 text-gray-600 opacity-80'>Promo codes list are empty...</p>
         }
-        <Button className='w-1/2' onClick={() => setIsCreate(true)}>
+        <Button className='mt-4' onClick={() => setIsCreate(true)}>
           Create promo code
         </Button>
       </div>

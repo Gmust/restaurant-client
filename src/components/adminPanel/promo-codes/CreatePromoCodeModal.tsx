@@ -8,10 +8,12 @@ import { Modal } from '@/src/components/shared/Modal';
 import { CustomInput } from '@/src/components/shared/CustomInput';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
-import { fromISOSToReadable } from '@/src/utils/fromISOSToReadable';
 import { Button } from '@/src/components/shared/Button';
 import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
-import { Tooltip } from '@/src/components/shared/Tooltip';
+import { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
+import { generateString } from '@/src/utils/generateString';
+import { PromoCodesService } from '@/src/service/promoCodesService';
 
 interface ICreatePromoCodeModalProps {
   isActive: boolean,
@@ -30,7 +32,7 @@ export const CreatePromoCodeModal = ({ isActive, setIsActive }: ICreatePromoCode
     resolver: zodResolver(createPromoCodeValidator),
   });
 
-  const onSubmit = async ({}: formData) => {
+  const onSubmit = async (formData: formData) => {
     if (!expirationDate) {
       setError('expiresIn', {
         type: 'required',
@@ -45,9 +47,20 @@ export const CreatePromoCodeModal = ({ isActive, setIsActive }: ICreatePromoCode
     }
     setIsLoading(true);
     try {
-
+      const response = await PromoCodesService.createPromoCode({
+        promoCode: formData.promoCode,
+        expiresIn: formData.expiresIn!,
+        discountValue: formData.discountValue,
+      });
+      toast.success(response.message);
+      createPromoCode(response.newPromoCode);
+      reset();
     } catch (e) {
-
+      if (e instanceof AxiosError) {
+        toast.error(e.response!.data.message);
+      } else {
+        toast.error('Something went wrong!');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -61,9 +74,10 @@ export const CreatePromoCodeModal = ({ isActive, setIsActive }: ICreatePromoCode
           <label htmlFor='promoCode'>Promo code:</label>
           <span className='flex items-center space-x-2'>
             <CustomInput id='promoCode' {...register('promoCode')} variant='rounded' />
-            <Tooltip tooltipText='Generate random string' position='top' >
-              <GiPerspectiveDiceSixFacesRandom size={50} className='cursor-pointer hover:animate-spin' />
-            </Tooltip>
+            <GiPerspectiveDiceSixFacesRandom className='w-14 h-14 cursor-pointer hover:animate-spin'
+                                             onClick={() => {
+                                               setValue('promoCode', generateString().slice(0, 20));
+                                             }} />
           </span>
           <p className='text-red-700 text-sm'>{errors.promoCode && errors.promoCode.message}</p>
         </div>
@@ -75,14 +89,19 @@ export const CreatePromoCodeModal = ({ isActive, setIsActive }: ICreatePromoCode
         </div>
         <div className='flex flex-col'>
           <label>Expiration date:</label>
-          <DatePicker selected={expirationDate} onChange={(date) => setExpirationDate(date)} showTimeSelect inline />
+          <DatePicker {...register('expiresIn')} selected={expirationDate} onChange={(date) => {
+            setValue('expiresIn', date?.toISOString());
+            setExpirationDate(date);
+          }} showTimeSelect inline />
           {
             expirationDate &&
             <p>Picked date: {expirationDate.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</p>
           }
           <p className='text-red-700 text-sm'>{errors.expiresIn && errors.expiresIn.message}</p>
         </div>
-        <Button disabled={!isValid || isLoading || !expirationDate} isLoading={isLoading}>Create</Button>
+        <Button type='submit' disabled={!isValid || isLoading || !expirationDate} isLoading={isLoading}>
+          Create
+        </Button>
       </form>
     </Modal>
   );

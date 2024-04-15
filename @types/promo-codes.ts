@@ -2,7 +2,7 @@ interface IPromoCode {
   _id: string
   promoCode: string,
   expiresIn: string,
-  discountValue: string,
+  discountValue: number,
   created_at: string,
   updated_at: string
 }
@@ -11,7 +11,7 @@ interface IPromoCode {
 interface ICreatePromoCodeReq {
   promoCode: string,
   expiresIn: string,
-  discountValue: string
+  discountValue: number
 }
 
 interface ICreatePromoCodeRes {
@@ -19,7 +19,7 @@ interface ICreatePromoCodeRes {
   newPromoCode: {
     promoCode: string,
     expiresIn: string,
-    discountValue: string
+    discountValue: number
   }
 }
 
@@ -28,7 +28,7 @@ interface IAdminPromoCodesStore {
   promoCodes: IPromoCode[],
   actions: {
     deletePromoCode: (promoCodeId: string) => void;
-    createPromoCode: (promoCode: IPromoCode) => void;
+    createPromoCode: (promoCode: ICreatePromoCodeReq) => void;
     setPromoCodes: (promoCodes: IPromoCode[]) => void
   }
 }
