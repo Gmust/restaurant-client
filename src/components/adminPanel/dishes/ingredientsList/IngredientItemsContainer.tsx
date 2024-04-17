@@ -1,6 +1,7 @@
+import React from 'react';
+
 import { IIngredient } from '@/@types/ingredients';
 import { IngredientItem } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientItem';
-import React from 'react';
 
 
 interface IIngredientItemsContainerProps {

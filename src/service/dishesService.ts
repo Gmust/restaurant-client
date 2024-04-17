@@ -1,12 +1,13 @@
 import {
-  IChangeDishInfoReq, ICreateDishResponse,
+  IChangeDishInfoReq, ICreateDishResponse, ICreateSpecialtiesMenu,
   IDish,
   IFetchDishesRequest,
   IFetchDishesResponse,
   IFetchSpecialtiesResponse,
 } from '@/@types/dishes';
 import { IPayForOrderRes } from '@/@types/orders';
-import { $authHost } from '@/src/service/index';
+import { $authHost, $unAuthHost } from '@/src/service/index';
+import { OrdersService } from '@/src/service/ordersService';
 
 
 export class DishesService {
@@ -65,16 +66,29 @@ export class DishesService {
 
   static async getAllDishes(token: string) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/dishes/all`, {
-        method: 'GET',
+      const response = await $unAuthHost.get<IDish[]>('dishes/all', {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
-      return await response.json() as IDish[];
+      if (response.status == 403) {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/token`, { method: 'GET' });
+        const resData = await res.json();
+        const token = resData?.access_token;
+        const response = await $unAuthHost.get('dishes/all', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        return response.data;
+      } else {
+        return response.data;
+      }
+
     } catch (e) {
       console.error('Error fetching dishes menu:', e);
+      throw e;
     }
   }
 
@@ -117,6 +131,19 @@ export class DishesService {
       return response.data;
     } catch (e) {
       console.error('Error finding dish by term', e);
+      throw e;
+    }
+  }
+
+  static async createSpecialtiesMenu({ specialties }: ICreateSpecialtiesMenu) {
+    try {
+      const response = await $authHost.post('/dishes/create-specialties-menu', {
+        specialties,
+      });
+
+      return response.data;
+    } catch (e) {
+      console.error(e);
       throw e;
     }
   }

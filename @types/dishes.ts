@@ -79,3 +79,8 @@ export interface IAdminDishesStore {
     setDishes: (dishes: IDish[]) => void
   }
 }
+
+
+export interface ICreateSpecialtiesMenu {
+  specialties: IDish[];
+}

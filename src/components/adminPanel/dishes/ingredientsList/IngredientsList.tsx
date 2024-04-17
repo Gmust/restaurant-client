@@ -1,10 +1,11 @@
-import { Tooltip } from '@/src/components/shared/Tooltip';
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
-import { IIngredient } from '@/@types/ingredients';
-import { LuArrowRightSquare } from 'react-icons/lu';
-import { cn } from '@/src/lib/utils';
-import { PiDotsNine } from 'react-icons/pi';
 import { Simulate } from 'react-dom/test-utils';
+import { LuArrowRightSquare } from 'react-icons/lu';
+import { PiDotsNine } from 'react-icons/pi';
+
+import { IIngredient } from '@/@types/ingredients';
+import { Tooltip } from '@/src/components/shared/Tooltip';
+import { cn } from '@/src/lib/utils';
 import dragOver = Simulate.dragOver;
 import { IngredientItem } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientItem';
 import { IngredientItemsContainer } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientItemsContainer';
@@ -24,19 +25,21 @@ export const IngredientsList = ({ setPickedIngredients, allIngredients, pickedIn
 
   const handleDragging = (dragging: boolean) => setIsDragging(dragging);
 
+
+
   const handleUpdatePickedList = (id: string) => {
-    let ingredientFromList = ingredients.find(item => item._id = id);
-    if (ingredientFromList && !pickedIngredients.find(item => item._id = id)) {
-      const newIngredientsList = ingredients.filter(item => item._id != id);
+    let ingredientFromList = ingredients.find(item => item._id === id);
+    if (ingredientFromList && !pickedIngredients.find(item => item._id === id)) {
+      const newIngredientsList = ingredients.filter(item => item._id !== id);
       setIngredients(newIngredientsList);
       setPickedIngredients([...pickedIngredients, ingredientFromList]);
     }
   };
 
   const handleUpdateIngredientsList = (id: string) => {
-    const ingredientFromList = pickedIngredients.find(item => item._id = id);
-    if (ingredientFromList && !ingredients.find(item => item._id = id)) {
-      const newIngredientsList = pickedIngredients.filter(item => item._id != id);
+    const ingredientFromList = pickedIngredients.find(item => item._id === id);
+    if (ingredientFromList && !ingredients.find(item => item._id === id)) {
+      const newIngredientsList = pickedIngredients.filter(item => item._id !== id);
       setPickedIngredients(newIngredientsList);
       setIngredients([...ingredients, ingredientFromList]);
     }

@@ -1,5 +1,6 @@
-import { PiDotsNine } from 'react-icons/pi';
 import React from 'react';
+import { PiDotsNine } from 'react-icons/pi';
+
 import { IIngredient } from '@/@types/ingredients';
 import { cn } from '@/src/lib/utils';
 

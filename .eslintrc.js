@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['next', 'prettier', 'plugin:testing-library/react', 'plugin:jest-dom/recommended'],
   parserOptions: {
-    ecmaVersion: 2021, // Adjust to your project's ECMAScript version
+    ecmaVersion: 2021,
   },
   env: {
     es6: true,

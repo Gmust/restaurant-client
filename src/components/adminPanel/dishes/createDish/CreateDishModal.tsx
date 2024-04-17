@@ -1,19 +1,20 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { IIngredient } from '@/@types/ingredients';
-import { Modal } from '@/src/components/shared/Modal';
-import { z } from 'zod';
-import { createDishValidator } from '@/src/lib/validations/create-dish';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
-import { CustomInput } from '@/src/components/shared/CustomInput';
-import { DishCategories, IDish } from '@/@types/dishes';
-import { Button } from '@/src/components/shared/Button';
-import { IngredientsList } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientsList';
-import toast from 'react-hot-toast';
-import { DishesService } from '@/src/service/dishesService';
 import { AxiosError } from 'axios';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { z } from 'zod';
+
+import { DishCategories, IDish } from '@/@types/dishes';
+import { IIngredient } from '@/@types/ingredients';
+import { IngredientsList } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientsList';
+import { Button } from '@/src/components/shared/Button';
+import { CustomInput } from '@/src/components/shared/CustomInput';
+import { Modal } from '@/src/components/shared/Modal';
+import { createDishValidator } from '@/src/lib/validations/create-dish';
+import { DishesService } from '@/src/service/dishesService';
 import { useAdminDishesStore } from '@/src/store/admin-dishes-store';
 
 
@@ -32,12 +33,9 @@ export const CreateDishModal = ({ setIsActive, isActive, allIngredients }: ICrea
   const [dishPicture, setDishPicture] = useState<File>();
   const createDish = useAdminDishesStore(state => state.actions.createDish);
   const [previewDishPicture, setPreviewDishPicture] = useState<string>('/image-placeholder.png');
-  const router = useRouter();
   const {
     register,
     handleSubmit,
-    setError,
-    reset,
     formState: { errors },
   } = useForm<formData>({ resolver: zodResolver(createDishValidator), mode: 'all' });
 

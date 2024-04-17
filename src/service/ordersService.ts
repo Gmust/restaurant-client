@@ -1,15 +1,15 @@
 import {
+  ICompleteOrderRes,
   IConfirmOrderReq,
   IGetOrderInfoReq,
-  IOrder,
   IGuestPayForOrderReq,
+  IOrder,
   IPayForOrderRes,
-  IUserPayForOrderReq,
-  IUserOrder,
+  IUpdateGuestOrderStatusReq, IUpdateGuestOrderStatusRes,
   IUpdateOrderStatusReq,
   IUpdateOrderStatusRes,
-  ICompleteOrderRes,
-  IUpdateGuestOrderStatusReq, IUpdateGuestOrderStatusRes,
+  IUserOrder,
+  IUserPayForOrderReq,
 } from '@/@types/orders';
 import { $authHost, $unAuthHost } from '@/src/service/index';
 
@@ -146,7 +146,6 @@ export class OrdersService {
         const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/token`, { method: 'GET' });
         const resData = await res.json();
         const token = resData?.access_token;
-        console.log('token', token);
         const response = await $unAuthHost.get('orders/orders-list', {
           headers: {
             Authorization: `Bearer ${token}`,
