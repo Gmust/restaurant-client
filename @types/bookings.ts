@@ -59,7 +59,7 @@ export interface ICreateReservationResError {
 }
 
 export interface IConfirmReservationReq {
-  tableNum: string,
+  tableNum: number,
   email: string,
   confirmed: boolean
   reservationId: string

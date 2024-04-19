@@ -1,10 +1,12 @@
 'use client';
 
-import { ITable } from '@/@types/tables';
-import { Chair } from '@/src/components/booking/tables/Chair';
-import { cn } from '@/src/lib/utils';
-import { Modal } from '@/src/components/shared/Modal';
 import { useState } from 'react';
+
+import { ITable } from '@/@types/tables';
+import { BookingInfo } from '@/src/components/booking/BookingInfo';
+import { Chair } from '@/src/components/booking/tables/Chair';
+import { Modal } from '@/src/components/shared/Modal';
+import { cn } from '@/src/lib/utils';
 
 export const SecondTable = ({ tableNum, numberOfSeats}: ITable) => {
 
@@ -12,7 +14,7 @@ export const SecondTable = ({ tableNum, numberOfSeats}: ITable) => {
 
   return (
     <>
-      <div className='ml-1 flex flex-col absolute space-y-0.5 items-center group'>
+      <div className='ml-1 flex flex-col absolute space-y-0.5 items-center group' onClick={()=> setIsActive(true)}>
         <div className='flex space-x-8'>
           <Chair />
           <Chair />
@@ -29,7 +31,7 @@ export const SecondTable = ({ tableNum, numberOfSeats}: ITable) => {
         </div>
       </div>
       <Modal isActive={isActive} setIsActive={setIsActive}>
-        <div></div>
+        <BookingInfo tableNum={tableNum} numberOfSeats={numberOfSeats} setIsActive={setIsActive}/>
       </Modal>
     </>
   );

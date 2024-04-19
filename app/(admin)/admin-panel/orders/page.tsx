@@ -1,8 +1,9 @@
-import { OrdersService } from '@/src/service/ordersService';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+
 import { OrdersList } from '@/src/components/adminPanel/orders/OrdersList';
 import { SelectedOrder } from '@/src/components/adminPanel/orders/SelectedOrder';
+import { OrdersService } from '@/src/service/ordersService';
 
 const OrdersPage = async () => {
 

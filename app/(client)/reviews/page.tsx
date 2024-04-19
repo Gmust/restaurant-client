@@ -1,5 +1,5 @@
-import { ReviewsService } from '@/src/service/reviewsService';
 import { ReviewsList } from '@/src/components/reviews/ReviewsList';
+import { ReviewsService } from '@/src/service/reviewsService';
 
 const ReviewsPage = async () => {
 

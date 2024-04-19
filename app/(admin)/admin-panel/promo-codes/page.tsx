@@ -1,5 +1,5 @@
-import { PromoCodesService } from '@/src/service/promoCodesService';
 import { PromoCodesList } from '@/src/components/adminPanel/promo-codes/PromoCodesList';
+import { PromoCodesService } from '@/src/service/promoCodesService';
 
 const PromoCodesPage = async () => {
 

@@ -71,21 +71,8 @@ export class DishesService {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (response.status == 403) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth-next/token`, { method: 'GET' });
-        const resData = await res.json();
-        const token = resData?.access_token;
-        const response = await $unAuthHost.get('dishes/all', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
 
-        return response.data;
-      } else {
-        return response.data;
-      }
-
+      return response.data;
     } catch (e) {
       console.error('Error fetching dishes menu:', e);
       throw e;

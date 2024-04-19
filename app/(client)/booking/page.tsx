@@ -1,5 +1,5 @@
-import { TablesService } from '@/src/service/tablesService';
 import { BuildingPlan } from '@/src/components/booking/BuildingPlan';
+import { TablesService } from '@/src/service/tablesService';
 
 const BookingPage = async () => {
 

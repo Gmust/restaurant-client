@@ -1,5 +1,5 @@
-import { $authHost, $unAuthHost } from '@/src/service/index';
-import { IUser } from '@/@types/user';
+import { AxiosError } from 'axios';
+
 import {
   IChangeReviewReq,
   ICreateReviewReq,
@@ -8,6 +8,8 @@ import {
   IGetReviewsRes,
   IReview,
 } from '@/@types/reviews';
+import { IUser } from '@/@types/user';
+import { $authHost, $unAuthHost } from '@/src/service/index';
 import { generateQuery } from '@/src/utils/generateQuery';
 
 export class ReviewsService {
@@ -28,7 +30,10 @@ export class ReviewsService {
       const response = await $unAuthHost.get<IGetReviewsRes>(`/reviews?${queryStr}`);
       return response.data;
     } catch (e) {
-      console.error('Failed to fetch all reviews');
+      if (e instanceof AxiosError) {
+        console.error('Failed to fetch all reviews', e.response!.data);
+      }
+      throw e;
     }
   }
 
@@ -56,7 +61,7 @@ export class ReviewsService {
 
       return response.data;
     } catch (e) {
-      console.error('Failed to patch review', e)
+      console.error('Failed to patch review', e);
     }
   }
 

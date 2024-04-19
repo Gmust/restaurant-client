@@ -1,18 +1,20 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { TablesService } from '@/src/service/tablesService';
-import { BookingService } from '@/src/service/bookingService';
-import toast from 'react-hot-toast';
-import { IAvailableTime, ReservationTime } from '@/@types/bookings';
-import { availableReservations } from '@/src/utils/availableReservations';
-import { cn } from '@/src/lib/utils';
-import { useForm } from 'react-hook-form';
-import { createBookingValidator } from '@/src/lib/validations/create-booking';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CustomInput } from '@/src/components/shared/CustomInput';
+import { AxiosError } from 'axios';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { z } from 'zod';
+
+import { IAvailableTime, ReservationTime } from '@/@types/bookings';
 import { Button } from '@/src/components/shared/Button';
+import { CustomInput } from '@/src/components/shared/CustomInput';
+import { cn } from '@/src/lib/utils';
+import { createBookingValidator } from '@/src/lib/validations/create-booking';
+import { BookingService } from '@/src/service/bookingService';
+import { TablesService } from '@/src/service/tablesService';
+import { availableReservations } from '@/src/utils/availableReservations';
 
 interface IBookingInfoProps {
   tableNum: number,
@@ -28,11 +30,12 @@ export const BookingInfo = ({ tableNum, numberOfSeats, setIsActive }: IBookingIn
   const [isLoading, setIsLoading] = useState<boolean>();
   const [reservations, setReservations] = useState<IAvailableTime[]>(availableReservations);
   const [selectedTime, setSelectedTime] = useState<ReservationTime | null>(null);
-  const { register, handleSubmit, setError, formState: { errors } } = useForm<formData>({
+  const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm<formData>({
     resolver: zodResolver(createBookingValidator),
   });
 
   const onSubmit = async ({ amountOfVisitors, email }: formData) => {
+    setIsLoading(true)
     try {
       const newBooking = await BookingService.createReservation({
         amountOfVisitors,
@@ -40,15 +43,18 @@ export const BookingInfo = ({ tableNum, numberOfSeats, setIsActive }: IBookingIn
         timeOfReservation: selectedTime!,
         table: tableNum,
       });
-      //@ts-ignore
-      if (newBooking?.statusCode == '400') {
-        toast.error(newBooking!.message);
-      } else {
+
         setIsActive(false);
         toast.success(newBooking!.message);
-      }
     } catch (e: any) {
+      if(e instanceof AxiosError){
+        toast.error(e.response!.data.message);
+      }else{
+        toast.error('Something went wrong')
+      }
       console.error(e);
+    }finally {
+      setIsLoading(false)
     }
   };
 
@@ -113,7 +119,7 @@ export const BookingInfo = ({ tableNum, numberOfSeats, setIsActive }: IBookingIn
             {errors.amountOfVisitors && 'Select amount of visitors'}
           </p>
         </div>
-        <Button type='submit' disabled={selectedTime ? false : true} isLoading={isLoading}
+        <Button type='submit' disabled={selectedTime ? false : true || isValid || isLoading} isLoading={isLoading}
                 className='disabled:cursor-not-allowed'>
           Create booking
         </Button>

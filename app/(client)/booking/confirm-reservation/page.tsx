@@ -1,9 +1,11 @@
 'use client';
 
-import toast from 'react-hot-toast';
-import { BookingService } from '@/src/service/bookingService';
-import { Button } from '@/src/components/shared/Button';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+
+import { Button } from '@/src/components/shared/Button';
+import { BookingService } from '@/src/service/bookingService';
 
 type ConfirmReservationSearchParams = {
   email: string,
@@ -26,21 +28,21 @@ const ConfirmReservationPage = (props: Props) => {
       const response = await BookingService.confirmReservation({
         confirmed: confirmed,
         email: props.searchParams.email,
-        tableNum: props.searchParams.t,
+        tableNum: Number(props.searchParams.t),
         reservationId: props.searchParams.reservationId,
       });
-      if (!response) {
-        toast.error('Something went wrong');
-      } else {
-        toast.success(response.message);
-        setTimeout(() => {
-          toast.success('You will be redirected now...');
-          router.push('/menu');
-        }, 1000);
-        toast.success(response.message);
-      }
+      console.log(response);
+      toast.success(response!.message);
+      setTimeout(() => {
+        toast.success('You will be redirected now...');
+        router.push('/menu');
+      }, 1000);
     } catch (e: any) {
-      toast.error(e);
+      if (e instanceof AxiosError) {
+        toast.error(e.response!.data.message);
+      }else{
+        toast.error('Something went wrong')
+      }
     }
   };
 

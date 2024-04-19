@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { UpdateDeleteButtons } from '@/src/components/shared/UpdateDeleteButtons';
-import { UpdateEventModal } from '@/src/components/adminPanel/events/UpdateEventModal';
+
 import { DeleteEventModal } from '@/src/components/adminPanel/events/DeleteEventModal';
+import { UpdateEventModal } from '@/src/components/adminPanel/events/UpdateEventModal';
+import { UpdateDeleteButtons } from '@/src/components/shared/UpdateDeleteButtons';
 
 
 interface IAdminEventCardProps {
