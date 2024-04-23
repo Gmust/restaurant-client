@@ -1,15 +1,16 @@
 'use client';
 
 import { Frown, Loader, PanelRightClose, ShoppingCartIcon, Sunset } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useCartStore } from '@/src/store/cart-store';
-import { cn } from '@/src/lib/utils';
+import toast from 'react-hot-toast';
+
+import { ICartStore } from '@/@types/cart';
 import { Button } from '@/src/components/shared/Button';
 import { ShoppingCartItem } from '@/src/components/shoppingCart/ShoppingCartItem';
 import { useStore } from '@/src/hooks/use-store';
-import { ICartStore } from '@/@types/cart';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
+import { cn } from '@/src/lib/utils';
+import { useCartStore } from '@/src/store/cart-store';
 
 export const ShoppingCart = () => {
 

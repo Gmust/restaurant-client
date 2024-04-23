@@ -1,5 +1,7 @@
 import { MdCelebration, MdOutlineCelebration } from 'react-icons/md';
 
+import { EventInfoCard } from '@/src/components/events/EventInfoCard';
+
 import { EventsService } from '../../../src/service/eventsService';
 
 const EventsPage = async () => {
@@ -12,8 +14,10 @@ const EventsPage = async () => {
         <h1> Upcoming events </h1>
         <MdOutlineCelebration size={35} />
       </div>
-      <div className='flex flex-col bg-white p-3'>
-
+      <div className='flex flex-col  p-3'>
+        {events.length > 0 ?
+          events.map(event => <EventInfoCard {...event} key={event._id} />)
+          : <div></div>}
       </div>
     </div>
   );

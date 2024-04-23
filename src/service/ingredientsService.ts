@@ -1,16 +1,12 @@
-import { $authHost } from '@/src/service/index';
 import { ICreateIngredientRes, IIngredient } from '@/@types/ingredients';
-import { IDish } from '@/@types/dishes';
-import { AuthService } from '@/src/service/authService';
-import { cookies } from 'next/headers';
-import { storeToken } from '@/src/lib/store-token';
+import { $authHost } from '@/src/service/index';
 
 
 export class IngredientsService {
 
   static async getAllIngredients(token: string) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/ingredients`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/ingredients`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

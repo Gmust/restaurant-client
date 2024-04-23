@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+
 import { IUser } from '@/@types/user';
 
 
@@ -11,7 +12,7 @@ export async function GET(request: Request) {
 
   const data = JSON.stringify({ access_token: authToken });
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/user-by-token`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/user-by-token`, {
     cache: 'no-store',
     headers: headers,
     method: 'POST',
@@ -24,7 +25,7 @@ export async function GET(request: Request) {
         'refresh_token': cookies().get('refreshToken')?.value,
         'email': cookies().get('email')?.value,
       };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/refresh`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

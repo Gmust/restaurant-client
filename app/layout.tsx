@@ -1,10 +1,12 @@
+import './globals.css';
+
 import type { Metadata } from 'next';
 import { Rubik } from 'next/font/google';
-import './globals.css';
-import { Header } from '@/src/components/header/Header';
-import { cn } from '@/src/lib/utils';
-import { Providers } from '@/src/components/shared/Providers';
+
 import { Footer } from '@/src/components/footer/Footer';
+import { Header } from '@/src/components/header/Header';
+import { Providers } from '@/src/components/shared/Providers';
+import { cn } from '@/src/lib/utils';
 
 const rubik = Rubik({ subsets: ['latin'], display: 'swap', variable: '--font-rubik' });
 

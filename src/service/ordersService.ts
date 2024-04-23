@@ -27,7 +27,7 @@ export class OrdersService {
     try {
       const data = JSON.stringify({ totalPrice, cartItems, orderDate, email, takeaway, promoCode });
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/payments/guest-pay-for-order`, {
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/payments/guest-pay-for-order`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export class OrdersService {
     try {
       const data = JSON.stringify({ orderNumber, email, confirmationToken });
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/orders/confirm-order`, {
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/orders/confirm-order`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export class OrdersService {
     try {
       const data = JSON.stringify({ orderNumber, email });
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/orders/get-order-info`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/orders/get-order-info`,
         {
           method: 'POST',
           headers: {
@@ -100,7 +100,7 @@ export class OrdersService {
   static async deleteOrder(orderId: string) {
     try {
       const data = JSON.stringify({ orderId });
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/orders/delete-order`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders/delete-order`, {
         method: 'DELETE',
         body: data,
       });
@@ -113,7 +113,7 @@ export class OrdersService {
 
   static async getUserOrders(userId: string, token: string) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/orders?userId=${userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders?userId=${userId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

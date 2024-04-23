@@ -1,9 +1,9 @@
-import { RestaurantImage } from '@/src/components/homePage/RestaurantImage';
-import { EventsPanel } from '@/src/components/homePage/eventsPanel/EventsPanel';
-import { EventsService } from '@/src/service/eventsService';
-import { DishesService } from '@/src/service/dishesService';
-import { SpecialtiesMenu } from '@/src/components/homePage/SpecialtiesMenu';
 import { Contacts } from '@/src/components/homePage/Contacts';
+import { EventsPanel } from '@/src/components/homePage/eventsPanel/EventsPanel';
+import { RestaurantImage } from '@/src/components/homePage/RestaurantImage';
+import { SpecialtiesMenu } from '@/src/components/homePage/SpecialtiesMenu';
+import { DishesService } from '@/src/service/dishesService';
+import { EventsService } from '@/src/service/eventsService';
 
 
 const Home = async () => {
@@ -14,7 +14,7 @@ const Home = async () => {
 
   return (
     <section className='mt-7'>
-      <div className='flex w-full items-start justify-center space-x-6'>
+      <div className='flex flex-col items-center sm:flex-row w-full sm:items-start justify-center space-x-6 space-y-4 sm:space-y-0 '>
         <RestaurantImage />
         <EventsPanel closestEvents={closestEvents} nearestEvents={nearestEvents} />
       </div>

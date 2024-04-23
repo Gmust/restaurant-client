@@ -1,8 +1,8 @@
 interface IEvent {
   name: string,
   description: string,
-  startDate: Date,
-  endDate: Date,
+  startDate: string,
+  endDate: string,
   _id: string
 }
 

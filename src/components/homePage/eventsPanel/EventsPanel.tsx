@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+
+import { EventCard } from '@/src/components/homePage/eventsPanel/EventCard';
 import { Button } from '@/src/components/shared/Button';
 import { cn } from '@/src/lib/utils';
-import { EventCard } from '@/src/components/homePage/eventsPanel/EventCard';
-import { Frown } from 'lucide-react';
 
 
 export interface IEventsProps {
@@ -37,14 +37,14 @@ export const EventsPanel = ({ nearestEvents, closestEvents }: IEventsProps) => {
           {
             showEvents.length <= 0 &&
             <div className='text-2xl'>
-              <p className='flex  items-center p-24 break-all'>
+              <p className='flex w-full items-center p-12 sm:p-24 sm:break-all'>
                 No events available at the moment
               </p>
             </div>
           }
         </div>
         {
-          showEvents.length > 0 && <div className=' grid grid-cols-2 '>
+          showEvents.length > 0 && <div className='grid grid-cols-1 md:grid-cols-2 '>
             {
               showEvents.slice(0, 3).map(event => <EventCard {...event} key={event.name} />)
             }

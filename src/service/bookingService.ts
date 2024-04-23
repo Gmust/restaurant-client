@@ -11,7 +11,7 @@ export class BookingService {
 
   static async fetchAllReservations(tableId: string) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/booking/get-all-reservations/${tableId}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/booking/get-all-reservations/${tableId}`);
       return await response.json() as IBooking[];
     } catch (e) {
       console.error('Failed to fetch all availableReservations for table');
@@ -21,7 +21,7 @@ export class BookingService {
   static async createReservation({ timeOfReservation, email, table, amountOfVisitors }: ICreateReservationReq) {
     try {
       const data = JSON.stringify({ timeOfReservation, email, table, amountOfVisitors: Number(amountOfVisitors) });
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/booking/new-reservation`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/booking/new-reservation`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export class BookingService {
   static async confirmReservation({ confirmed, email, tableNum, reservationId }: IConfirmReservationReq) {
     try {
       const data = JSON.stringify({ confirmed, email, table: tableNum, reservationId });
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/booking/confirm-reservation`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/booking/confirm-reservation`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

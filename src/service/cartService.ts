@@ -12,7 +12,7 @@ export class CartService {
 
   // static async fetchCart(cartId: string, token: string): Promise<ICart | undefined> {
   //   try {
-  //     const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/cart?cartId=${cartId}`, {
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart?cartId=${cartId}`, {
   //       method: 'GET',
   //       headers: {
   //         'Content-Type': 'application/json',

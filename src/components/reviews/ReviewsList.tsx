@@ -1,13 +1,18 @@
 'use client';
 
-import { IGetReviewsRes, IReview } from '@/@types/reviews';
-import { ReviewCard } from '@/src/components/reviews/ReviewCard';
-import { Paginator } from '@/src/components/menu/menuList/Paginator';
-import { useCallback, useState } from 'react';
-import { IFetchDishesResponse } from '@/@types/dishes';
+import { AxiosError } from 'axios';
+import { Loader2 } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeToPrev } from '@/src/components/menu/menuList/ChangeToPrev';
+import { useCallback, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+
+import { IFetchDishesResponse } from '@/@types/dishes';
+import { IGetReviewsRes, IReview } from '@/@types/reviews';
 import { ChangeToNext } from '@/src/components/menu/menuList/ChangeToNext';
+import { ChangeToPrev } from '@/src/components/menu/menuList/ChangeToPrev';
+import { Paginator } from '@/src/components/menu/menuList/Paginator';
+import { ReviewCard } from '@/src/components/reviews/ReviewCard';
+import { ReviewsService } from '@/src/service/reviewsService';
 
 export const ReviewsList = ({ pageTotal, data, currentPage: initialCurrenPage }: IGetReviewsRes) => {
 
@@ -29,14 +34,44 @@ export const ReviewsList = ({ pageTotal, data, currentPage: initialCurrenPage }:
     [searchParams],
   );
 
+  useEffect(() => {
+
+    const getReviews = async () => {
+      setIsLoading(true);
+      try {
+        const response = await ReviewsService.getAllReviews({
+          skip: Number(searchParams.get('skip')),
+          limit: Number(searchParams.get('limit')),
+          newFirst: true,
+          oldFirst: false,
+        });
+        setReviews(response.data);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          toast.error(e.response!.data.message);
+        } else {
+          toast.error('Something went wrong');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getReviews();
+
+  }, [searchParams]);
 
   return (
     <div className='flex flex-col space-y-6'>
       <div className='flex justify-center'>
         <ChangeToPrev currentPage={currentPage} createQueryString={createQueryString} pageTotal={pageTotal} />
-        <div className='grid grid-cols-1 md:grid-cols-2 mx-16 align-middle justify-items-center'>
-          {data.map(review => <ReviewCard key={review._id} {...review} />)}
-        </div>
+        {
+          isLoading ? <Loader2 className='animate-spin' />
+            :
+            <div className='grid grid-cols-1 md:grid-cols-2 mx-16 align-middle justify-items-center gap-4'>
+              {reviews.map(review => <ReviewCard key={review._id} {...review} />)}
+            </div>
+        }
         <ChangeToNext currentPage={currentPage} createQueryString={createQueryString} pageTotal={pageTotal} />
       </div>
       <Paginator currentPage={currentPage} pageTotal={pageTotal} setCurrentPage={setCurrentPage}

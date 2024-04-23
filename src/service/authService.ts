@@ -1,7 +1,8 @@
 import { z } from 'zod';
-import { createAccountValidator } from '@/src/lib/validations/create-account';
+
 import { IConfirmAccount, ILoginResponse, IRefreshTokenReq, IUserLoginReq, IUserLoginRes } from '@/@types/auth';
 import { IUser } from '@/@types/user';
+import { createAccountValidator } from '@/src/lib/validations/create-account';
 import { $authHost } from '@/src/service/index';
 
 
@@ -10,7 +11,7 @@ export class AuthService {
   static async registerUser(userInfo: z.infer<typeof createAccountValidator>) {
     try {
       const data = JSON.stringify(userInfo);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/register`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -36,7 +37,7 @@ export class AuthService {
   static async confirmAccount({ token, email }: IConfirmAccount) {
     try {
       const data = JSON.stringify({ confirmationToken: token, email });
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/confirm-account`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/confirm-account`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -54,7 +55,7 @@ export class AuthService {
   static async loginUser({ email, password }: IUserLoginReq) {
     try {
       const data = JSON.stringify({ email, password });
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ export class AuthService {
     try {
       const data = JSON.stringify({ access_token });
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/auth/user-by-token`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/user-by-token`, {
         method: 'POST',
         body: data,
         headers: {

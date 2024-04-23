@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { IRoute } from '@/@types/routes';
 
 export const RouteItem = ({ name, path }: IRoute) => {

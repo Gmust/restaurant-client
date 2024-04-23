@@ -2,11 +2,11 @@ import axios from 'axios';
 
 
 const $unAuthHost = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
 
 const $authHost = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   withCredentials: true,
 });
 

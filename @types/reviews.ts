@@ -11,8 +11,8 @@ export interface IReview {
 export interface IGetReviewsReq {
   oldFirst: boolean,
   newFirst: boolean
-  skip?: string,
-  limit?: string
+  skip?: number,
+  limit?: number
 }
 
 export interface IGetReviewsRes {
