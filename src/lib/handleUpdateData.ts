@@ -1,5 +1,6 @@
-import { IIngredient } from '@/@types/ingredients';
 import { Dispatch, SetStateAction } from 'react';
+
+import { IIngredient } from '@/@types/ingredients';
 
 
 interface IHandleUpdateData {

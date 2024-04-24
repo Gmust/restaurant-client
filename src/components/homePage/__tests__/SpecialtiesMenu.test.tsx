@@ -1,8 +1,10 @@
 import '@testing-library/jest-dom';
+
 import { render, screen } from '@testing-library/react';
-import { SpecialtiesMenu } from '@/src/components/homePage/SpecialtiesMenu';
+
 import { DishCategories, IFetchSpecialtiesResponse } from '@/@types/dishes';
 import { Units } from '@/@types/ingredients';
+import { SpecialtiesMenu } from '@/src/components/homePage/SpecialtiesMenu';
 
 
 const mockedSpecialtiesMenu: IFetchSpecialtiesResponse = {

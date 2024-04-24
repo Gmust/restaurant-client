@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/src/components/shared/Button';
-import { LeaveReviewModal } from '@/src/components/reviews/LeaveReviewModal';
-import { ChangeReviewModal } from '@/src/components/reviews/ChangeReviewModal';
+
 import { IReview } from '@/@types/reviews';
+import { ChangeReviewModal } from '@/src/components/reviews/ChangeReviewModal';
+import { LeaveReviewModal } from '@/src/components/reviews/LeaveReviewModal';
+import { Button } from '@/src/components/shared/Button';
 
 interface IChangeFeedbackProps {
   review: IReview;

@@ -4,7 +4,7 @@ interface IMenuSkeleton {
 
 export const MenuSkeleton = ({ itemsAmount }: IMenuSkeleton) => {
   return (
-    <div className='grid grid-cols-2 align-middle justify-items-center gap-12 mx-8'>
+    <div className='grid grid-cols-1 md:grid-cols-2 align-middle justify-items-center gap-6 md:gap-12 mx-8'>
 
       {Array.from({ length: itemsAmount }).map((_, index) =>
         <div

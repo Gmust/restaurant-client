@@ -1,11 +1,12 @@
-import { DishInfo } from '@/src/components/menu/menuList/dish/DishInfo';
-import { DishesService } from '@/src/service/dishesService';
+import { ArrowBigLeft } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
+
 import { AddToCartBar } from '@/src/components/menu/menuList/dish/AddToCartBar';
+import { DishInfo } from '@/src/components/menu/menuList/dish/DishInfo';
 import { SimilarDishes } from '@/src/components/menu/menuList/dish/SimilarDishes';
 import { Button } from '@/src/components/shared/Button';
-import Link from 'next/link';
-import { ArrowBigLeft } from 'lucide-react';
+import { DishesService } from '@/src/service/dishesService';
 
 const DishPage = async ({ params }: { params: { id: string }, }) => {
 
@@ -14,7 +15,7 @@ const DishPage = async ({ params }: { params: { id: string }, }) => {
 
   return (
     <div className='flex flex-col'>
-      <Link href='/menu' className='ml-10 mt-2'>
+      <Link href='/menu' className='ml-5 md:ml-10 mt-2'>
         <Button className='flex justify-center items-center'>
           <ArrowBigLeft />
           Menu

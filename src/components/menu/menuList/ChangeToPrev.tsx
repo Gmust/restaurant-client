@@ -1,8 +1,9 @@
-import { Button } from '@/src/components/shared/Button';
 import { ArrowLeft } from 'lucide-react';
-import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import React from 'react';
+
 import { IChangePageProps } from '@/src/components/menu/menuList/MenuList';
+import { Button } from '@/src/components/shared/Button';
 
 
 export const ChangeToPrev = ({ currentPage, createQueryString }: IChangePageProps) => {

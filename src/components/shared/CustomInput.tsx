@@ -1,7 +1,8 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import { forwardRef, InputHTMLAttributes, LegacyRef } from 'react';
 import { IconNode } from 'lucide-react';
+import { forwardRef, InputHTMLAttributes, LegacyRef } from 'react';
 import { IconType } from 'react-icons';
+
 import { cn } from '@/src/lib/utils';
 
 
@@ -29,6 +30,7 @@ interface IInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'
   Icon?: IconNode | IconType
 }
 
+// eslint-disable-next-line react/display-name
 export const CustomInput = forwardRef(({ Icon, isLoading, variant, size, className, ...props }: IInputProps, ref: LegacyRef<HTMLInputElement>) => {
   return (
     <>

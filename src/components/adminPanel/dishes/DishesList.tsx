@@ -1,14 +1,15 @@
 'use client';
 
-import { IDish } from '@/@types/dishes';
 import React, { useEffect, useState } from 'react';
-import { CustomInput } from '@/src/components/shared/CustomInput';
-import { FiSearch } from 'react-icons/fi';
-import { DishAdminCard } from '@/src/components/adminPanel/dishes/DishAdminCard';
-import { IIngredient } from '@/@types/ingredients';
-import { useAdminDishesStore } from '@/src/store/admin-dishes-store';
 import toast from 'react-hot-toast';
+import { FiSearch } from 'react-icons/fi';
+
+import { IDish } from '@/@types/dishes';
+import { IIngredient } from '@/@types/ingredients';
+import { DishAdminCard } from '@/src/components/adminPanel/dishes/DishAdminCard';
+import { CustomInput } from '@/src/components/shared/CustomInput';
 import { DishesService } from '@/src/service/dishesService';
+import { useAdminDishesStore } from '@/src/store/admin-dishes-store';
 
 interface IDishesListProps {
   initialDishes: IDish[];

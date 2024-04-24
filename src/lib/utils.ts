@@ -1,6 +1,4 @@
 import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import { DishCategories } from '@/@types/dishes';
 import {
   Beef,
   CookingPot,
@@ -13,6 +11,9 @@ import {
   Soup,
   Utensils,
 } from 'lucide-react';
+import { twMerge } from 'tailwind-merge';
+
+import { DishCategories } from '@/@types/dishes';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

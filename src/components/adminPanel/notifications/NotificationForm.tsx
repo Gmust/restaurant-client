@@ -1,16 +1,17 @@
 'use client';
 
-import { Roles } from '@/@types/user';
-import { capitalizeFirstLetter } from '@/src/lib/utils';
-import { CustomInput } from '@/src/components/shared/CustomInput';
-import { Button } from '@/src/components/shared/Button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { notifyUserValidator } from '@/src/lib/validations/notify-user';
-import { z, ZodError } from 'zod';
-import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
+import { z, ZodError } from 'zod';
+
+import { Roles } from '@/@types/user';
+import { Button } from '@/src/components/shared/Button';
+import { CustomInput } from '@/src/components/shared/CustomInput';
+import { capitalizeFirstLetter } from '@/src/lib/utils';
+import { notifyUserValidator } from '@/src/lib/validations/notify-user';
 import { NotificationsService } from '@/src/service/notificationsService';
 
 type formData = z.infer<typeof notifyUserValidator>

@@ -1,19 +1,20 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { z } from 'zod';
+
 import { IModalProps } from '@/@types';
 import { DishCategories, IDish } from '@/@types/dishes';
-import { Modal } from '@/src/components/shared/Modal';
-import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { changeDishValidator } from '@/src/lib/validations/change-dish';
-import { z } from 'zod';
-import { CustomInput } from '@/src/components/shared/CustomInput';
-import { Button } from '@/src/components/shared/Button';
 import { IIngredient } from '@/@types/ingredients';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { IngredientsList } from '@/src/components/adminPanel/dishes/ingredientsList/IngredientsList';
+import { Button } from '@/src/components/shared/Button';
+import { CustomInput } from '@/src/components/shared/CustomInput';
+import { Modal } from '@/src/components/shared/Modal';
+import { changeDishValidator } from '@/src/lib/validations/change-dish';
 import { DishesService } from '@/src/service/dishesService';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 import { useAdminDishesStore } from '@/src/store/admin-dishes-store';
 
 interface IChangeDishModalProps extends IModalProps {

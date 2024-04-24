@@ -1,11 +1,12 @@
 'use client';
 
-import { OrdersService } from '@/src/service/ordersService';
-import Link from 'next/link';
-import { useCartStore } from '@/src/store/cart-store';
-import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
 import { Button } from '@/src/components/shared/Button';
+import { OrdersService } from '@/src/service/ordersService';
+import { useCartStore } from '@/src/store/cart-store';
 
 type SuccessfulPaymentsSearchParams = {
   email: string,

@@ -1,7 +1,8 @@
-import { ICartItem } from '@/@types/cart';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { ArrowBigLeft, ArrowBigRight, Trash } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
+import { ICartItem } from '@/@types/cart';
 import { useCartStore } from '@/src/store/cart-store';
 
 export const OrderItem = ({ _id, dish, quantity: initialQuantity }: ICartItem) => {

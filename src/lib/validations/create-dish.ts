@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { IIngredient } from '@/@types/ingredients';
+
 import { DishCategories, IDish } from '@/@types/dishes';
+import { IIngredient } from '@/@types/ingredients';
 
 const categoryEnum = Object.values(DishCategories).filter((v) => isNaN(Number(v))) as [string, ...string[]];
 const MAX_FILE_SIZE = 5000000

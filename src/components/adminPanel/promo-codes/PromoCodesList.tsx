@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
+import { CreatePromoCodeModal } from '@/src/components/adminPanel/promo-codes/CreatePromoCodeModal';
+import { DeletePromoCode } from '@/src/components/adminPanel/promo-codes/DeletePromoCode';
 import { PromoCodeCard } from '@/src/components/adminPanel/promo-codes/PromoCodeCard';
 import { Button } from '@/src/components/shared/Button';
 import { useAdminPromoCodesStore } from '@/src/store/admin-promo-codes-store';
-import { CreatePromoCodeModal } from '@/src/components/adminPanel/promo-codes/CreatePromoCodeModal';
-import { DeletePromoCode } from '@/src/components/adminPanel/promo-codes/DeletePromoCode';
 
 interface IPromoCodesListProps {
   promoCodes: IPromoCode[];

@@ -1,6 +1,7 @@
-import { Button } from '@/src/components/shared/Button';
 import { Edit2, Trash } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
+
+import { Button } from '@/src/components/shared/Button';
 
 
 interface IUpdateDeleteButtonsProps {

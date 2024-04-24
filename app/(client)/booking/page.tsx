@@ -7,7 +7,7 @@ const BookingPage = async () => {
   return (
     < >
       {
-        tables ? <div className='flex items-center justify-center w-full'>
+        tables ? <div className='flex items-center justify-center w-full h-4/5 md:h-fit'>
             <BuildingPlan tables={tables} />
           </div>
           :

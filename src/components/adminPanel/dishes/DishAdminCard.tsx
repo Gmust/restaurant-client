@@ -1,16 +1,17 @@
-import { DishCard } from '@/src/components/shared/DishCard';
-import { Button } from '@/src/components/shared/Button';
 import { Edit2, Trash } from 'lucide-react';
-import { IDish } from '@/@types/dishes';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { ChangeDishModal } from '@/src/components/adminPanel/dishes/ChangeDishModal';
-import { IIngredient } from '@/@types/ingredients';
 import toast from 'react-hot-toast';
-import { DishesService } from '@/src/service/dishesService';
+
+import { IDish } from '@/@types/dishes';
+import { IIngredient } from '@/@types/ingredients';
+import { ChangeDishModal } from '@/src/components/adminPanel/dishes/ChangeDishModal';
 import { DeleteDishModal } from '@/src/components/adminPanel/dishes/DeleteDishModal';
+import { Button } from '@/src/components/shared/Button';
+import { DishCard } from '@/src/components/shared/DishCard';
 import { UpdateDeleteButtons } from '@/src/components/shared/UpdateDeleteButtons';
+import { DishesService } from '@/src/service/dishesService';
 
 interface IDishAdminCardProps {
   dish: IDish;

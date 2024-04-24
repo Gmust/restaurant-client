@@ -1,10 +1,11 @@
+import { AxiosError } from 'axios';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Modal } from '@/src/components/shared/Modal';
+import toast from 'react-hot-toast';
+
 import { Button } from '@/src/components/shared/Button';
+import { Modal } from '@/src/components/shared/Modal';
 import { PromoCodesService } from '@/src/service/promoCodesService';
 import { useAdminPromoCodesStore } from '@/src/store/admin-promo-codes-store';
-import toast from 'react-hot-toast';
-import { AxiosError } from 'axios';
 
 interface IDeletePromoCodeProps {
   isActive: boolean,

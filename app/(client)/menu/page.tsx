@@ -1,8 +1,9 @@
-import { FilterBar } from '@/src/components/menu/FilterBar';
-import { DishesService } from '@/src/service/dishesService';
-import { MenuList } from '@/src/components/menu/menuList/MenuList';
 import { Suspense } from 'react';
+
 import { MenuSkeleton } from '@/src/components/loaders/MenuSkeleton';
+import { FilterBar } from '@/src/components/menu/FilterBar';
+import { MenuList } from '@/src/components/menu/menuList/MenuList';
+import { DishesService } from '@/src/service/dishesService';
 
 const MenuPage = async () => {
 

@@ -3,15 +3,17 @@
 import { AxiosError } from 'axios';
 import { Loader2 } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { IFetchDishesResponse } from '@/@types/dishes';
 import { IGetReviewsRes, IReview } from '@/@types/reviews';
 import { ChangeToNext } from '@/src/components/menu/menuList/ChangeToNext';
 import { ChangeToPrev } from '@/src/components/menu/menuList/ChangeToPrev';
+import { MobilePaginator } from '@/src/components/menu/menuList/MobilePaginator';
 import { Paginator } from '@/src/components/menu/menuList/Paginator';
 import { ReviewCard } from '@/src/components/reviews/ReviewCard';
+import { useScreenSize } from '@/src/hooks/screen-size-hook';
 import { ReviewsService } from '@/src/service/reviewsService';
 
 export const ReviewsList = ({ pageTotal, data, currentPage: initialCurrenPage }: IGetReviewsRes) => {
@@ -21,7 +23,7 @@ export const ReviewsList = ({ pageTotal, data, currentPage: initialCurrenPage }:
   const [currentPage, setCurrentPage] = useState<number>(initialCurrenPage);
   const [totalPages, setTotalPages] = useState<number>(pageTotal);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const { width } = useScreenSize();
   const searchParams = useSearchParams();
 
   const createQueryString = useCallback(
@@ -64,7 +66,11 @@ export const ReviewsList = ({ pageTotal, data, currentPage: initialCurrenPage }:
   return (
     <div className='flex flex-col space-y-6'>
       <div className='flex justify-center'>
-        <ChangeToPrev currentPage={currentPage} createQueryString={createQueryString} pageTotal={pageTotal} />
+        {
+          width > 780 ?
+            <ChangeToPrev currentPage={currentPage} createQueryString={createQueryString} pageTotal={totalPages} />
+            : null
+        }
         {
           isLoading ? <Loader2 className='animate-spin' />
             :
@@ -72,10 +78,21 @@ export const ReviewsList = ({ pageTotal, data, currentPage: initialCurrenPage }:
               {reviews.map(review => <ReviewCard key={review._id} {...review} />)}
             </div>
         }
-        <ChangeToNext currentPage={currentPage} createQueryString={createQueryString} pageTotal={pageTotal} />
+        {
+          width > 780 ?
+            <ChangeToNext currentPage={currentPage} createQueryString={createQueryString}
+                          pageTotal={totalPages} />
+            : null
+        }
       </div>
-      <Paginator currentPage={currentPage} pageTotal={pageTotal} setCurrentPage={setCurrentPage}
-                 createQueryString={createQueryString} />
+      {
+        width > 780 ?
+          <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} pageTotal={totalPages}
+                     createQueryString={createQueryString} />
+          :
+          <MobilePaginator createQueryString={createQueryString} pageTotal={totalPages} setCurrentPage={setCurrentPage}
+                           currentPage={currentPage} />
+      }
     </div>
   );
 };

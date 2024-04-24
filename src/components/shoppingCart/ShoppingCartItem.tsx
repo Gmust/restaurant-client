@@ -1,13 +1,14 @@
 'use client';
 
-import { ICartItem } from '@/@types/cart';
+import { ArrowBigLeft, ArrowBigRight, Trash } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { ArrowBigLeft, ArrowBigRight, Trash } from 'lucide-react';
+
+import { ICartItem } from '@/@types/cart';
 import { Button } from '@/src/components/shared/Button';
+import { CartService } from '@/src/service/cartService';
 import { useCartStore } from '@/src/store/cart-store';
 import { useUserStore } from '@/src/store/user-store';
-import { CartService } from '@/src/service/cartService';
 
 export const ShoppingCartItem = ({ _id, dish, quantity: initialQuantity }: ICartItem) => {
 

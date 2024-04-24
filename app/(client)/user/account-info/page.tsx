@@ -1,19 +1,18 @@
-import { AuthService } from '@/src/service/authService';
+import { Frown } from 'lucide-react';
 import { cookies } from 'next/headers';
-import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+
+import { ReviewCard } from '@/src/components/reviews/ReviewCard';
 import { Button } from '@/src/components/shared/Button';
+import { ChangeFeedback } from '@/src/components/shared/ChangeFeedback';
+import { LeaveFeedback } from '@/src/components/shared/LeaveFeedback';
+import { ReceiveNews } from '@/src/components/userPage/ReceiveNews';
 import { UserInfo } from '@/src/components/userPage/UserInfo';
 import { UserOrders } from '@/src/components/userPage/UserOrders';
-import { Frown } from 'lucide-react';
-import { ReceiveNews } from '@/src/components/userPage/ReceiveNews';
+import { AuthService } from '@/src/service/authService';
 import { OrdersService } from '@/src/service/ordersService';
 import { ReviewsService } from '@/src/service/reviewsService';
-import { ReviewCard } from '@/src/components/reviews/ReviewCard';
-import { LeaveFeedback } from '@/src/components/shared/LeaveFeedback';
-import { IReview } from '@/@types/reviews';
-import { ChangeReviewModal } from '@/src/components/reviews/ChangeReviewModal';
-import { ChangeFeedback } from '@/src/components/shared/ChangeFeedback';
 
 const UserPage = async () => {
   const token = cookies().get('accessToken')?.value;
@@ -30,7 +29,7 @@ const UserPage = async () => {
   return (
     <>
       {user ?
-        <div className='flex space-x-10  justify-between mx-16 text-2xl'>
+        <div className='flex-col mx-8 items-center md:flex-row flex  md:space-x-10  md:justify-between md:mx-16 text-2xl'>
           <div>
             <UserInfo {...user} />
             <ReceiveNews userId={user._id} receiveNews={user.receiveNews} />
@@ -50,7 +49,7 @@ const UserPage = async () => {
               }
             </div>
           </div>
-          <div className='space-y-6'>
+          <div className='md:space-y-6 mt-10 md:mt-0'>
             <div>
               <p className='font-semibold'>Current orders:</p>
               {

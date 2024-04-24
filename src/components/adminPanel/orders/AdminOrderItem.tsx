@@ -1,5 +1,6 @@
-import { IDish } from '@/@types/dishes';
 import Image from 'next/image';
+
+import { IDish } from '@/@types/dishes';
 
 interface IAdminOrderItem {
   quantity: number,

@@ -1,16 +1,17 @@
 'use client';
 
-import { OrderItems } from '@/src/components/order/OrderItems';
-import { useCartStore } from '@/src/store/cart-store';
-import { Button } from '@/src/components/shared/Button';
-import { useRouter } from 'next/navigation';
-import { loadStripe } from '@stripe/stripe-js';
-import { Modal } from '@/src/components/shared/Modal';
-import { useState } from 'react';
-import { OrderModalContent } from '@/src/components/order/OrderModalContent';
 import { Elements } from '@stripe/react-stripe-js';
-import toast from 'react-hot-toast';
+import { loadStripe } from '@stripe/stripe-js';
 import { Sunset } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+
+import { OrderItems } from '@/src/components/order/OrderItems';
+import { OrderModalContent } from '@/src/components/order/OrderModalContent';
+import { Button } from '@/src/components/shared/Button';
+import { Modal } from '@/src/components/shared/Modal';
+import { useCartStore } from '@/src/store/cart-store';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 

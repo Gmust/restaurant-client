@@ -1,5 +1,6 @@
-import { cn } from '@/src/lib/utils';
 import { Dispatch, SetStateAction, useEffect } from 'react';
+
+import { cn } from '@/src/lib/utils';
 
 
 interface IModalProps {

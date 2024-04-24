@@ -1,16 +1,17 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { IIngredient, Units } from '@/@types/ingredients';
-import { z } from 'zod';
-import { updateIngredientValidator } from '@/src/lib/validations/update-ingredient';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { IngredientsService } from '@/src/service/ingredientsService';
-import { Modal } from '@/src/components/shared/Modal';
-import { CustomInput } from '@/src/components/shared/CustomInput';
+import { z } from 'zod';
+
+import { IIngredient, Units } from '@/@types/ingredients';
 import { Button } from '@/src/components/shared/Button';
+import { CustomInput } from '@/src/components/shared/CustomInput';
+import { Modal } from '@/src/components/shared/Modal';
 import { handleUpdateData } from '@/src/lib/handleUpdateData';
+import { updateIngredientValidator } from '@/src/lib/validations/update-ingredient';
+import { IngredientsService } from '@/src/service/ingredientsService';
 
 
 interface IUpdateIngredientsModal {

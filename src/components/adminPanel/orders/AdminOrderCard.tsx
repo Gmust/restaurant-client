@@ -1,6 +1,6 @@
 import { IOrder } from '@/@types/orders';
-import { useAdminOrdersStore } from '@/src/store/admin-orders-store';
 import { cn } from '@/src/lib/utils';
+import { useAdminOrdersStore } from '@/src/store/admin-orders-store';
 import { transformToShortDate } from '@/src/utils/transformToShortDate';
 
 export const AdminOrderCard = (order: IOrder) => {

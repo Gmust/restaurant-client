@@ -1,6 +1,7 @@
-import { IDish } from '@/@types/dishes';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { IDish } from '@/@types/dishes';
 
 export const DishCard = ({
                            _id,

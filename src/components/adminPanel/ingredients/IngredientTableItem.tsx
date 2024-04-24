@@ -1,11 +1,12 @@
-import { IIngredient } from '@/@types/ingredients';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { capitalizeFirstLetter } from '@/src/lib/utils';
-import { Button } from '@/src/components/shared/Button';
 import { Edit2, Trash } from 'lucide-react';
+import { Dispatch, SetStateAction, useState } from 'react';
+
+import { IIngredient } from '@/@types/ingredients';
 import { DeleteIngredientModal } from '@/src/components/adminPanel/ingredients/DeleteIngredientModal';
 import { UpdateIngredientsModal } from '@/src/components/adminPanel/ingredients/UpdateIngredientsModal';
+import { Button } from '@/src/components/shared/Button';
 import { UpdateDeleteButtons } from '@/src/components/shared/UpdateDeleteButtons';
+import { capitalizeFirstLetter } from '@/src/lib/utils';
 
 
 interface IIngredientTableItem {

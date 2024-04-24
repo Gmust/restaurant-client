@@ -1,10 +1,11 @@
 'use client';
 
+import { useState } from 'react';
+
 import { IDish } from '@/@types/dishes';
 import { IIngredient } from '@/@types/ingredients';
-import { Button } from '@/src/components/shared/Button';
 import { CreateDishModal } from '@/src/components/adminPanel/dishes/createDish/CreateDishModal';
-import { useState } from 'react';
+import { Button } from '@/src/components/shared/Button';
 
 
 interface ICreateDishButtonProps {

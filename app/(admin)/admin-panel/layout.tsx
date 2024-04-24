@@ -1,5 +1,6 @@
-import { adminPanelRoutes } from '@/src/utils/routes';
 import Link from 'next/link';
+
+import { adminPanelRoutes } from '@/src/utils/routes';
 
 const AdminPanelLayout = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react';
-import { cn } from '@/src/lib/utils';
 import { Dispatch, SetStateAction } from 'react';
+
+import { cn } from '@/src/lib/utils';
 
 
 interface IReviewStarsProps {

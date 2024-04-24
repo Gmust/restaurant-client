@@ -1,9 +1,10 @@
-import { IDish } from '@/@types/dishes';
+import { Vegan } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
-import { Vegan } from 'lucide-react';
-import { capitalizeFirstLetter, cn, showDishCategoryIcon } from '@/src/lib/utils';
+
+import { IDish } from '@/@types/dishes';
 import { Tooltip } from '@/src/components/shared/Tooltip';
+import { capitalizeFirstLetter, cn, showDishCategoryIcon } from '@/src/lib/utils';
 
 
 export const DishInfo = (dish: IDish) => {
@@ -11,19 +12,20 @@ export const DishInfo = (dish: IDish) => {
   const Icon = showDishCategoryIcon(dish.category);
 
   return (
-    <div className='flex flex-row justify-center space-x-20 mx-10 mt-6'>
-      <div className='relative w-96 h-96'>
+    <div className='flex flex-col items-center md:flex-row md:justify-center md:space-x-20 md:mx-10 mt-6'>
+      <div className='relative w-72 h-72 md:w-96 md:h-96'>
         <Image alt={dish.name} fill src={`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/${dish.image}`}
                className='rounded-sm' />
       </div>
-      <div className='flex flex-col space-y-3'>
-        <span className='flex items-center space-x-4'>
+      <div className='flex flex-col space-y-3 mt-3 md:mt-0'>
+        <span className='flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-4'>
           <h1 className='text-3xl font-medium'>{dish.name}</h1>
-          <Tooltip tooltipText={`Dish category ${dish.category}`} position='top'>
-            <Icon className='w-8 h-8 hover:animate-bounce' color='#81586e' />
-          </Tooltip>
+          <div className='flex items-center space-x-12'>
+            <Tooltip textSize='xl' tooltipText={`Dish category ${dish.category}`} position='top'>
+              <Icon className='w-8 h-8 hover:animate-bounce' color='#81586e' />
+            </Tooltip>
           <Tooltip tooltipText={dish.isVegan ? 'This dish is for vegans' : 'This dish is not for vegans'}
-                   position='top'>
+                   position='top' textSize='xl'>
              <div className='relative inline-block'>
                 <Vegan color='#3e9392'
                        className={cn('w-7 h-7', {
@@ -41,6 +43,7 @@ export const DishInfo = (dish: IDish) => {
                }
           </div>
           </Tooltip>
+          </div>
         </span>
         <section className='flex flex-col text-xl space-y-1'>
           <p className='flex'>
@@ -54,7 +57,7 @@ export const DishInfo = (dish: IDish) => {
           <p className='break-words max-w-3xl'>
             {dish.description}
           </p>
-          <div>
+          <div className='flex flex-col'>
             <h2 className='text-amber-500 mr-2'>Ingredients:</h2>
             {dish.ingredients.map(ingredient =>
               <p key={ingredient._id}

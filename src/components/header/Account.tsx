@@ -1,10 +1,11 @@
 'use client';
 
 import { SquareUserRound } from 'lucide-react';
-import { Button } from '@/src/components/shared/Button';
 import Link from 'next/link';
-import { useUserStore } from '@/src/store/user-store';
+
 import { IUser } from '@/@types/user';
+import { Button } from '@/src/components/shared/Button';
+import { useUserStore } from '@/src/store/user-store';
 
 
 interface IAccountProps {

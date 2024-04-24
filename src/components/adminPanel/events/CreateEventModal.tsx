@@ -1,16 +1,18 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { Modal } from '@/src/components/shared/Modal';
-import { z } from 'zod';
-import { createEventValidator } from '@/src/lib/validations/create-event';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CustomInput } from '@/src/components/shared/CustomInput';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Button } from '@/src/components/shared/Button';
-import { EventsService } from '@/src/service/eventsService';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
+import { Dispatch, SetStateAction, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { z } from 'zod';
+
+import { Button } from '@/src/components/shared/Button';
+import { CustomInput } from '@/src/components/shared/CustomInput';
+import { Modal } from '@/src/components/shared/Modal';
+import { createEventValidator } from '@/src/lib/validations/create-event';
+import { EventsService } from '@/src/service/eventsService';
 
 interface ICreateEventModalProps {
   setIsActive: Dispatch<SetStateAction<boolean>>,

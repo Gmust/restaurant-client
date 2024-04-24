@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { OrdersService } from '@/src/service/ordersService';
 
 type SuccessfulPaymentsSearchParams = {

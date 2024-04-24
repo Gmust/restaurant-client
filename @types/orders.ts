@@ -1,6 +1,6 @@
 import { ICartItem } from '@/@types/cart';
-import { IUser } from '@/@types/user';
 import { IDish } from '@/@types/dishes';
+import { IUser } from '@/@types/user';
 
 
 export interface IGuestPayForOrderReq {

@@ -1,14 +1,16 @@
 import React, { ReactNode } from 'react';
+
 import { cn } from '@/src/lib/utils';
 
 
 interface ITooltipProps {
   children: ReactNode,
   tooltipText: string,
-  position: 'right' | 'top' | 'bottom' | 'left'
+  position: 'right' | 'top' | 'bottom' | 'left',
+  textSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 }
 
-export const Tooltip = ({ tooltipText, position, children }: ITooltipProps) => {
+export const Tooltip = ({ tooltipText, position, children, textSize }: ITooltipProps) => {
   return (
     <>
       <div className='group relative inline-block'>
@@ -28,7 +30,7 @@ export const Tooltip = ({ tooltipText, position, children }: ITooltipProps) => {
               'absolute bottom-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm bg-black': position === 'top',
               'absolute left-1/2 top-[-3px] -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm bg-black': position === 'bottom',
             })}></span>
-          {tooltipText}
+          <span className={textSize ? `text-${textSize}` : 'text-sm'}>{tooltipText}</span>
         </div>
       </div>
     </>

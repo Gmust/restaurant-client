@@ -1,16 +1,17 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { Modal } from '@/src/components/shared/Modal';
-import { CustomInput } from '@/src/components/shared/CustomInput';
-import DatePicker from 'react-datepicker';
-import { Button } from '@/src/components/shared/Button';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { updateEventValidator } from '@/src/lib/validations/update-event';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
+import { Dispatch, SetStateAction, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { EventsService } from '@/src/service/eventsService';
+import { z } from 'zod';
+
+import { Button } from '@/src/components/shared/Button';
+import { CustomInput } from '@/src/components/shared/CustomInput';
+import { Modal } from '@/src/components/shared/Modal';
 import { handleUpdateData } from '@/src/lib/handleUpdateData';
+import { updateEventValidator } from '@/src/lib/validations/update-event';
+import { EventsService } from '@/src/service/eventsService';
 
 interface IUpdateEventModal {
   isEdit: boolean,

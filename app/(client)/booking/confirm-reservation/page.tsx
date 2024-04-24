@@ -31,8 +31,6 @@ const ConfirmReservationPage = (props: Props) => {
         tableNum: Number(props.searchParams.t),
         reservationId: props.searchParams.reservationId,
       });
-      console.log(response);
-      toast.success(response!.message);
       setTimeout(() => {
         toast.success('You will be redirected now...');
         router.push('/menu');

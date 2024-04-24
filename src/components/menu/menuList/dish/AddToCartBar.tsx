@@ -1,12 +1,13 @@
 'use client';
 
-import { IDish } from '@/@types/dishes';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useCartStore } from '@/src/store/cart-store';
+
+import { IDish } from '@/@types/dishes';
 import { Button } from '@/src/components/shared/Button';
-import { useUserStore } from '@/src/store/user-store';
 import { CartService } from '@/src/service/cartService';
+import { useCartStore } from '@/src/store/cart-store';
+import { useUserStore } from '@/src/store/user-store';
 
 export const AddToCartBar = (dish: IDish) => {
 
@@ -47,7 +48,7 @@ export const AddToCartBar = (dish: IDish) => {
 
   return (
     <div
-      className='fixed z-5 flex bg-orange-900 justify-between items-center inset-x-0 bottom-16  mx-14 px-3 py-2 rounded-md'>
+      className='fixed max-w-[360px] sm:max-w-full z-10 flex bg-orange-900 justify-between items-center inset-x-0 bottom-16 mx-7 md:mx-14 px-3 py-2 rounded-md'>
       <div className='flex flex-row space-x-4'>
         <Image src={`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/${dish.image}`} alt={dish.name} width={40}
                height={40} className='rounded-sm' />
@@ -56,7 +57,7 @@ export const AddToCartBar = (dish: IDish) => {
           <p>{dish.dishWeight} gr</p>
         </div>
       </div>
-      <div className='flex flex-row  justify-between'>
+      <div className='flex flex-row justify-between'>
         {/*<div className='flex items-center space-x-4'>*/}
         {/*  <div className='flex justify-between space-x-1 items-center'>*/}
         {/*    <MinusIcon className='border-2 rounded-lg cursor-pointer border-gray-200 w-8 active:scale-95'*/}

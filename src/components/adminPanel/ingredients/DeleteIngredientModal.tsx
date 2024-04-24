@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Modal } from '@/src/components/shared/Modal';
-import { Button } from '@/src/components/shared/Button';
-import { DishesService } from '@/src/service/dishesService';
 import toast from 'react-hot-toast';
+
 import { IIngredient } from '@/@types/ingredients';
+import { Button } from '@/src/components/shared/Button';
+import { Modal } from '@/src/components/shared/Modal';
+import { DishesService } from '@/src/service/dishesService';
 import { IngredientsService } from '@/src/service/ingredientsService';
 
 interface IDeleteIngredientModal {

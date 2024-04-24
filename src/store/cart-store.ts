@@ -1,8 +1,9 @@
+import { persistNSync } from 'persist-and-sync';
 import { create } from 'zustand';
+
 import { ICartStore } from '@/@types/cart';
 import { CartService } from '@/src/service/cartService';
 import { useUserStore } from '@/src/store/user-store';
-import { persistNSync } from 'persist-and-sync';
 
 export const useCartStore = create<ICartStore>()(
   persistNSync(

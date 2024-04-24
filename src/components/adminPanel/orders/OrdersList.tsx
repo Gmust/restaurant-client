@@ -1,9 +1,10 @@
 'use client'
 
-import { IOrder } from '@/@types/orders';
 import React, { useEffect } from 'react';
-import { OrderInfo } from '@/src/components/order/OrderInfo';
+
+import { IOrder } from '@/@types/orders';
 import { AdminOrderCard } from '@/src/components/adminPanel/orders/AdminOrderCard';
+import { OrderInfo } from '@/src/components/order/OrderInfo';
 import { useAdminOrdersStore } from '@/src/store/admin-orders-store';
 
 

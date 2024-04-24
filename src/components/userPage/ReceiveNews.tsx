@@ -1,9 +1,10 @@
 'use client';
 
-import { FaRegNewspaper } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
-import { NotificationsService } from '@/src/service/notificationsService';
 import toast from 'react-hot-toast';
+import { FaRegNewspaper } from 'react-icons/fa6';
+
+import { NotificationsService } from '@/src/service/notificationsService';
 
 interface IReceiveNewsProps {
   receiveNews: boolean;

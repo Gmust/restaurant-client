@@ -1,6 +1,8 @@
 import  '@testing-library/jest-dom'
-import { RouteItem } from '@/src/components/header/RouteItem';
+
 import { render, screen } from '@testing-library/react';
+
+import { RouteItem } from '@/src/components/header/RouteItem';
 
 
 describe('Route item component', () => {

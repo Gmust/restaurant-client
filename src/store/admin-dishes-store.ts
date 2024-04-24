@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import { IAdminDishesStore } from '@/@types/dishes';
 
 export const useAdminDishesStore = create<IAdminDishesStore>()(set => ({
@@ -10,7 +11,6 @@ export const useAdminDishesStore = create<IAdminDishesStore>()(set => ({
       });
     },
     createDish: (newDish) => {
-      console.log(newDish);
       set((state) => ({
         dishes: [
           ...state.dishes,

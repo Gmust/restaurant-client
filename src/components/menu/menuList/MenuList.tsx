@@ -1,16 +1,19 @@
 'use client';
 
-import { IFetchDishesResponse } from '@/@types/dishes';
-import { Button } from '@/src/components/shared/Button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
-import { DishesService } from '@/src/service/dishesService';
-import { DishCard } from '@/src/components/shared/DishCard';
-import { Paginator } from '@/src/components/menu/menuList/Paginator';
+
+import { IFetchDishesResponse } from '@/@types/dishes';
 import { MenuSkeleton } from '@/src/components/loaders/MenuSkeleton';
-import { ChangeToPrev } from '@/src/components/menu/menuList/ChangeToPrev';
 import { ChangeToNext } from '@/src/components/menu/menuList/ChangeToNext';
+import { ChangeToPrev } from '@/src/components/menu/menuList/ChangeToPrev';
+import { MobilePaginator } from '@/src/components/menu/menuList/MobilePaginator';
+import { Paginator } from '@/src/components/menu/menuList/Paginator';
+import { Button } from '@/src/components/shared/Button';
+import { DishCard } from '@/src/components/shared/DishCard';
+import { useScreenSize } from '@/src/hooks/screen-size-hook';
+import { DishesService } from '@/src/service/dishesService';
 
 interface IMenuListProps {
   initialMenu: IFetchDishesResponse;
@@ -30,7 +33,7 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
   const [currentPage, setCurrentPage] = useState<number>(initialMenu.currentPage);
   const [totalPages, setTotalPages] = useState<number>(initialMenu.currentPage);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const { width } = useScreenSize();
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -64,10 +67,14 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
   return (
     <div className='animate-fadeInBottom flex flex-col'>
       <div className='flex flex-row justify-around items-center mx-24'>
-        <ChangeToPrev currentPage={currentPage} createQueryString={createQueryString} />
+        {
+          width > 780 ?
+            <ChangeToPrev currentPage={currentPage} createQueryString={createQueryString} pageTotal={totalPages} />
+            : null
+        }
         {
           isLoading ? <MenuSkeleton itemsAmount={6} /> : menu.data.length > 0 ?
-            <div className='grid grid-cols-2 align-middle justify-items-center gap-12 mx-8'>
+            <div className='grid grid-cols-1 md:grid-cols-2 align-middle justify-items-center gap-6 md:gap-12 md:mx-8'>
               {menu.data.map(dish => <DishCard {...dish} key={dish._id} />)}
             </div>
             :
@@ -75,11 +82,22 @@ export const MenuList = ({ initialMenu }: IMenuListProps) => {
               Unable to find dishes with the following filters
             </div>
         }
-        <ChangeToNext currentPage={currentPage} createQueryString={createQueryString}
-                      pageTotal={initialMenu.pageTotal} />
+        {
+          width > 780 ?
+            <ChangeToNext currentPage={currentPage} createQueryString={createQueryString}
+                          pageTotal={totalPages} />
+            : null
+        }
       </div>
-      <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} pageTotal={totalPages}
-                 createQueryString={createQueryString} />
+      {
+        width > 780 ?
+          <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} pageTotal={totalPages}
+                     createQueryString={createQueryString} />
+          :
+          <MobilePaginator createQueryString={createQueryString} pageTotal={totalPages} setCurrentPage={setCurrentPage}
+                           currentPage={currentPage} />
+      }
+
     </div>
   );
 };

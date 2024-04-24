@@ -1,5 +1,6 @@
-import { IReview } from '@/@types/reviews';
 import { Divide, Star } from 'lucide-react';
+
+import { IReview } from '@/@types/reviews';
 import { cn } from '@/src/lib/utils';
 
 export const ReviewCard = ({ reviewComment, user, rating }: IReview) => {

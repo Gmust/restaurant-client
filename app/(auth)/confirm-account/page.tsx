@@ -1,6 +1,7 @@
-import { AuthService } from '@/src/service/authService';
-import { Button } from '@/src/components/shared/Button';
 import Link from 'next/link';
+
+import { Button } from '@/src/components/shared/Button';
+import { AuthService } from '@/src/service/authService';
 
 type ConfirmAccountSearchParams = {
   token: string,

@@ -1,8 +1,9 @@
+import { usePathname, useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
+
 import { IFetchDishesResponse } from '@/@types/dishes';
 import { Button } from '@/src/components/shared/Button';
 import { cn } from '@/src/lib/utils';
-import { usePathname, useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
 
 
 type  IPaginatorProps = Pick<IFetchDishesResponse, 'pageTotal' | 'currentPage'> & {

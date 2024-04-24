@@ -1,10 +1,11 @@
 'use client';
 
-import { Button } from '@/src/components/shared/Button';
 import { useState } from 'react';
-import { EventCard } from '@/src/components/homePage/eventsPanel/EventCard';
+
 import { AdminEventCard } from '@/src/components/adminPanel/events/AdminEventCard';
 import { CreateEventModal } from '@/src/components/adminPanel/events/CreateEventModal';
+import { EventCard } from '@/src/components/homePage/eventsPanel/EventCard';
+import { Button } from '@/src/components/shared/Button';
 
 interface IEventsListProps {
   events: IEvent[];

@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom';
-import { useUserStore } from '@/src/store/user-store';
+
 import { render, screen } from '@testing-library/react';
+
 import { Header } from '@/src/components/header/Header';
+import { useUserStore } from '@/src/store/user-store';
 
 jest.mock('../../../store/user-store.ts', () => ({
   useUserStore: jest.fn(),

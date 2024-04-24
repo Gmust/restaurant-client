@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { IIngredient } from '@/@types/ingredients';
-import { Modal } from '@/src/components/shared/Modal';
-import { Button } from '@/src/components/shared/Button';
 import { AxiosError } from 'axios';
+import { Dispatch, SetStateAction, useState } from 'react';
 import toast from 'react-hot-toast';
+
+import { IIngredient } from '@/@types/ingredients';
+import { Button } from '@/src/components/shared/Button';
+import { Modal } from '@/src/components/shared/Modal';
 import { EventsService } from '@/src/service/eventsService';
 
 

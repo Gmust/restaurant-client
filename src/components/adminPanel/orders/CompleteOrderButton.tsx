@@ -1,10 +1,11 @@
-import { useAdminOrdersStore } from '@/src/store/admin-orders-store';
-import { useState } from 'react';
-import { Button } from '@/src/components/shared/Button';
-import { Statuses } from '@/@types/orders';
 import { AxiosError } from 'axios';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
+
+import { Statuses } from '@/@types/orders';
+import { Button } from '@/src/components/shared/Button';
 import { OrdersService } from '@/src/service/ordersService';
+import { useAdminOrdersStore } from '@/src/store/admin-orders-store';
 
 export const CompleteOrderButton = () => {
 

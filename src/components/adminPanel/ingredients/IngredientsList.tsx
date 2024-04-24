@@ -1,12 +1,13 @@
 'use client';
 
-import { IIngredient } from '@/@types/ingredients';
-import { Button } from '@/src/components/shared/Button';
 import { Edit2, Trash } from 'lucide-react';
-import { capitalizeFirstLetter } from '@/src/lib/utils';
 import { useState } from 'react';
-import { IngredientTableItem } from '@/src/components/adminPanel/ingredients/IngredientTableItem';
+
+import { IIngredient } from '@/@types/ingredients';
 import { CreateIngredientModal } from '@/src/components/adminPanel/ingredients/CreateIngredientModal';
+import { IngredientTableItem } from '@/src/components/adminPanel/ingredients/IngredientTableItem';
+import { Button } from '@/src/components/shared/Button';
+import { capitalizeFirstLetter } from '@/src/lib/utils';
 
 interface IIngredientsList {
   ingredients: IIngredient[];

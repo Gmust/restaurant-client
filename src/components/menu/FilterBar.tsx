@@ -1,9 +1,10 @@
 'use client';
 
-import { DishCategories } from '@/@types/dishes';
 import { Vegan } from 'lucide-react';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+
+import { DishCategories } from '@/@types/dishes';
 
 export const FilterBar = () => {
 
@@ -50,7 +51,7 @@ export const FilterBar = () => {
   };
 
   return (
-    <div className='animate-fadeInBottom flex flex-row justify-around mx-10 w-full'>
+    <div className='animate-fadeInBottom flex flex-row  justify-around mx-6 md:mx-10 w-full'>
       <div className='flex relative items-center space-x-2 text-xl border-b-2 border-gray-50 border-opacity-70 '>
         <label htmlFor='isVegan' className='cursor-pointer'>Is vegan:</label>
         <input type='checkbox' title='Is Vegan' id='isVegan' checked={isVegan}
@@ -62,7 +63,7 @@ export const FilterBar = () => {
                className='absolute w-5 h-5 pointer-events-none' />
       </div>
 
-      <div className='flex flex-row  justify-around items-center w-1/5'>
+      <div className='flex flex-col items-start md:flex-row md:justify-around md:items-center md:w-1/5'>
         <label htmlFor='dish-category' className='text-xl'>Select category:</label>
         <select id='dish-category' title='Dish category' value={currentCategory}
                 onChange={handleGetCategory}

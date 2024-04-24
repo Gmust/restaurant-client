@@ -1,7 +1,8 @@
-import { IngredientsService } from '@/src/service/ingredientsService';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+
 import { IngredientsList } from '@/src/components/adminPanel/ingredients/IngredientsList';
+import { IngredientsService } from '@/src/service/ingredientsService';
 
 const IngredientsPage = async () => {
   const token = cookies().get('accessToken')?.value;

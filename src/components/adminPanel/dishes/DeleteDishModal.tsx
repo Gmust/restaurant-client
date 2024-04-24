@@ -1,10 +1,11 @@
-import { DishesService } from '@/src/service/dishesService';
-import toast from 'react-hot-toast';
-import { Modal } from '@/src/components/shared/Modal';
-import { Dispatch, SetStateAction } from 'react';
-import { Button } from '@/src/components/shared/Button';
 import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
+import toast from 'react-hot-toast';
+
 import { IDish } from '@/@types/dishes';
+import { Button } from '@/src/components/shared/Button';
+import { Modal } from '@/src/components/shared/Modal';
+import { DishesService } from '@/src/service/dishesService';
 import { useAdminDishesStore } from '@/src/store/admin-dishes-store';
 
 

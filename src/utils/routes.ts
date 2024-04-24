@@ -1,9 +1,10 @@
-import { IRoute, IRouteAdmin } from '@/@types/routes';
-import { GiRadarDish } from 'react-icons/gi';
-import { MdEventNote, MdOutlineBorderColor, MdOutlineMenuBook, MdOutlineSell, MdRateReview } from 'react-icons/md';
-import { IoIosNotificationsOutline } from 'react-icons/io';
 import { BiDish } from 'react-icons/bi';
+import { GiRadarDish } from 'react-icons/gi';
+import { IoIosNotificationsOutline } from 'react-icons/io';
 import { LuCarrot } from 'react-icons/lu';
+import { MdEventNote, MdOutlineBorderColor, MdOutlineMenuBook, MdOutlineSell, MdRateReview } from 'react-icons/md';
+
+import { IRoute, IRouteAdmin } from '@/@types/routes';
 
 export const routes: IRoute[] = [
   {
