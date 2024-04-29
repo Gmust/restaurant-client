@@ -5,6 +5,7 @@ export const useAdminPromoCodesStore = create<IAdminPromoCodesStore>()(set => ({
   promoCodes: [],
   actions: {
     createPromoCode: (promoCode) => {
+      // @ts-ignore
       set(state => ({
         promoCodes: [...state.promoCodes, promoCode],
       }));
