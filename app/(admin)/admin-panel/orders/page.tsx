@@ -1,9 +1,16 @@
+import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import { OrdersList } from '@/src/components/adminPanel/orders/OrdersList';
 import { SelectedOrder } from '@/src/components/adminPanel/orders/SelectedOrder';
 import { OrdersService } from '@/src/service/ordersService';
+
+export const metadata: Metadata = {
+  title: 'Orders page',
+  description: 'Orders page',
+};
+
 
 const OrdersPage = async () => {
 

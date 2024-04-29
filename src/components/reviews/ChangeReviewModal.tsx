@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -30,6 +31,7 @@ export const ChangeReviewModal = ({ initialReview, isActive, setIsActive }: ICha
   const changeReview = async () => {
     if (!rating) return;
     if (!review) return;
+    setISLoading(true);
     try {
       const response = await ReviewsService.changeReview({
         newComment: review,
@@ -42,7 +44,11 @@ export const ChangeReviewModal = ({ initialReview, isActive, setIsActive }: ICha
         router.refresh();
       }
     } catch (e) {
-      toast.error('Something went wrong, try to change your review later');
+      if(e instanceof AxiosError){
+        toast.error(e.response!.data.message);
+      } else toast.error('Something went wrong, try to change your review later');
+    } finally {
+      setISLoading(false);
     }
   };
 
@@ -55,12 +61,13 @@ export const ChangeReviewModal = ({ initialReview, isActive, setIsActive }: ICha
                     defaultValue={initialReview.reviewComment}>
           </textarea>
         <div className='flex space-x-3'>
-          <ReviewStars hover={hover} setRating={setRating} setHover={setHover} setCurrentRating={setCurrentRating} initialRating={initialReview.rating} />
+          <ReviewStars hover={hover} setRating={setRating} setHover={setHover} setCurrentRating={setCurrentRating}
+                       initialRating={initialReview.rating} />
         </div>
         {
           currentRating && <RatingMessages currentRating={currentRating} />
         }
-        <Button className='w-full' disabled={!review || !currentRating} onClick={changeReview} isLoading={isLoading}>
+        <Button className='w-full' disabled={!review || !currentRating || isLoading} onClick={changeReview} isLoading={isLoading}>
           Change review
         </Button>
       </div>

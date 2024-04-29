@@ -1,5 +1,12 @@
+import { Metadata } from 'next';
+
 import { BuildingPlan } from '@/src/components/booking/BuildingPlan';
 import { TablesService } from '@/src/service/tablesService';
+
+export const metadata: Metadata = {
+  title: 'Booking page',
+  description: 'Pick and book table for special time',
+};
 
 const BookingPage = async () => {
 

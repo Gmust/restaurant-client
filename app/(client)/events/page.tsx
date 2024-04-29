@@ -1,8 +1,14 @@
-import { MdCelebration, MdOutlineCelebration } from 'react-icons/md';
+import { Metadata } from 'next';
+import { MdOutlineCelebration } from 'react-icons/md';
 
 import { EventInfoCard } from '@/src/components/events/EventInfoCard';
 
 import { EventsService } from '../../../src/service/eventsService';
+
+export const metadata: Metadata = {
+  title: 'Events',
+  description: 'Check out our closest events',
+};
 
 const EventsPage = async () => {
 

@@ -11,7 +11,7 @@ export const UserOrders = ({ orders }: IUserOrdersProps) => {
     <div className='grid grid-cols-1 gap-y-1'>
       {orders.map(order =>
         <Link href={`/order/full-info/${order._id}`}
-              className='flex justify-between items-center  shadow-2xl p-2 cursor-pointer hover:scale-105 transition duration-200 space-x-5 '
+              className='flex justify-between items-center shadow-2xl p-2 cursor-pointer hover:scale-105 transition duration-200 space-x-5 text-sm'
               key={order._id}>
           <div className='flex flex-col items-start justify-center'>
             <p>Order No̱: {order.orderNumber}</p>

@@ -1,4 +1,6 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { Button } from '@/src/components/shared/Button';
 import { AuthService } from '@/src/service/authService';
@@ -13,7 +15,17 @@ type Props = {
   searchParams: ConfirmAccountSearchParams,
 }
 
+
+export const metadata: Metadata = {
+  title: 'Account confirmation',
+  description: 'Account confirmation page',
+};
+
 const ConfirmAccountPage = async ({ params, searchParams }: Props) => {
+  if (!searchParams) {
+    notFound();
+  }
+
   const response = await AuthService.confirmAccount({
     token: encodeURIComponent(searchParams.token),
     email: searchParams.email,

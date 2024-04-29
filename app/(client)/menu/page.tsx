@@ -1,9 +1,17 @@
+import { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import { MenuSkeleton } from '@/src/components/loaders/MenuSkeleton';
 import { FilterBar } from '@/src/components/menu/FilterBar';
 import { MenuList } from '@/src/components/menu/menuList/MenuList';
 import { DishesService } from '@/src/service/dishesService';
+
+
+
+export const metadata: Metadata = {
+  title: 'Menu',
+  description: 'Restaurant full menu',
+};
 
 const MenuPage = async () => {
 

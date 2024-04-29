@@ -20,9 +20,9 @@ import { Logo } from './Logo';
 
 export const Header = () => {
   const { isAuth, user, actions: { setUser, setIsAuth, removeUser } } = useUserStore();
-  const { width, height } = useScreenSize();
-  const { actions: { clearCart, setCart } } = useCartStore();
-  const router = useRouter();
+  const { width } = useScreenSize();
+  const { actions: {  setCart } } = useCartStore();
+
 
   useEffect(() => {
 

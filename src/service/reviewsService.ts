@@ -48,6 +48,7 @@ export class ReviewsService {
       return response.data;
     } catch (e) {
       console.error('Failed to create review', e);
+      throw e;
     }
   }
 
@@ -62,6 +63,7 @@ export class ReviewsService {
       return response.data;
     } catch (e) {
       console.error('Failed to patch review', e);
+      throw e;
     }
   }
 

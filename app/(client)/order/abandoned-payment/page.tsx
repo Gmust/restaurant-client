@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 import { OrdersService } from '@/src/service/ordersService';
@@ -11,6 +12,11 @@ type Props = {
   searchParams: SuccessfulPaymentsSearchParams,
 }
 
+
+export const metadata: Metadata = {
+  title: 'Payment abandoned',
+  description: 'Account confirmation page',
+};
 
 const AbandonedPaymentPage = async ({ searchParams, params }: Props) => {
 

@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { Star } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -35,6 +36,7 @@ export const LeaveReviewModal = ({ setIsActive, isActive }: ILeaveReviewModal) =
   const createReview = async () => {
     if (!rating) return;
     if (!review) return;
+    setISLoading(true);
     try {
       const response = await ReviewsService.createReview({
         comment: review,
@@ -47,7 +49,11 @@ export const LeaveReviewModal = ({ setIsActive, isActive }: ILeaveReviewModal) =
         router.refresh();
       }
     } catch (e) {
-      toast.error('Something went wrong, leave your ');
+      if (e instanceof AxiosError) {
+        toast.error(e.response!.data.message);
+      } else toast.error('Something went wrong, leave your ');
+    } finally {
+      setISLoading(false);
     }
   };
 
@@ -64,7 +70,7 @@ export const LeaveReviewModal = ({ setIsActive, isActive }: ILeaveReviewModal) =
         {
           currentRating && <RatingMessages currentRating={currentRating} />
         }
-        <Button className='w-full' disabled={!review || !currentRating} onClick={createReview} isLoading={isLoading}>
+        <Button className='w-full' disabled={!review || !currentRating || isLoading} onClick={createReview} isLoading={isLoading}>
           Send review
         </Button>
       </div>

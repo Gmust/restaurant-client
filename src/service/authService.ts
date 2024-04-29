@@ -66,8 +66,7 @@ export class AuthService {
 
       return await response.json() as IUserLoginRes;
     } catch (e) {
-      console.error('Failed to login user');
-      console.error(e);
+      throw e;
     }
   }
 

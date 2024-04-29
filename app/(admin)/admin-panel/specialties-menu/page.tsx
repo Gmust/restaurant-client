@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
@@ -5,6 +6,12 @@ import { NewSpecialtiesMenu } from '@/src/components/adminPanel/specialties-menu
 import { SpecialtiesList } from '@/src/components/adminPanel/specialties-menu/SpecialtiesList';
 
 import { DishesService } from '../../../../src/service/dishesService';
+
+export const metadata: Metadata = {
+  title: 'Specialties Menu',
+  description: 'Specialties Menu',
+};
+
 
 const SpecialtiesMenuPage = async () => {
 

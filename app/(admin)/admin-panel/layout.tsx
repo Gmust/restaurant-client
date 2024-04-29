@@ -1,6 +1,20 @@
+import { Metadata, Viewport } from 'next';
 import Link from 'next/link';
 
 import { adminPanelRoutes } from '@/src/utils/routes';
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Admin Panel',
+    default: 'Admin Panel'
+  },
+  description: 'Admin panel',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 0.1,
+};
 
 const AdminPanelLayout = ({ children }: { children: React.ReactNode }) => {
   return (

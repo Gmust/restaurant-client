@@ -1,4 +1,5 @@
 import { ArrowBigLeft } from 'lucide-react';
+import { Metadata, ResolvingMetadata } from 'next';
 import Link from 'next/link';
 import React from 'react';
 
@@ -7,6 +8,23 @@ import { DishInfo } from '@/src/components/menu/menuList/dish/DishInfo';
 import { SimilarDishes } from '@/src/components/menu/menuList/dish/SimilarDishes';
 import { Button } from '@/src/components/shared/Button';
 import { DishesService } from '@/src/service/dishesService';
+
+type Props = {
+  params: { id: string }
+}
+
+export async function generateMetadata({ params }: Props,
+                                       parent: ResolvingMetadata): Promise<Metadata> {
+  const dish = await DishesService.fetchDish(params.id);
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: dish.name,
+    openGraph: {
+      images: [`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/${dish.image}`, ...previousImages],
+    },
+  };
+}
 
 const DishPage = async ({ params }: { params: { id: string }, }) => {
 

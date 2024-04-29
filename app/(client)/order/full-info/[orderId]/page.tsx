@@ -2,7 +2,7 @@
 
 
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import { notFound, usePathname, useRouter } from 'next/navigation';
+import {  usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { io } from 'socket.io-client';
@@ -10,10 +10,8 @@ import { io } from 'socket.io-client';
 import { IOrder } from '@/@types/orders';
 import { OrderInfo } from '@/src/components/order/OrderInfo';
 import { Button } from '@/src/components/shared/Button';
-import { AuthService } from '@/src/service/authService';
 import { OrdersService } from '@/src/service/ordersService';
 import { useUserStore } from '@/src/store/user-store';
-import { socket } from '@/src/utils/socket';
 
 const FullInfoOrderPage = () => {
 
@@ -62,7 +60,6 @@ const FullInfoOrderPage = () => {
     });
 
     socket.on('update-order-status', (data: any) => {
-      console.log('Received update-order-status event:', data.newStatus);
       handelStatusUpdate(data.newStatus);
     });
 
@@ -75,13 +72,12 @@ const FullInfoOrderPage = () => {
     });
 
     return () => {
-      console.log('Disconnecting WebSocket...');
       socket.disconnect();
     };
   }, [user]);
 
   return (
-    <div className='flex flex-col space-y-6 justify-center items-center h-3/5'>
+    <div className='flex flex-col space-y-6 justify-center items-center h-3/5 mt-12 md:mt-0'>
       {
         currentOrder ?
           <OrderInfo  {...currentOrder} email={user?.email!} />

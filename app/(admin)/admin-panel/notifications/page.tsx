@@ -1,4 +1,12 @@
+import { Metadata } from 'next';
+
 import { NotificationForm } from '@/src/components/adminPanel/notifications/NotificationForm';
+
+export const metadata: Metadata = {
+  title: 'Notification Menu',
+  description: 'Notification Menu',
+};
+
 
 const NotificationsPage = () => {
 

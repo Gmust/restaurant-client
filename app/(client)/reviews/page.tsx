@@ -1,5 +1,13 @@
+import { Metadata } from 'next';
+
 import { ReviewsList } from '@/src/components/reviews/ReviewsList';
 import { ReviewsService } from '@/src/service/reviewsService';
+
+
+export const metadata: Metadata = {
+  title: 'User reviews',
+  description: 'Reviews of our best in the world customers',
+};
 
 const ReviewsPage = async () => {
 

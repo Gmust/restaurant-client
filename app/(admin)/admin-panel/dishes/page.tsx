@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
@@ -5,6 +6,12 @@ import { CreateDishButton } from '@/src/components/adminPanel/dishes/createDish/
 import { DishesList } from '@/src/components/adminPanel/dishes/DishesList';
 import { DishesService } from '@/src/service/dishesService';
 import { IngredientsService } from '@/src/service/ingredientsService';
+
+export const metadata: Metadata = {
+  title: 'Dishes page',
+  description: 'Dishes page',
+};
+
 
 const DishesPage = async () => {
   const token = cookies().get('accessToken')?.value;

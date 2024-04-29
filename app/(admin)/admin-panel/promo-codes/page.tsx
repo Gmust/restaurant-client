@@ -1,5 +1,13 @@
+import { Metadata } from 'next';
+
 import { PromoCodesList } from '@/src/components/adminPanel/promo-codes/PromoCodesList';
 import { PromoCodesService } from '@/src/service/promoCodesService';
+
+export const metadata: Metadata = {
+  title: 'Promo codes',
+  description: 'Promo codes page',
+};
+
 
 const PromoCodesPage = async () => {
 
