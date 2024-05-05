@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Account } from '@/src/components/header/Account';
@@ -78,7 +77,7 @@ export const Header = () => {
           width < 780 ?
             null
             : isAuth && user
-              ? <Account user={user} />
+              ? <Account user={user} data-testid="account-info" />
               : <Link href='/login'>
                 <Button variant='outlined'>Log in</Button>
               </Link>

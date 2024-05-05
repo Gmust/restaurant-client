@@ -16,7 +16,7 @@ const mockedSpecialtiesMenu: IFetchSpecialtiesResponse = {
       image: '',
       price: 100,
       dishWeight: 100,
-      ingredients: [{ name: 'test', _id: 'dsds', unit: Units.Gram, quantity: '100' }],
+      ingredients: [{ name: 'test', _id: 'dsds', unit: Units.Gram, quantity: 100 }],
       preparationTime: '60m',
       isVegan: true,
       description: 'test desc',
@@ -33,17 +33,14 @@ describe('Specialties menu page', () => {
     render(await <SpecialtiesMenu specialtiesMenu={mockedSpecialtiesMenu} />);
 
 
-    // Check if the title is rendered
     expect(screen.getByText('Specialties menu')).toBeInTheDocument();
 
-    // Check if each specialty dish is rendered
     mockedSpecialtiesMenu.specialtyDishes.forEach((menuItem) => {
       expect(screen.getByText(menuItem.name)).toBeInTheDocument();
       expect(screen.getByText(`${menuItem.price}$`)).toBeInTheDocument();
       expect(screen.getByText(menuItem.description)).toBeInTheDocument();
     });
 
-    // Check if the "Whole menu" button is rendered
     expect(screen.getByRole('button', { name: 'Whole menu' })).toBeInTheDocument();
   });
 });

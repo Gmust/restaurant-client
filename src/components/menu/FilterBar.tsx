@@ -60,13 +60,13 @@ export const FilterBar = () => {
                  handleGetOnlyVegan();
                }} />
         <Vegan style={{ marginLeft: '90px' }} color={isVegan ? '#3e9392' : 'white'}
-               className='absolute w-5 h-5 pointer-events-none' />
+               className='absolute w-5 h-5 pointer-events-none' data-testid='isVegan-checkbox' />
       </div>
 
       <div className='flex flex-col items-start md:flex-row md:justify-around md:items-center md:w-1/5'>
         <label htmlFor='dish-category' className='text-xl'>Select category:</label>
         <select id='dish-category' title='Dish category' value={currentCategory}
-                onChange={handleGetCategory}
+                onChange={handleGetCategory} data-testid='dish-category'
                 className='block py-1 text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
           {dishesOptions.map(dishOption =>
             <option value={dishOption} key={dishOption}
